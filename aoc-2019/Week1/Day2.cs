@@ -18,7 +18,7 @@ namespace advent.Week1
             var computer = new IntcodeComputer(ints);
             computer.Memory[1] = 12;
             computer.Memory[2] = 2;
-            computer.Process();
+            computer.Compute();
             Console.WriteLine(computer.Memory[0]);
 
             //task2
@@ -28,7 +28,7 @@ namespace advent.Week1
                 computer.ResetMemory();
                 computer.Memory[1] = i;
                 computer.Memory[2] = j;
-                computer.Process();
+                computer.Compute();
                 if (computer.Memory[0] == 19690720)
                 {
                     Console.WriteLine($"found the pair! : {i}, {j} => {i * 100 + j}");

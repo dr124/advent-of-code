@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
+
+#pragma warning disable 8509
 
 namespace advent
 {
     public class IntcodeComputer
     {
-        public int[] Memory { get; set; } // program memory
+        private readonly int[] ROM;         // read only memory
+        public int[] Memory;                // program memory
+        private Instruction Instr;          // current instruction
+        private int Pointer;                // instruction pointer
+        private bool Stop;
 
         // for diag codes
         public List<int> Input;
         public List<int> Output;
         private int InputPointer;
         private int InputValue => Input[InputPointer++];
-        private int OutputValue
-        {
-            set => Output.Add(value);
-        }
-
-        private readonly int[] ROM; // read only memory
-        private Instruction Instr;  // current instruction
-        private int Pointer;        // instruction pointer
-        private bool Stop;
+        private int OutputValue { set => Output.Add(value); }
 
         public IntcodeComputer(int[] Instructions)
         {
@@ -33,10 +29,7 @@ namespace advent
 
         public void Compute()
         {
-            while (!Stop)
-            {
-                Pointer = OpCode(Pointer);
-            }
+            while (!Stop) ProcessInstruction();
         }
 
         public void ResetMemory()
@@ -49,74 +42,63 @@ namespace advent
             InputPointer = 0;
         }
 
-        public int MathCodes(int i)
+        public void MathCodes()
+        {
+            Memory[Instr.Param3Value] = Instr.Instr switch
+            {
+                1 => (Instr.Param2Value + Instr.Param1Value),
+                2 => (Instr.Param2Value * Instr.Param1Value),
+            };
+
+            Pointer += 4;
+        }
+
+        public void DiagCodes()
         {
             switch (Instr.Instr)
             {
-                case 1:
-                    Memory[Instr.Param3Value] = Instr.Param2Value + Instr.Param1Value;
+                case 3:
+                    Memory[Memory[Pointer + 1]] = InputValue;
                     break;
-                case 2:
-                    Memory[Instr.Param3Value] = Instr.Param2Value * Instr.Param1Value;
+                case 4:
+                    OutputValue = Memory[Memory[Pointer + 1]];
                     break;
             }
 
-            return i + 4;
+            Pointer += 2;
         }
 
-        public int DiagCodes(int i)
+        public void JumpCodes()
         {
             switch (Instr.Instr)
             {
-                case 3: // input a value
-                    Memory[Memory[i + 1]] = InputValue; 
+                case 5 when Instr.Param1Value != 0:
+                case 6 when Instr.Param1Value == 0:
+                    Pointer = Instr.Param2Value;
                     break;
-                case 4: // output a value
-                    OutputValue = Memory[Memory[i + 1]];
+                default:
+                    Pointer += 3;
                     break;
             }
-
-            return i + 2;
         }
 
-        public int JumpCodes(int i)
+        public void IfCodes()
         {
-            switch (Instr.Instr)
+            Memory[Instr.Param3Value] = Instr.Instr switch
             {
-                case 5: // jump if true 
-                    if (Instr.Param1Value != 0)
-                        return Instr.Param2Value;
-                    break;
-                case 6: // jump is zero
-                    if (Instr.Param1Value == 0)
-                        return Instr.Param2Value;
-                    break;
-            }
+                7 => (Instr.Param1Value < Instr.Param2Value ? 1 : 0),
+                8 => (Instr.Param1Value == Instr.Param2Value ? 1 : 0),
+            };
 
-            return i + 3;
+            Pointer += 4;
         }
 
-        public int IfCodes(int i)
-        {
-            switch (Instr.Instr)
-            {
-                case 7: // less than
-                    Memory[Instr.Param3Value] = Instr.Param1Value < Instr.Param2Value ? 1 : 0;
-                    break;
-                case 8: // equals
-                    Memory[Instr.Param3Value] = Instr.Param1Value == Instr.Param2Value ? 1 : 0;
-                    break;
-            }
-
-            return i + 4;
-        }
-
-        public int OpCode(int i)
+        public void ProcessInstruction()
         {
             if (Pointer >= Memory.Length)
             {
                 Stop = true;
-                return 0;
+                return;
             }
 
             Instr = new Instruction(Memory.ToList(), Pointer);
@@ -125,18 +107,23 @@ namespace advent
             {
                 case 1:
                 case 2:
-                    return MathCodes(i);
+                    MathCodes();
+                    break;
                 case 3:
                 case 4:
-                    return DiagCodes(i);
+                    DiagCodes();
+                    break;
                 case 5:
                 case 6:
-                    return JumpCodes(i);
+                    JumpCodes();
+                    break;
                 case 7:
                 case 8:
-                    return IfCodes(i);
+                    IfCodes();
+                    break;
                 case 99:
-                    return Memory.Length; // program exit
+                    Pointer = Memory.Length; // program exit
+                    break;
                 default:
                     throw new Exception("witam, error, pozdrawiam");
             }
@@ -144,10 +131,10 @@ namespace advent
 
         public class Instruction
         {
-            private string raw;
             public int Instr;
-            public int Param1Value, Param2Value, Param3Value;
             public int Param1Mode, Param2Mode, Param3Mode;
+            public int Param1Value, Param2Value, Param3Value;
+            private string raw;
 
             public Instruction(List<int> list, int i)
             {
@@ -163,7 +150,9 @@ namespace advent
                     Param2Mode = int.Parse(str.Substring(str.Length - 4, 1));
                     Param3Mode = int.Parse(str.Substring(str.Length - 5, 1));
                 }
-                catch { }
+                catch
+                {
+                }
 
                 try
                 {
@@ -171,7 +160,9 @@ namespace advent
                     Param2Value = Param2Mode == 1 ? list[i + 2] : list[list[i + 2]];
                     Param3Value = list[i + 3]; //param 3 always position mode
                 }
-                catch { }
+                catch
+                {
+                }
             }
         }
     }
