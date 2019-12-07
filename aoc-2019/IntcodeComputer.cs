@@ -42,7 +42,7 @@ namespace advent
             InputPointer = 0;
         }
 
-        public void MathCodes()
+        private void MathCodes()
         {
             Memory[Instr.Param3Value] = Instr.Instr switch
             {
@@ -53,7 +53,7 @@ namespace advent
             Pointer += 4;
         }
 
-        public void DiagCodes()
+        private void DiagCodes()
         {
             switch (Instr.Instr)
             {
@@ -68,7 +68,7 @@ namespace advent
             Pointer += 2;
         }
 
-        public void JumpCodes()
+        private void JumpCodes()
         {
             switch (Instr.Instr)
             {
@@ -82,7 +82,7 @@ namespace advent
             }
         }
 
-        public void IfCodes()
+        private void IfCodes()
         {
             Memory[Instr.Param3Value] = Instr.Instr switch
             {
@@ -93,7 +93,7 @@ namespace advent
             Pointer += 4;
         }
 
-        public void ProcessInstruction()
+        private void ProcessInstruction()
         {
             if (Pointer >= Memory.Length)
             {
@@ -129,11 +129,11 @@ namespace advent
             }
         }
 
-        public class Instruction
+        private class Instruction
         {
-            public int Instr;
-            public int Param1Mode, Param2Mode, Param3Mode;
-            public int Param1Value, Param2Value, Param3Value;
+            public readonly int Instr;
+            private readonly int Param1Mode, Param2Mode, Param3Mode;
+            public readonly int Param1Value, Param2Value, Param3Value;
             private string raw;
 
             public Instruction(List<int> list, int i)
