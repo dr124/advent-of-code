@@ -11,7 +11,7 @@ namespace advent
             var s = new Stopwatch();
             s.Start();
 
-            Day6.Execute();
+            Day7.Execute();
 
             s.Stop();
             Console.WriteLine($"\n\nTime Elapsed: {s.ElapsedMilliseconds}ms");
