@@ -15,47 +15,29 @@ namespace advent.Week1
                 .Select(int.Parse)
                 .ToArray();
 
-            //task1 
-            ints[1] = 12;
-            ints[2] = 2;
-            Console.WriteLine(Process(ints)[0]);
+            var computer = new IntcodeComputer(ints);
+            computer.Memory[1] = 12;
+            computer.Memory[2] = 2;
+            computer.Process();
+            Console.WriteLine(computer.Memory[0]);
 
             //task2
-            for (int i = 0; i < 100; i++)
-            for (int j = 0; j < 100; j++)
+            for (var i = 0; i < 100; i++)
+            for (var j = 0; j < 100; j++)
             {
-                ints[1] = i;
-                ints[2] = j;
-                var result = Process(ints);
-                if (result[0] == 19690720)
+                computer.ResetMemory();
+                computer.Memory[1] = i;
+                computer.Memory[2] = j;
+                computer.Process();
+                if (computer.Memory[0] == 19690720)
+                {
                     Console.WriteLine($"found the pair! : {i}, {j} => {i * 100 + j}");
+                    return;
+                }
             }
         }
 
-        public static int[] Process(int[] ints)
-        {
-            var list = ints.ToList();
-            for (var i = 0; i < list.Count;)
-                i = OpCode(list, i);
-            return list.ToArray();
-        }
-
-
-        public static int OpCode(List<int> list, int i)
-        {
-            switch (list[i])
-            {
-                case 1:
-                    list[list[i + 3]] = list[list[i + 1]] + list[list[i + 2]];
-                    return i + 3;
-                case 2:
-                    list[list[i + 3]] = list[list[i + 1]] * list[list[i + 2]];
-                    return i+3;
-                case 99:
-                    return list.Count;
-            }
-            return i+1;
-        }
+       
 
     }
 }

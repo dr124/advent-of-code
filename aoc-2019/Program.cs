@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using advent.Week1;
 
-namespace avent
+namespace advent
 {
     class Program
     {
