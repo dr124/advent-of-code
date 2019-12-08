@@ -18,8 +18,9 @@ namespace advent
         public List<int> Input;
         public List<int> Output;
         private int InputPointer;
-        private int InputValue => Input[InputPointer++];
-        private int OutputValue { set => Output.Add(value); }
+        private int GetInputValue() => InputPointer < Input.Count ? Input[InputPointer] : Input.Last();
+
+        private int OutputValue{ get => Output.Last(); set => Output.Add(value); }
 
         public IntcodeComputer(int[] Instructions)
         {
@@ -58,7 +59,9 @@ namespace advent
             switch (Instr.Instr)
             {
                 case 3:
-                    Memory[Memory[Pointer + 1]] = InputValue;
+                    var xd = GetInputValue();
+                    Memory[Memory[Pointer + 1]] = xd;
+                    InputPointer += 1;
                     break;
                 case 4:
                     OutputValue = Memory[Memory[Pointer + 1]];

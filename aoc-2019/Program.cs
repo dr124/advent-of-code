@@ -12,7 +12,7 @@ namespace advents
             var s = new Stopwatch();
             s.Start();
 
-            Day8.Execute();
+            Day7.Execute();
 
             s.Stop();
             Console.WriteLine($"\n\nTime Elapsed: {s.ElapsedMilliseconds}ms");
