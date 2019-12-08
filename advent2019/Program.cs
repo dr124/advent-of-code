@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using advent.Week1;
-using advent.Week2;
+using advent2019.Week1;
 
-namespace advents
+namespace advent2019
 {
     class Program
     {

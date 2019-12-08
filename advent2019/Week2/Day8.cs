@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using MoreLinq;
 
-namespace advent.Week2
+namespace advent2019.Week2
 {
     public static class Day8
     {

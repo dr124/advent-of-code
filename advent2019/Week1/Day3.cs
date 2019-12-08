@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace advent.Week1
+namespace advent2019.Week1
 {
     public static class Day3
     {

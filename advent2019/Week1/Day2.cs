@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using advent2019.Intcode;
 
-namespace advent.Week1
+namespace advent2019.Week1
 {
     public class Day2
     {
@@ -15,7 +15,7 @@ namespace advent.Week1
                 .Select(int.Parse)
                 .ToArray();
 
-            var computer = new IntcodeComputer(ints);
+            var computer = new Computer(ints);
             computer.Memory[1] = 12;
             computer.Memory[2] = 2;
             computer.Compute();
