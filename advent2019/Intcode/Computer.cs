@@ -8,19 +8,23 @@ namespace advent2019.Intcode
 {
     public partial class Computer
     {
-        private readonly int[] ROM; // read only memory
+        private readonly long[] ROM; // read only memory
         private Instruction Instr; // current instruction
-        public int[] Memory; // program memory
+        public long[] Memory; // program memory
         private int Pointer; // instruction pointer
-        private bool Stop;
+        public bool Stop;
         private string computerName;
+        private int RelativeBase;
 
-        public Computer(int[] Instructions, [CallerMemberName] string name = "")
+        public Computer(long[] instructions, [CallerMemberName] string name = "")
         {
             computerName = name;
-            ROM = Instructions.ToArray();
+            ROM = instructions.ToArray();
             ResetMemory();
         }
+
+        public Computer(int[] instructions, [CallerMemberName] string name = "")
+            : this(instructions.Select(x => (long)x).ToArray(), name) { }
 
         public void Compute()
         {
@@ -29,8 +33,8 @@ namespace advent2019.Intcode
 
         private void ProcessInstruction()
         {
-            Instr = new Instruction(Memory.ToList(), Pointer);
-
+            Instr = new Instruction(Memory.ToList(), Pointer, RelativeBase);
+            Log($"i{Pointer},b{RelativeBase} - OP: {Instr.Op.ToString()}, I: {Memory[Pointer]}");
             switch (Instr.Op)
             {
                 case Operation.Add:
@@ -48,6 +52,9 @@ namespace advent2019.Intcode
                 case Operation.AreEqual:
                 case Operation.LessThan:
                     IfCodes();
+                    break;
+                case Operation.SetBase:
+                    SetBase();
                     break;
                 case Operation.HALT:
                     ProgramFinished();

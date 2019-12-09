@@ -1,5 +1,7 @@
 ﻿// ReSharper disable SwitchStatementMissingSomeCases
 
+using System.Collections;
+
 #pragma warning disable 8509
 
 namespace advent2019.Intcode
@@ -8,7 +10,7 @@ namespace advent2019.Intcode
     {
         private void MathCodes()
         {
-            Memory[Instr.Arg3] = Instr.Op switch
+            Memory[Instr.Arg3Index] = Instr.Op switch
             {
                 Operation.Add => (Instr.Arg2 + Instr.Arg1),
                 Operation.Multiply => (Instr.Arg2 * Instr.Arg1),
@@ -23,10 +25,10 @@ namespace advent2019.Intcode
             {
                 case Operation.ReadInput:
                     var xd = ReadInputValue();
-                    Memory[Memory[Pointer + 1]] = xd;
+                    Memory[Instr.Arg1Index] = xd;
                     break;
                 case Operation.WriteOutput:
-                    var xd2 = Memory[Memory[Pointer + 1]];
+                    var xd2 = Memory[Instr.Arg1Index];
                     WriteOutputValue(xd2);
                     break;
             }
@@ -40,14 +42,14 @@ namespace advent2019.Intcode
             {
                 case Operation.JumpTrue when Instr.Arg1 != 0:
                 case Operation.JumpZero when Instr.Arg1 == 0:
-                    Pointer = Instr.Arg2;
+                    Pointer = (int)Instr.Arg2;
                     break;
                 default:
                     Pointer += 3;
                     break;
             }
         }
-
+        
         private void IfCodes()
         {
             Memory[Instr.Arg3] = Instr.Op switch
@@ -57,6 +59,17 @@ namespace advent2019.Intcode
             };
 
             Pointer += 4;
+        }
+
+        private void SetBase()
+        {
+            switch (Instr.Op)
+            {
+                case Operation.SetBase:
+                    RelativeBase += (int)Instr.Arg1;
+                    Pointer += 2;
+                    break;
+            }
         }
     }
 }

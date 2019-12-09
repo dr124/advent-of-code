@@ -29,7 +29,7 @@ namespace advent2019.Week1
             Console.WriteLine($"A: {taskA}, B: {taskB}");
         }
 
-        public static int ProcessA(int[] ints, int[] seq)
+        public static long ProcessA(int[] ints, int[] seq)
         {
             var computers = seq.Select(x => new Computer(ints)).ToArray();
             computers.ForEach((x, i) => x.Input.Enqueue(seq[i]));
@@ -44,7 +44,7 @@ namespace advent2019.Week1
             return computers[^1].Output[^1];
         }
 
-        public static int ProcessB(int[] ints, int[] seq)
+        public static long ProcessB(int[] ints, int[] seq)
         {
             var computers = seq.Select(x => new Computer(ints)).ToArray();
             computers.ForEach((x, i) => x.Input.Enqueue(seq[i]));
@@ -53,7 +53,7 @@ namespace advent2019.Week1
             computers.ForEach((x, i) => x.OnProgramOutput += (s, args) =>
                 computers[(i + 1) % seq.Length].Input.Enqueue(args.OutputValue));
 
-            var output = 0;
+            long output = 0;
             computers[^1].OnProgramFinish += (sender, args) => output = computers[^1].Output.Max();
 
             Task.WaitAll(computers.Select(x => Task.Run(x.Compute)).ToArray());

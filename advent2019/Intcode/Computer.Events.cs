@@ -26,7 +26,7 @@ namespace advent2019.Intcode
 
         public class OutputEventArgs : EventArgs
         {
-            public int OutputValue { get; set; }
+            public long OutputValue { get; set; }
         }
     }
 }

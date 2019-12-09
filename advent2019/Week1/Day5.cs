@@ -17,12 +17,12 @@ namespace advent2019.Week1
                 .ToArray();
 
             var a = new Computer(ints);
-            a.Input.EnqueueMany(Enumerable.Repeat(1, 100));
+            a.Input.EnqueueMany(Enumerable.Repeat(1L, 100));
             a.Compute();
             Console.WriteLine(string.Join("\n", a.Output));
 
             var b = new Computer(ints);
-            b.Input.EnqueueMany(Enumerable.Repeat(5, 100));
+            b.Input.EnqueueMany(Enumerable.Repeat(5L, 100));
             b.Compute();
             Console.WriteLine(string.Join("\n", b.Output));
         }
