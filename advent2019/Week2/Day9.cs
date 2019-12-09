@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using advent2019.Intcode;
 
 namespace advent2019.Week2
 {
@@ -13,17 +14,17 @@ namespace advent2019.Week2
                 .Select(int.Parse)
                 .ToArray();
 
-            var (a,b) = Process(ints);
+            var (a, b) = Process(ints);
             Console.Write($"A: {a}, B: {b}");
         }
 
-        public static (long,long) Process(int[] ints)
+        public static (long, long) Process(int[] ints)
         {
-            var computerA = new Intcode.Computer(ints, "A");
+            var computerA = new Computer(ints, "A");
             computerA.Input.Enqueue(1);
             computerA.Compute();
 
-            var computerB = new Intcode.Computer(ints, "B");
+            var computerB = new Computer(ints, "B");
             computerB.Input.Enqueue(2);
             computerB.OnProgramOutput += (s, e) => computerB.Stop = true;
             computerB.Compute();

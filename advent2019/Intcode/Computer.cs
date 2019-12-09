@@ -9,12 +9,12 @@ namespace advent2019.Intcode
     public partial class Computer
     {
         private readonly long[] ROM; // read only memory
+        private string computerName;
         private Instruction Instr; // current instruction
         public long[] Memory; // program memory
         private int Pointer; // instruction pointer
-        public bool Stop;
-        private string computerName;
         private int RelativeBase;
+        public bool Stop;
 
         public Computer(long[] instructions, [CallerMemberName] string name = "")
         {
@@ -24,7 +24,9 @@ namespace advent2019.Intcode
         }
 
         public Computer(int[] instructions, [CallerMemberName] string name = "")
-            : this(instructions.Select(x => (long)x).ToArray(), name) { }
+            : this(instructions.Select(x => (long) x).ToArray(), name)
+        {
+        }
 
         public void Compute()
         {

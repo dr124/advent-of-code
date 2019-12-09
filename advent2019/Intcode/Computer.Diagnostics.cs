@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace advent2019.Intcode
@@ -37,7 +35,7 @@ namespace advent2019.Intcode
 
         public void ResetMemory()
         {
-            Memory = ROM.Concat(Enumerable.Repeat(0L, ROM.Length+5000)).ToArray();
+            Memory = ROM.Concat(Enumerable.Repeat(0L, 150)).ToArray();
             Stop = false;
             Pointer = 0;
             Input = new Queue<long>();
@@ -47,8 +45,10 @@ namespace advent2019.Intcode
 
         public void Log(string s)
         {
+#if DEBUG
             Console.WriteLine($"{computerName}: {s}");
             Debug.WriteLine($"{computerName}: {s}");
+#endif
         }
     }
 }
