@@ -41,6 +41,8 @@ namespace advent2019.Intcode
             // one digit instr
             Op = (Operation) memory[i];
 
+            
+
             try
             {
                 Op = (Operation) int.Parse(str.Substring(str.Length - 2, 2));
