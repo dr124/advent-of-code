@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace advent2019
 {
     public static class Utils
     {
+        public static Point Point(this (int x, int y) v) => new Point(v.x,v.y);
+
         public static void EnqueueMany<T>(this Queue<T> queue, IEnumerable<T> value)
         {
             foreach (var v in value) 
@@ -23,7 +26,7 @@ namespace advent2019
 
         public static IEnumerable<int> To(this Range r)
         {
-            for (int i = r.Start.Value; i < r.End.Value; i++)
+            for (var i = r.Start.Value; i < r.End.Value; i++)
                 yield return i;
         }
     }
