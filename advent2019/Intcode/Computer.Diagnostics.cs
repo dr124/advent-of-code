@@ -37,7 +37,7 @@ namespace advent2019.Intcode
 
         public void ResetMemory()
         {
-            Memory = ROM.Concat(Enumerable.Repeat(0L, 150)).ToArray();
+            Memory = ROM.Concat(Enumerable.Repeat(0L, 1500)).ToArray();
             Stop = false;
             Pointer = 0;
             Input = new Queue<long>();

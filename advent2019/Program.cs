@@ -12,7 +12,7 @@ namespace advent2019
             var s = new Stopwatch();
             s.Start();
 
-            Day10.Execute();
+            Day11.Execute();
 
             s.Stop();
             Console.WriteLine($"\n\nTime Elapsed: {s.ElapsedMilliseconds}ms");
