@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using advent2019.Intcode;
 
 #pragma warning disable 8509
@@ -23,15 +24,17 @@ namespace advent2019.Week2
 
         public static int Process(long[] ints)
         {
-            var map = new Dictionary<Point, int>();
+            var map = new Dictionary<Vec2, int>();
             var computer = new Computer(ints);
 
             var output = 0;
             var rotations = new[] {(0, 1), (1, 0), (0, -1), (-1, 0)};
             var rot = 0;
-            Point pos = 0;
+            Vec2 pos = 0;
 
-            computer.Input.Enqueue(1);
+            var sb = new StringBuilder(",");
+            computer.Input.Enqueue(0);
+            int i = 0;
             computer.OnProgramOutput += (s, e) =>
             {
                 switch (output)
@@ -40,16 +43,25 @@ namespace advent2019.Week2
                         output = 1;
                         return;
                     case 1:
+                        i++;
                         output = 0;
-                        map[pos] = (int) computer.Output[^2];
+
+                        map[pos] = (int) computer.Output[^2]; // kolorowanko
+
+                        //obliczenie nowego obrotu
                         rot = (rot + ((int) computer.Output[^1] * 2 - 1) + rotations.Length) % rotations.Length;
-                        pos += rotations[rot];
-                        computer.Input.Enqueue(map.ContainsKey(pos) ? map[pos] : 0);
+                        var prevpos = pos; // tymczasowe
+                        pos += rotations[rot]; // ruch w zadanym kierunku
+
+                        var inn = map.ContainsKey(pos) ? map[pos] : 0; // input
+                        computer.Input.Enqueue(inn);
+                        sb.AppendLine($"{i}: {prevpos}->{pos}, new rot: {rot}, output[0]={computer.Output[^2]}, output[1]={computer.Output[^1]}, input: {inn}");
                         return;
                 }
             };
 
             computer.Compute();
+            File.WriteAllText("pos.txt", sb.ToString());
 
             for (var y = 0; y >= -6; y--, Console.WriteLine()) // no braces!
             for (var x = 0; x < 40; x++)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 
@@ -8,7 +7,8 @@ namespace advent2019
 {
     public static class Utils
     {
-        public static Point Point(this (int x, int y) v) => new Point(v.x,v.y);
+        public static Vec2 Vec2(this (int x, int y) v) => new Vec2(v);
+        //public static Vec3 Vec3(this (int x, int y, int z) v) => new Vec3(v);
 
         public static void EnqueueMany<T>(this Queue<T> queue, IEnumerable<T> value)
         {
@@ -16,18 +16,25 @@ namespace advent2019
                 queue.Enqueue(v);
         }
 
-        public static IEnumerable<IEnumerable<int>> Permutations(this IEnumerable<int> values)
-        {
-            return values.Count() == 1 ?
-                new[] { values }
-                : values.SelectMany(v =>
-                    Permutations(values.Where(x => x != v)), (v, p) => p.Prepend(v));
-        }
-
         public static IEnumerable<int> To(this Range r)
         {
             for (var i = r.Start.Value; i < r.End.Value; i++)
                 yield return i;
+        }
+        public static long gcf(long a, long b)
+        {
+            while (b != 0)
+            {
+                var temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        public static long lcm(long a, long b)
+        {
+            return (a / gcf(a, b)) * b;
         }
     }
 }

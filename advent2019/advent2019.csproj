@@ -18,6 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ILNumerics" Version="4.8.0" />
+    <PackageReference Include="MathNet.Numerics" Version="4.9.0" />
     <PackageReference Include="morelinq" Version="3.2.0" />
   </ItemGroup>
 
@@ -44,6 +46,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Week2\input11.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Week2\input12.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Week2\input13.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Week2\input8.txt">

@@ -71,9 +71,9 @@ namespace advent2019.Intcode
                 Mode.Relative => _relativeBase + (int)memory[i + 3]
             };
 
-            if(memory.Count > Arg1Index)
+            if(memory.Count > Arg1Index && Arg1Index >= 0)
                 Arg1 = memory[Arg1Index];
-            if (memory.Count > Arg2Index)
+            if (memory.Count > Arg2Index && Arg2Index >=0)
                 Arg2 = memory[Arg2Index];
             Arg3 = Arg3Index;
         }

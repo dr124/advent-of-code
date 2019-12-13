@@ -58,14 +58,14 @@ namespace advent2019.Week2
             return (taskA, taskB);
         }
 
-        public static IEnumerable<Point> GetAllPoints()
+        public static IEnumerable<Vec2> GetAllPoints()
         {
             for (var y = 0; y < map[0].Length; y++)
             for (var x = 0; x < map.Length; x++)
                 if (MapPoint((x, y)) != 0)
-                    yield return new Point(x, y);
+                    yield return new Vec2(x, y);
         }
 
-        public static ref int MapPoint(this Point p) => ref map[p.Y][p.X];
+        public static ref int MapPoint(this Vec2 p) => ref map[p.Y][p.X];
     }
 }
