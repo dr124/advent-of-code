@@ -62,6 +62,7 @@ namespace advent2019.Week2
             return (taskA, taskB);
         }
 
+        //for fun
         private static void DrawMap(Dictionary<Vec2, int> map)
         {
             Console.SetCursorPosition(0, 0);

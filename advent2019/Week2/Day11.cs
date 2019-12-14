@@ -32,7 +32,7 @@ namespace advent2019.Week2
             var rot = 0;
             Vec2 pos = 0;
 
-            var sb = new StringBuilder(",");
+            var sb = new StringBuilder();
             computer.Input.Enqueue(0);
             int i = 0;
             computer.OnProgramOutput += (s, e) =>
@@ -45,17 +45,22 @@ namespace advent2019.Week2
                     case 1:
                         i++;
                         output = 0;
+                        sb.AppendLine($"===============================")
+                            .AppendLine($"iter: {i}");
+                        sb.AppendLine($"I am on {pos}");
 
                         map[pos] = (int) computer.Output[^2]; // kolorowanko
+                        sb.AppendLine($"colored here to {map[pos]}");
 
                         //obliczenie nowego obrotu
                         rot = (rot + ((int) computer.Output[^1] * 2 - 1) + rotations.Length) % rotations.Length;
                         var prevpos = pos; // tymczasowe
                         pos += rotations[rot]; // ruch w zadanym kierunku
+                        sb.AppendLine($"I went to --> {pos}");
 
                         var inn = map.ContainsKey(pos) ? map[pos] : 0; // input
+                        sb.AppendLine($"new input color: {inn} at {pos}");
                         computer.Input.Enqueue(inn);
-                        sb.AppendLine($"{i}: {prevpos}->{pos}, new rot: {rot}, output[0]={computer.Output[^2]}, output[1]={computer.Output[^1]}, input: {inn}");
                         return;
                 }
             };
