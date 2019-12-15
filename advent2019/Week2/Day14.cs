@@ -80,7 +80,8 @@ namespace advent2019.Week2
                         var recipeCount = Recipe[i].count * count;
                         if (recipeName == "ORE")
                         {
-                            totalOres += storage["ORE"] += recipeCount;
+                            totalOres += recipeCount;
+                            storage["ORE"] += recipeCount;
                         }
                         else if (storage[recipeName] < recipeCount)
                         {
