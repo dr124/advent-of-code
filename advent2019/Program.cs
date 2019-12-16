@@ -14,7 +14,7 @@ namespace advent2019
             var s = new Stopwatch();
             s.Start();
 
-            Day15.Execute();
+            Day16.Execute();
 
             s.Stop();
             Console.WriteLine($"\n\nTime Elapsed: {s.ElapsedMilliseconds}ms");
