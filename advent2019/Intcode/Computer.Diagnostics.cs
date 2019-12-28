@@ -7,6 +7,7 @@ namespace advent2019.Intcode
 {
     public partial class Computer
     {
+        public bool ShouldLog { get; set; }
         // for diag codes
         public Queue<long> Input { get; set; }
         public List<long> Output { get; set; }
@@ -37,7 +38,7 @@ namespace advent2019.Intcode
 
         public void ResetMemory()
         {
-            Memory = ROM.Concat(Enumerable.Repeat(0L, 1500)).ToArray();
+            Memory = ROM.Concat(Enumerable.Repeat(0L, 5500)).ToArray();
             Stop = false;
             Pointer = 0;
             Input = new Queue<long>();
@@ -48,6 +49,8 @@ namespace advent2019.Intcode
         public void Log(string s)
         {
 #if DEBUG
+            if (!ShouldLog)
+                return;
             Console.WriteLine($"{computerName}: {s}");
             Debug.WriteLine($"{computerName}: {s}");
 #endif

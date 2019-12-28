@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.Intrinsics.X86;
 using advent2019.Week1;
 using advent2019.Week2;
 using advent2019.Week3;
+using advent2019.Week4;
 
 namespace advent2019
 {
@@ -14,7 +14,7 @@ namespace advent2019
             var s = new Stopwatch();
             s.Start();
 
-            Day16.Execute();
+            Day24.Execute();
 
             s.Stop();
             Console.WriteLine($"\n\nTime Elapsed: {s.ElapsedMilliseconds}ms");

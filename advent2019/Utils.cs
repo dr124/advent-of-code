@@ -7,6 +7,9 @@ namespace advent2019
 {
     public static class Utils
     {
+        public static bool IsChar(this int c) => c >= 'A' && c <= 'Z';
+        public static bool IsChar(this char c) => IsChar((int)c);
+        
         public static Vec2 Vec2(this (int x, int y) v) => new Vec2(v);
         //public static Vec3 Vec3(this (int x, int y, int z) v) => new Vec3(v);
 
