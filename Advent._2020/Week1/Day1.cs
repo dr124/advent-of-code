@@ -1,36 +1,33 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Advent.Core;
 
 namespace Advent._2020.Week1
 {
-    public class Day1
+    public class Day1 : Day<int[], int>
     {
-        public static void Execute()
+        protected override int[] ReadData()
         {
-            var input = File.ReadAllLines("Week1/input1.txt")
+            return File.ReadAllLines("Week1/input1.txt")
                 .Select(int.Parse)
                 .ToArray();
-
-            var taskA = TaskA(input);
-            var taskB = TaskB(input);
-            Console.WriteLine($"A: {taskA}, B: {taskB}");
         }
 
-        public static int TaskA(int[] input)
+        protected override int TaskA()
         {
-            foreach (var i in input)
-            foreach (var j in input)
+            foreach (var i in Input)
+            foreach (var j in Input)
                 if (i + j == 2020)
                     return i * j;
             return -1;
         }
 
-        public static int TaskB(int[] input)
+        protected override int TaskB()
         {
-            foreach (var i in input)
-            foreach (var j in input)
-            foreach (var k in input)
+            foreach (var i in Input)
+            foreach (var j in Input)
+            foreach (var k in Input)
                 if (i + j + k == 2020)
                     return i * j * k;
             return -1;
