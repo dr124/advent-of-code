@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Advent.Core
 {
     public static class Utils
     {
+        public static int Product(this IEnumerable<int> vals) => vals.Aggregate(1, (acc, arr) => acc * arr);
+
         public static bool IsChar(this int c) => c >= 'A' && c <= 'Z';
         public static bool IsChar(this char c) => IsChar((int)c);
         

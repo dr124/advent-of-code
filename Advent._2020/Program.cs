@@ -6,7 +6,7 @@ namespace Advent._2020
     {
         static void Main(string[] args)
         {
-            (new Day2()).Execute();
+            (new Day3()).Execute();
         }
     }
 }
