@@ -21,6 +21,8 @@ namespace Advent._2020.Week1
         protected override int TaskA() => TreesInSlope((3, 1));
         protected override int TaskB() => Slopes.Select(TreesInSlope).Product();
 
+        // ========================================
+
         private int TreesInSlope((int x, int y) slope) => EnumerateSlope(slope).Count(IsDżewo);
         private bool IsDżewo((int x, int y) pos) => Input[pos.y % Input.Length][pos.x % Input[0].Length] == '#';
 
