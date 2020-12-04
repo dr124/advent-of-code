@@ -9,13 +9,14 @@ namespace Advent.Core
         private TResult _resultB;
         private TimeSpan _timeA;
         private TimeSpan _timeB;
+        private TimeSpan _timeReadData;
         protected TInput Input { get; private set; }
 
         public void Execute()
         {
             try
             {
-                Input = ReadData();
+                ProcessReadData();
             }
             catch (Exception e)
             {
@@ -50,6 +51,17 @@ namespace Advent.Core
             Console.WriteLine($"B: {_resultB}");
             Console.WriteLine($"Total time: {(_timeA + _timeB).TotalMilliseconds}ms");
             Console.WriteLine("============================");
+        }
+
+        private void ProcessReadData()
+        {
+            var timer = new Stopwatch();
+            timer.Start();
+
+            Input = ReadData();
+            timer.Stop();
+            _timeReadData = timer.Elapsed;
+            Console.WriteLine($"Data read in {_timeReadData.TotalMilliseconds}ms");
         }
 
         private void ProcessTaskA()
