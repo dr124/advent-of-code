@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Advent.Core;
 
 namespace Advent._2020.Week1
@@ -9,8 +11,13 @@ namespace Advent._2020.Week1
         protected override int[] ReadData()
         {
             return File.ReadAllLines("Week1/input5.txt")
-                .Select(str => 8 * BinarySearch(str[..7], 'F', 'B')
-                               + BinarySearch(str[^3..], 'L', 'R'))
+                .Select(str =>
+                {
+                    var bin = str
+                        .Replace('L', '0').Replace('R', '1')
+                        .Replace('F', '0').Replace('B', '1');
+                    return Convert.ToInt32(bin, 2);
+                })
                 .ToArray();
         }
 
@@ -27,23 +34,6 @@ namespace Advent._2020.Week1
                     return seats[i - 1] + 1;
 
             return -1;
-        }
-
-        // ========================================
-
-        private static int BinarySearch(string str, char l, char r)
-        {
-            int from = 0, to = (1 << str.Length) - 1;
-            foreach (var t in str)
-            {
-                var mid = (to + from) / 2;
-                if (t == l) 
-                    to = mid;
-                else if (t == r) 
-                    from = mid + 1;
-            }
-
-            return to;
         }
     }
 }
