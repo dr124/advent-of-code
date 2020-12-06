@@ -30,13 +30,12 @@ namespace Advent._2020.Week1
 
         protected override int TaskB()
         {
-            return Input
-                .Select(str =>
-                {
-                    var n = str.Split(' ').Length;
-                    var answers = str.Remove("\\s").GroupBy(c => c);
-                    return answers.Count(c => c.Count() == n);
-                }).Sum();
+            return Input.Sum(str =>
+            {
+                var n = str.Split(' ').Length;
+                var answers = str.Remove("\\s").GroupBy(c => c);
+                return answers.Count(c => c.Count() == n);
+            });
         }
     }
 }
