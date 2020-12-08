@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Week4\" />
     <Folder Include="Week3\" />
-    <Folder Include="Week2\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +36,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Week1\input3.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Week2\input8.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
