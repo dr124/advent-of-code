@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using Advent._2020.Week2.Gameboy;
 using Advent.Core;
 
 namespace Advent._2020.Week2
 {
-    internal class Day8 : Day<Command[], int>
+    public class Day8 : Day<Command[], int>
     {
         public class MyGameBoy : GameBoy
         {
