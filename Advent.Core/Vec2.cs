@@ -2,6 +2,12 @@
 
 namespace Advent.Core
 {
+    public enum RotateDirection
+    {
+        Left,
+        Right,
+    }
+
     public struct Vec2
     {
         #region constructor
@@ -26,7 +32,7 @@ namespace Advent.Core
         public int Y { get; set; }
         public double Distance => Math.Sqrt(X * X + Y * Y);
         public int ManhattanDistance => Math.Abs(X) + Math.Abs(Y);
-        
+
         public double AngleInDegrees
         {
             get
@@ -55,15 +61,15 @@ namespace Advent.Core
             return Scale(p.Vec2());
         }
 
-        public Vec2 RotateLeft()
+        public Vec2 Rotate(RotateDirection dir)
         {
-            return (-Y, X);
+            return dir switch
+            {
+                RotateDirection.Left => (-Y, X),
+                RotateDirection.Right => (Y, -X)
+            };
         }
 
-        public Vec2 RotateRight()
-        {
-            return (Y, -X);
-        }
         #endregion
 
         #region conversions

@@ -6,19 +6,6 @@ namespace Advent._2020.Week2
 {
     public class Day12 : Day<Day12.Movement[], int>
     {
-        public enum Direction
-        {
-            North = 'N',
-            South = 'S',
-            East = 'E',
-            West = 'W',
-            Left = 'L',
-            Right = 'R',
-            Forward = 'F'
-        }
-
-        public record Movement(Direction dir, int val);
-
         protected override Movement[] ReadData()
         {
             return File.ReadAllLines("Week2/input12.txt")
@@ -34,32 +21,22 @@ namespace Advent._2020.Week2
         {
             Vec2 direction = (1, 0);
             Vec2 position = (0, 0);
-
-            foreach (var mov in Input)
-                switch (mov.dir)
+            foreach (var (dir, val) in Input)
+                switch (dir)
                 {
                     case Direction.North:
-                        position.Y += mov.val;
-                        break;
-                    case Direction.East:
-                        position.X += mov.val;
-                        break;
-                    case Direction.West:
-                        position.X -= mov.val;
-                        break;
                     case Direction.South:
-                        position.Y -= mov.val;
-                        break;
-                    case Direction.Forward:
-                        position += direction.Scale(mov.val);
+                    case Direction.East:
+                    case Direction.West:
+                        position += DirToVec(dir).Scale(val);
                         break;
                     case Direction.Left:
-                        for (var a = mov.val; a != 0; a -= 90)
-                            (direction.X, direction.Y) = (-direction.Y, direction.X);
-                        break;
                     case Direction.Right:
-                        for (var a = mov.val; a != 0; a -= 90)
-                            (direction.X, direction.Y) = (direction.Y, -direction.X);
+                        for (var a = val; a > 0; a -= 90)
+                            direction = direction.Rotate(DirToRot(dir));
+                        break;
+                    case Direction.Forward:
+                        position += direction.Scale(val);
                         break;
                 }
 
@@ -71,36 +48,53 @@ namespace Advent._2020.Week2
             Vec2 position = (0, 0);
             Vec2 waypoint = (10, 1);
 
-            foreach (var mov in Input)
-                switch (mov.dir)
+            foreach (var (dir, val) in Input)
+                switch (dir)
                 {
                     case Direction.North:
-                        waypoint.Y += mov.val;
-                        break;
-                    case Direction.East:
-                        waypoint.X += mov.val;
-                        break;
-                    case Direction.West:
-                        waypoint.X -= mov.val;
-                        break;
                     case Direction.South:
-                        waypoint.Y -= mov.val;
-                        break;
-                    case Direction.Forward:
-                        position += waypoint.Scale(mov.val);
+                    case Direction.East:
+                    case Direction.West:
+                        waypoint += DirToVec(dir).Scale(val);
                         break;
                     case Direction.Left:
-                        for (var a = mov.val; a != 0; a -= 90)
-                            waypoint = waypoint.RotateLeft();
-                        break;
                     case Direction.Right:
-                        for (var a = mov.val; a != 0; a -= 90)
-                            waypoint = waypoint.RotateRight();
+                        for (var a = val; a > 0; a -= 90)
+                            waypoint = waypoint.Rotate(DirToRot(dir));
+                        break;
+                    case Direction.Forward:
+                        position += waypoint.Scale(val);
                         break;
                 }
 
             return position.ManhattanDistance;
         }
 
+        public enum Direction
+        {
+            North = 'N',
+            South = 'S',
+            East = 'E',
+            West = 'W',
+            Left = 'L',
+            Right = 'R',
+            Forward = 'F'
+        }
+
+        public record Movement(Direction dir, int val);
+
+        public Vec2 DirToVec(Direction dir) =>
+            dir switch
+            {
+                Direction.North => (0, 1),
+                Direction.South => (0, -1),
+                Direction.East => (1, 0),
+                Direction.West => (-1, 0)
+            };
+
+        private RotateDirection DirToRot(Direction dir) =>
+            dir is Direction.Left
+                ? RotateDirection.Left
+                : RotateDirection.Right;
     }
 }
