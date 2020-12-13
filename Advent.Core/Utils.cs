@@ -8,6 +8,7 @@ namespace Advent.Core
     public static class Utils
     {
         public static int Product(this IEnumerable<int> vals) => vals.Aggregate(1, (acc, arr) => acc * arr);
+        public static long ProductLong(this IEnumerable<long> vals) => vals.Aggregate(1L, (acc, arr) => acc * arr);
 
         public static bool IsChar(this int c) => c is >= 'A' and <= 'Z';
         public static bool IsChar(this char c) => IsChar((int)c);
