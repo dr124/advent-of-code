@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -9,7 +10,7 @@ using MoreLinq;
 
 namespace Advent._2020.Week3
 {
-    public class Day16 : Day<int, int>
+    public class Day16 : Day<int, long>
     {
         private record Field(string name, Range r1, Range r2);
 
@@ -53,11 +54,10 @@ namespace Advent._2020.Week3
                         break;
                 }
             }
-
             return -1;
         }
 
-        protected override int TaskA()
+        protected override long TaskA()
         {
             var sum = 0;
             
@@ -70,13 +70,16 @@ namespace Advent._2020.Week3
             return sum;
         }
 
-        protected override int TaskB()
+        protected override long TaskB()
         {
             var columns = _fields.Select((f, j) => (j, t: _validTickets.Select(x => x[j]).ToArray())).ToArray();
 
             var n = _fields.Count;
+            var m = columns.Length;
+            
             var matchingColumns = new int[n, n];
-
+            var seen = new bool[n];
+            var assigned = new int[n];
             
             for (int i = 0; i < n; i++)
             {
@@ -85,6 +88,9 @@ namespace Advent._2020.Week3
                 {
                     matchingColumns[i, f.j] = 1;
                 }
+
+                seen[i] = false;
+                assigned[i] = -1;
             }
 
             for (int i = 0; i < n * n * 100; i++)
@@ -100,18 +106,21 @@ namespace Advent._2020.Week3
                     matchingColumns[ii, j] = 1;
                 }
             }
-            
+
             DebugDraw(n, matchingColumns);
 
-            return _fields.Select((field, i) => (field,i))
+            return _fields.Select((field, i) => (field, i))
                     .Where(x => x.field.name.StartsWith("departure"))
+                    .OrderBy(x => x.field.name)
                     .Select(x =>
                     {
                         var nth = matchingColumns.GetRowSpan(x.i);
                         var ind = nth.IndexOf(1);
-                        return _myTicket[ind];
+                        var ret = (long)_myTicket[ind];
+                        Console.WriteLine($"{x.field.name}: {ind} -> {ret}");
+                        return ret;
                     })
-                    .Product()
+                    .ProductLong()
                 ;
         }
 
@@ -130,10 +139,60 @@ namespace Advent._2020.Week3
 
         private bool IsTicketValid(int[] ticket, out int error)
         {
+            int n = 20;
+            var seen = new bool[n];
+            var assigned = new int[n];
+            for (int i = 0; i < 20; i++)
+            {
+                seen[i] = false;
+                assigned[i] = -1;
+            }
+            
+            bool isMatching(int[,] graph, int u)
+            {
+                for (var v = 0; v < n; v++)
+                {
+                    if (graph[u, v] == 1 && !seen[v])
+                    {
+                        seen[v] = true;
+
+                        if (assigned[v] < 0 || isMatching(graph, assigned[v]))
+                        {
+                            assigned[v] = u;
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            int maximumMatching(int[,] graph)
+            {
+                return Enumerable.Range(0, n).Count(v => isMatching(graph, v));
+            }
+            
             error = ticket
                 .Where(field => !_fields.Any(x => field.IsInRange(x.r1) || field.IsInRange(x.r2)))
                 .Sum();
-            return error == 0 && ticket.Length == _fields.Count;
+            var isNoError = error == 0;
+            var isValidLength = ticket.Length == _fields.Count;
+            var isMaxMatching = false;
+
+
+            var graph = new int[n, n];
+            for (int col = 0; col < n; col++)
+            {
+                for (int row = 0; row < n; row++)
+                {
+                    graph[row, col] = (ticket[col].IsInRange(_fields[row].r1) || ticket[col].IsInRange(_fields[row].r2)) ? 1 : 0;
+                }
+            }
+
+            var matching = maximumMatching(graph);
+            isMaxMatching = matching == n;
+            
+            return isNoError && isValidLength && isMaxMatching;
         }
     }
 }
