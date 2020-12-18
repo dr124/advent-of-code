@@ -1,47 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Advent.Core;
-using Microsoft.VisualBasic;
-using MoreLinq.Extensions;
 
 namespace Advent._2020.Week3
 {
-
     public class Day18 : Day<string[], long>
     {
-        protected override string[] ReadData()
-        {
-            return File.ReadAllLines("Week3/Input18.txt").Select(x => x).ToArray();
-        }
+        protected override string[] ReadData() => File.ReadAllLines("Week3/Input18.txt");
 
-        protected override long TaskA()
-        {
-            return Input.Select(x => CalculateA(x.ToCharArray())).Sum();
-        }
+        protected override long TaskA() => Input.Select(x => CalculateA(x.ToList())).Sum();
 
-        protected override long TaskB()
-        {
-            return Input.Select(x => CalculateB(x.ToCharArray().ToList())).Sum();
-        }
+        protected override long TaskB() => Input.Select(x => CalculateB(x.ToList())).Sum();
 
-        public long CalculateA(Span<char> line)
+        // ============================
+        
+        public long CalculateA(List<char> line)
         {
             var sum = 0L;
 
-            while (FindParenthesis(new string(line), out var xd))
+            while (HasParenthesis(line.ToArray().ToList(), out var xd))
             {
-                var inPar = CalculateA(line[xd.from..xd.to]);
-                line[(xd.from - 1)..(xd.to + 1)].Fill(' ');
-                foreach (var c in inPar.ToString())
-                    line[xd.from++] = c;
+                var inner = line.GetRange(xd.from, xd.count);
+                var result = CalculateA(inner);
+                line.RemoveRange(xd.from - 1, xd.count + 2);
+                line.InsertRange(xd.from - 1, result.ToString());
             }
 
-            var elements = new string(line).Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).ToList();
+            var elements = new string(line.ToArray()).SplitClear(" ").ToList();
 
             var op = "+";
             while (elements.Count != 0)
@@ -63,83 +49,61 @@ namespace Advent._2020.Week3
 
         public long CalculateB(List<char> line)
         {
-            var sum = 0L;
-
-            while (true)
+            while (HasParenthesis(line, out var xd))
             {
-                var parStart = line.IndexOf('(');
-                if (parStart != -1)
-                {
-                    parStart += 1;
-                    int parEnd = parStart;
-                    for (int p = 1; p != 0; parEnd++)
-                        if (line[parEnd] == '(') p += 1;
-                        else if (line[parEnd] == ')') p -= 1;
-                    parEnd -= 1;
-
-                    var xdd = line.GetRange(parStart, parEnd - parStart);
-                    var inPar = CalculateB(xdd);
-                    line.RemoveRange(parStart - 1, parEnd - parStart + 2);
-                    line.InsertRange(parStart - 1, inPar.ToString());
-                }
-                else
-                    break;
+                var inner = line.GetRange(xd.from, xd.count);
+                var result = CalculateB(inner);
+                line.RemoveRange(xd.from - 1, xd.count + 2);
+                line.InsertRange(xd.from - 1, result.ToString());
             }
 
-            while (true)
+            var elements = new string(line.ToArray()).SplitClear(" ").ToList();
+
+            while (HasSymbol(elements, "+", out var add))
             {
-                var elements = new string(line.ToArray()).SplitClear(" ").ToList();
-                var add = elements.IndexOf("+");
-                if (add != -1)
-                {
-                    var a = long.Parse(elements[add - 1]);
-                    var b = long.Parse(elements[add + 1]);
-                    elements[add - 1] = (a + b).ToString();
-                    elements.RemoveRange(add, 2);
-                    line = string.Join(" ", elements).ToList();
-                }
-                else
-                    break;
+                var a = long.Parse(elements[add - 1]);
+                var b = long.Parse(elements[add + 1]);
+                elements[add - 1] = (a + b).ToString();
+                elements.RemoveRange(add, 2);
+                line = string.Join(" ", elements).ToList();
             }
 
-
-            while (true)
+            while (HasSymbol(elements, "*", out var add))
             {
-                var elements = new string(line.ToArray()).SplitClear(" ").ToList();
-                var mult = elements.IndexOf("*");
-                if (mult != -1)
-                {
-                    var a = long.Parse(elements[mult - 1]);
-                    var b = long.Parse(elements[mult + 1]);
-                    elements[mult - 1] = (a * b).ToString();
-                    elements.RemoveRange(mult, 2);
-                    line = string.Join(" ", elements).ToList();
-                }
-                else
-                    break;
+                var a = long.Parse(elements[add - 1]);
+                var b = long.Parse(elements[add + 1]);
+                elements[add - 1] = (a * b).ToString();
+                elements.RemoveRange(add, 2);
+                line = string.Join(" ", elements).ToList();
             }
 
             return long.Parse(line.ToArray());
         }
 
-        private bool FindParenthesis(ReadOnlySpan<char> line, out (int from,int to) parenthesis)
+        private bool HasParenthesis(List<char> line, out (int from, int count) parenthesis)
         {
             parenthesis = (0, 0);
-            
+
             var parStart = line.IndexOf('(');
             if (parStart != -1)
             {
                 parStart += 1;
-                int parEnd = parStart;
-                for (int p = 1; p != 0; parEnd++)
+                var parEnd = parStart;
+                for (var p = 1; p != 0; parEnd++)
                     if (line[parEnd] == '(') p += 1;
                     else if (line[parEnd] == ')') p -= 1;
                 parEnd -= 1;
-                parenthesis = (parStart, parEnd);
+                parenthesis = (parStart, parEnd - parStart);
                 return true;
             }
 
             return false;
+        }
+
+        private bool HasSymbol(List<string> line, string symbol, out int index)
+        {
+            index = line.IndexOf(symbol);
+            return index != -1;
         }
     }
 }
