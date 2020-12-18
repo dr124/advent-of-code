@@ -1,5 +1,6 @@
 ﻿using Advent._2020.Week1;
 using Advent._2020.Week2;
+using Advent._2020.Week3;
 
 namespace Advent._2020
 {
@@ -7,7 +8,7 @@ namespace Advent._2020
     {
         static void Main(string[] args)
         {
-            (new Day14()).Execute();
+            (new Day18()).Execute();
         }
     }
 }
