@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using Advent._2019;
 using Advent.Core;
 using MoreLinq;
-using MoreLinq.Extensions;
+
+//work in progress
 
 namespace Advent._2020.Week3
 {
