@@ -3,34 +3,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Advent._2019
+namespace Advent.Core
 {
     public static class Combinatorics
     {
         public static IEnumerable<IEnumerable<int>> Permutations(this IEnumerable<int> values)
         {
             return values.Count() == 1
-                ? new[] {values}
+                ? new[] { values }
                 : values.SelectMany(v =>
-                    Permutations(values.Where(x => x != v)), (v, p) => p.Prepend(v));
+                    values.Where(x => x != v).Permutations(), (v, p) => p.Prepend(v));
         }
 
         public static IEnumerable<IEnumerable<T>> GetKCombsWithRept<T>(IEnumerable<T> list, int length)
             where T : IComparable
         {
-            if (length == 1) return list.Select(t => new[] {t});
+            if (length == 1) return list.Select(t => new[] { t });
             return GetKCombsWithRept(list, length - 1)
                 .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) >= 0),
-                    (t1, t2) => t1.Concat(new[] {t2}));
+                    (t1, t2) => t1.Concat(new[] { t2 }));
         }
 
-        public static IEnumerable<IEnumerable<T>> GetKCombs<T>(IEnumerable<T> list, int length) 
+        public static IEnumerable<IEnumerable<T>> GetKCombs<T>(IEnumerable<T> list, int length)
             where T : IComparable<T>
         {
-            if (length == 1) return list.Select(t => new[] {t});
+            if (length == 1) return list.Select(t => new[] { t });
             return GetKCombs(list, length - 1)
                 .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) > 0),
-                    (t1, t2) => t1.Concat(new[] {t2}));
+                    (t1, t2) => t1.Concat(new[] { t2 }));
         }
 
         public static List<List<T>> GetAllPossibleCombos<T>(List<List<T>> objects)
@@ -40,7 +40,8 @@ namespace Advent._2019
             foreach (var inner in objects)
             {
                 combos = combos.SelectMany(r => inner
-                    .Select(x => {
+                    .Select(x =>
+                    {
                         var n = r.DeepClone();
                         if (x != null)
                         {
@@ -57,9 +58,9 @@ namespace Advent._2019
         public static T DeepClone<T>(this T source)
         {
             // Don't serialize a null object, simply return the default for that object
-            if (Object.ReferenceEquals(source, null))
+            if (ReferenceEquals(source, null))
             {
-                return default(T);
+                return default;
             }
 
             var deserializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };

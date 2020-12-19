@@ -47,5 +47,14 @@ namespace Advent.Core
             for (int i = 0; i < n; i++)
                 yield return matrix[i, col];
         }
+
+        public static int[,] BoolToIntMatrix(this bool[,] src)
+        {
+            var dst = new int[src.GetLength(0), src.GetLength(1)];
+            for (int i = 0; i < src.GetLength(0); i++)
+            for (int j = 0; j < src.GetLength(1); j++)
+                dst[i, j] = src[i, j] ? 1 : 0;
+            return dst;
+        }
     }
 }
