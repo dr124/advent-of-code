@@ -46,37 +46,44 @@ namespace Advent._2020.Week3
 
         private PcreRegex CreateRegex(IEnumerable<string> lines)
         {
+            const string rulesStart = "(?(DEFINE)";
+            const string rulesEnd = ")";
+            const string startGroupFormat = "(?<_{0}>";
+            const string groupRefFormat = "(?&_{0})";
+            const string terminatingFormat = "({0})";
+            const string end = ")^(?&_0)$";
+
             var sb = new StringBuilder();
-            sb.Append(@"(?(DEFINE)");
+            sb.Append(rulesStart);
 
             foreach (var line in lines.OrderBy(x => x))
             {
                 var split = line.Split(": ");
                 var index = split[0];
-                sb.Append($"(?<_{index}>");
+                sb.AppendFormat(startGroupFormat, index);
                 
                 var isTerminating = split[1].Contains("\"");
                 if (isTerminating)
                 {
                     var letter = split[1].Remove("(\")*");
-                    sb.Append($"({letter})");
+                    sb.AppendFormat(terminatingFormat, letter);
                 }
                 else
                 {
                     var groups = split[1].Split(" | ");
-                    for (int i = 0; i < groups.Length; i++)
+                    for (var i = 0; i < groups.Length; i++)
                     {
                         foreach (var gr_ref in groups[i].SplitClear(" "))
-                            sb.Append($"(?&_{gr_ref})");
+                            sb.AppendFormat(groupRefFormat, gr_ref);
                         if (i < groups.Length - 1)
-                            sb.Append("|");
+                            sb.Append('|');
                     }
                 }
 
-                sb.AppendLine(")");
+                sb.AppendLine(rulesEnd);
             }
 
-            sb.Append(@")^(?&_0)$");
+            sb.Append(end);
             return new PcreRegex(sb.ToString());
             // based on https://stackoverflow.com/questions/58735015/
         }
