@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Advent.Core
 {
@@ -21,6 +24,20 @@ namespace Advent.Core
             for (var i = 0; i < arr.Length; i++) 
                 arr[i] = value;
             return arr;
+        }
+
+        public static int ToBitMap(this IEnumerable<bool> arr)
+        {
+            int i = 0;
+            int sum = 0;
+            foreach (var a in arr)
+            {
+                if (a)
+                    sum += (1 << i);
+                i++;
+            }
+
+            return sum;
         }
     }
 }

@@ -56,5 +56,43 @@ namespace Advent.Core
                 dst[i, j] = src[i, j] ? 1 : 0;
             return dst;
         }
+
+        public static T[,] Rotate<T>(this T[,] src) where T : struct
+        {
+            var M = src.GetLength(0);
+            var N = src.GetLength(1);
+
+            var xd = new T[N,M];
+            for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                xd[j, i] = src[M - i - 1, j];
+
+            return xd;
+        }
+
+        public static T[,] FlipUD<T>(this T[,] src) where T : struct
+        {
+            var M = src.GetLength(0);
+            var N = src.GetLength(1);
+
+            var xd = new T[M, N];
+            for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                xd[i, j] = src[M - i - 1, j];
+
+            return xd;
+        }
+
+        public static T[,] FlipLR<T>(this T[,] src) where T : struct
+        {
+            var M = src.GetLength(0);
+            var N = src.GetLength(1);
+
+            var xd = new T[M, N];
+            for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                xd[i, j] = src[i, N -j-1];
+            return xd;
+        }
     }
 }
