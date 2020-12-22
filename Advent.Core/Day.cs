@@ -89,4 +89,24 @@ namespace Advent.Core
         protected abstract TResult TaskA();
         protected abstract TResult TaskB();
     }
+
+    public abstract class Day : Day<int, int>
+    {
+        protected new abstract void Execute();
+        protected override int ReadData()
+        {
+            this.Execute();
+            return -1;
+        }
+
+        protected override int TaskA()
+        {
+            return -1;
+        }
+
+        protected override int TaskB()
+        {
+            return -1;
+        }
+    }
 }

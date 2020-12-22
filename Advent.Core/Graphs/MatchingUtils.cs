@@ -170,7 +170,7 @@ namespace Advent.Core.Graphs
             // applicant number assigned to job i,  
             // the value -1 indicates nobody is assigned. 
             // -1 = Initially all jobs are available 
-            var matchR = new int[N].Populate(-1);
+            Assigned = new int[N].Populate(-1);
 
             // Count of jobs assigned to applicants 
             var result = 0;
@@ -182,11 +182,13 @@ namespace Advent.Core.Graphs
 
                 // Find if the applicant  
                 // 'u' can get a job 
-                if (IsMatching(graph, u, seen, matchR))
+                if (IsMatching(graph, u, seen, Assigned))
                     result++;
             }
             return result;
         }
 
+        
+        public int[] Assigned { get; private set; }
     }
 }

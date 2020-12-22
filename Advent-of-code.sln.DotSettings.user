@@ -4,5 +4,9 @@
     &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.BoolToIntMatrixTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_1&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_2&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.ArrayUtilsTests.ToBitMapTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.RotateTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipUDTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipLRTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
