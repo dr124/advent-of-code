@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Advent.Core;
-using MoreLinq.Extensions;
 
 namespace Advent._2020.Week4
 {
@@ -64,14 +60,12 @@ namespace Advent._2020.Week4
                 var p1c = p1.Dequeue();
                 var p2c = p2.Dequeue();
 
-                int winner;
+                var winner = p1c > p2c ? 1 : 2;
                 if (isRecurvise && p1.Count >= p1c && p2.Count >= p2c)
                     winner = Play(
                         new Queue<int>(p1.Take(p1c)), 
                         new Queue<int>(p2.Take(p2c)),
                         true);
-                else
-                    winner = p1c > p2c ? 1 : 2;
 
                 ProcessWin(p1, p2, p1c, p2c, winner);
             }
