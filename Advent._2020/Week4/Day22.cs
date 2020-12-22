@@ -48,13 +48,11 @@ namespace Advent._2020.Week4
         private int Play(Queue<int> p1, Queue<int> p2, bool isRecurvise)
         {
             HashSet<string> played = new();
-
             while (p1.Count * p2.Count != 0)
             {
-                if (played.Contains(Serialize(p1, p2)))
-                    return 1;
-
                 var str = Serialize(p1, p2);
+                if (played.Contains(str))
+                    return 1;
                 played.Add(str);
 
                 var p1c = p1.Dequeue();
@@ -67,26 +65,21 @@ namespace Advent._2020.Week4
                         new Queue<int>(p2.Take(p2c)),
                         true);
 
-                ProcessWin(p1, p2, p1c, p2c, winner);
+                if (winner == 1)
+                {
+                    p1.Enqueue(p1c);
+                    p1.Enqueue(p2c);
+                }
+                else if (winner == 2)
+                {
+                    p2.Enqueue(p2c);
+                    p2.Enqueue(p1c);
+                }
             }
 
             return p2.Count == 0 ? 1 : 2; 
         }
-
-        void ProcessWin(Queue<int> p1, Queue<int> p2, int p1c, int p2c, int winner)
-        {
-            if (winner == 1)
-            {
-                p1.Enqueue(p1c);
-                p1.Enqueue(p2c);
-            }
-            else if (winner == 2)
-            {
-                p2.Enqueue(p2c);
-                p2.Enqueue(p1c);
-            }
-        }
-
+        
         private string Serialize(IEnumerable<int> p1, IEnumerable<int> p2) =>
             $"{string.Join(",", p1)}_{string.Join(",",p2)}";
     }
