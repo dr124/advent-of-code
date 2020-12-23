@@ -70,6 +70,32 @@ namespace Advent.Core
             return xd;
         }
 
+        public static T[,] Transpose<T>(this T[,] src) where T : struct
+        {
+            var M = src.GetLength(0);
+            var N = src.GetLength(1);
+
+            var xd = new T[N, M];
+            for (int i = 0; i < N; i++)
+            for (int j = 0; j < M; j++)
+                xd[i, j] = src[j, i];
+
+            return xd;
+        }
+
+        public static T[,] MultiplyElements<T>(T[,] m1, T[,] m2) where T : struct
+        {
+            var M = m1.GetLength(0);
+            var N = m1.GetLength(1);
+
+            var xd = new T[N, M];
+            for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                xd[i, j] = (dynamic) m1[i, j] * (dynamic) m2[i, j];
+
+            return xd;
+        }
+
         public static T[,] FlipUD<T>(this T[,] src) where T : struct
         {
             var M = src.GetLength(0);
@@ -93,6 +119,16 @@ namespace Advent.Core
             for (int j = 0; j < N; j++)
                 xd[i, j] = src[i, N -j-1];
             return xd;
+        }
+
+        public static IEnumerable<T> Flatten<T>(this T[,] src) where T : struct
+        {
+            var M = src.GetLength(0);
+            var N = src.GetLength(1);
+
+            for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                yield return src[i, j];
         }
     }
 }
