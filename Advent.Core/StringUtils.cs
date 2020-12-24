@@ -16,7 +16,7 @@ namespace Advent.Core
         /// </summary>
         public static string Remove(this string str, string pattern) => Regex.Replace(str, pattern, "");
 
-        public static string[] SplitClear(this string str, string separator) => str.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        public static string[] SplitClear(this string str, string separator) => str.Split(separator, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         
     }
