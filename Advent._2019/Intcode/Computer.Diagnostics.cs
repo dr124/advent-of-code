@@ -3,57 +3,56 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Advent._2019.Intcode
+namespace Advent._2019.Intcode;
+
+public partial class Computer
 {
-    public partial class Computer
+    public bool ShouldLog { get; set; }
+    // for diag codes
+    public Queue<long> Input { get; set; }
+    public List<long> Output { get; set; }
+
+    private long ReadInputValue()
     {
-        public bool ShouldLog { get; set; }
-        // for diag codes
-        public Queue<long> Input { get; set; }
-        public List<long> Output { get; set; }
-
-        private long ReadInputValue()
+        if (Input.Count == 0)
         {
-            if (Input.Count == 0)
-            {
-                InputEmpty();
-                Log("waiting for input..");
-            }
-
-            while (Input.Count == 0)
-            {
-            }
-
-            var input = Input.Dequeue();
-            Log($"got input: {input}");
-            return input;
+            InputEmpty();
+            Log("waiting for input..");
         }
 
-        private void WriteOutputValue(long value)
+        while (Input.Count == 0)
         {
-            Log($"outputting: {value}");
-            Output.Add(value);
-            ProgramOutputted(new OutputEventArgs {OutputValue = value});
         }
 
-        public void ResetMemory()
-        {
-            Memory = ROM.Concat(Enumerable.Repeat(0L, 5500)).ToArray();
-            Stop = false;
-            Pointer = 0;
-            Input = new Queue<long>();
-            Output = new List<long>();
-            RelativeBase = 0;
-        }
+        var input = Input.Dequeue();
+        Log($"got input: {input}");
+        return input;
+    }
 
-        public void Log(string s)
-        {
+    private void WriteOutputValue(long value)
+    {
+        Log($"outputting: {value}");
+        Output.Add(value);
+        ProgramOutputted(new OutputEventArgs {OutputValue = value});
+    }
+
+    public void ResetMemory()
+    {
+        Memory = ROM.Concat(Enumerable.Repeat(0L, 5500)).ToArray();
+        Stop = false;
+        Pointer = 0;
+        Input = new Queue<long>();
+        Output = new List<long>();
+        RelativeBase = 0;
+    }
+
+    public void Log(string s)
+    {
 #if DEBUG
-            if (!ShouldLog)
-                return;
-            Console.WriteLine($"{computerName}: {s}");
-            Debug.WriteLine($"{computerName}: {s}");
+        if (!ShouldLog)
+            return;
+        Console.WriteLine($"{computerName}: {s}");
+        Debug.WriteLine($"{computerName}: {s}");
 #endif
-        }
     }
 }

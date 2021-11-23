@@ -3,13 +3,12 @@ using Advent._2020.Week2;
 using Advent._2020.Week3;
 using Advent._2020.Week4;
 
-namespace Advent._2020
+namespace Advent._2020;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            new Day25().Execute();
-        }
+        new Day25().Execute();
     }
 }
