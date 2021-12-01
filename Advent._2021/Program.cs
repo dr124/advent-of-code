@@ -14,7 +14,6 @@ using BenchmarkDotNet.Running;
 BenchmarkRunner.Run<AocRunner>();
 
 [SimpleJob(RunStrategy.Throughput)]
-[MinColumn, MaxColumn]
 public class AocRunner
 {
     private readonly IDay _day;
@@ -22,10 +21,9 @@ public class AocRunner
     public AocRunner()
     {
         _day = DayFactory.GetDay(1, Assembly.GetExecutingAssembly());
+        if(_day is IReadInputDay readInputDay)
+            readInputDay.ReadData();
     }
-
-    [Benchmark]
-    public void ReadData() => (_day as IReadInputDay)?.ReadData();
     
     [Benchmark]
     public object TaskA() => _day.TaskA();

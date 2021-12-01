@@ -1,29 +1,32 @@
 ﻿using Advent.Core;
 
-namespace Advent._2021.Week1
+namespace Advent._2021.Week1;
+
+internal class Day1 : IReadInputDay<int[]>
 {
-    internal class Day1 : IReadInputDay<int[]>,IDay 
+    public int[] Input { get; set; }
+    public void ReadData() =>
+        Input = File.ReadAllLines("Week1/Day1.txt")
+            .Select(int.Parse)
+            .ToArray();
+
+    public object TaskA()
     {
-        public int[] Input { get; set; }
-        public void ReadData()
-        {
-            Input = File.ReadAllText("Week1/Day1.txt").Select(x => (int)x).ToArray();
-        }
+        var result = 0;
+        for (var i = 1; i < Input.Length; i++)
+            if (Input[i] > Input[i - 1])
+                result++;
 
-        public object TaskA()
-        {
-            Func<int, int> fib = null;
-            fib = (a => a < 2 ? a : fib(a - 1) + fib(a - 2));
+        return result;
+    }
 
-            return fib(30);
-        }
+    public object TaskB()
+    {
+        var result = 0;
+        for (var i = 3; i < Input.Length; i++)
+            if (Input[i] > Input[i - 3])
+                result++;
 
-        public object TaskB()
-        {
-            Func<int, int> fib = null;
-            fib = (a => a < 2 ? a : fib(a - 1) + fib(a - 2));
-
-            return fib(35);
-        }
+        return result;
     }
 }

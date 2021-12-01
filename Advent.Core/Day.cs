@@ -13,7 +13,7 @@ public interface IReadInputDay : IDay
     void ReadData();
 }
 
-public interface IReadInputDay<out T>
+public interface IReadInputDay<out T> : IReadInputDay
 {
     T Input { get; }
 }
