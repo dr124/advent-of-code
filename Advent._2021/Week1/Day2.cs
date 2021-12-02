@@ -2,34 +2,40 @@
 
 namespace Advent._2021.Week1;
 
-internal class Day2 : IReadInputDay<string[]>
+internal class Day2 : IReadInputDay<(int dx, int dy)[]>
 {
-    public void ReadData() => Input = File.ReadAllLines("Week1/Day2.txt");
-    public string[] Input { get; set; }
+    public (int dx, int dy)[] Input { get; set; }
+    public void ReadData() =>
+        Input = File.ReadAllLines("Week1/Day2.txt")
+            .Select(s => s[0] switch
+            {
+                'f' => (s[^1] - '0', 0),
+                'd' => (0, s[^1] - '0'),
+                'u' => (0, -s[^1] + '0')
+            }).ToArray();
 
     public object TaskA()
     {
-        var (x, y) = Input
-            .Select(s => s[0] switch
-            {
-                'f' => new Vec2(s[^1] - '0', 0),
-                'd' => new Vec2(0, s[^1] - '0'),
-                'u' => new Vec2(0, -s[^1] + '0')
-            })
-            .Aggregate((a, b) => a + b);
+        int x = 0, y = 0;
+        foreach (var (dx, dy) in Input)
+        {
+            x += dx;
+            y += dy;
+        }
+
         return x * y;
     }
 
     public object TaskB()
     {
-        var (x, y, _) = Input
-            .Select(s => s[0] switch
-            {
-                'f' => new Vec3(s[^1] - '0', 0, 0),
-                'd' => new Vec3(0, 0, s[^1] - '0'),
-                'u' => new Vec3(0, 0, -s[^1] + '0')
-            })
-            .Aggregate((a, b) => a + (b.X, b.X * a.Z, b.Z));
+        int x = 0, y = 0, a = 0;
+        foreach (var (dx, da) in Input)
+        {
+            x += dx;
+            y += dx * a;
+            a += da;
+        }
+
         return x * y;
     }
 }

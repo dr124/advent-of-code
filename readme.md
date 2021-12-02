@@ -1,9 +1,11 @@
 # [🎄 Advent of Code 2021](https://adventofcode.com/2021)
 
+This year I focus on writing very performant and elegant code in C#.
+
 | Day                                                                                                     |  Stars  | Part One | Part Two |
 | ------------------------------------------------------------------------------------------------------- | :-----: | :------: | -------- |
 | ✔️ [Day 1: Sonar Sweep](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week1/Day1.cs) | ⭐️ ⭐️ | 1.825 us | 1.792 us |
-| ❌ Day 2: ...                                                                                           |         |
+| ✔️ [Day 2: Dive!](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week1/Day2.cs)       | ⭐️ ⭐️ | 537.2 ns | 760.1 ns |
 | ❌ Day 3: ...                                                                                           |         |
 | ❌ Day 4: ...                                                                                           |         |
 | ❌ Day 5: ...                                                                                           |         |
@@ -29,3 +31,9 @@
 | ❌ Day 25: ...                                                                                          |         |
 
 Time measured by BenchmarkDotNet, it might vary a little.
+
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.19043.1348 (21H1/May2021Update)\
+AMD Ryzen 5 3600, 1 CPU, 12 logical and 6 physical cores\
+.NET SDK=6.0.100\
+ [Host] : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT\
+ Job-ITIINI : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT
