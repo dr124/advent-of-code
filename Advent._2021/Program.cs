@@ -3,13 +3,14 @@ global using System.Collections.Generic;
 global using System.IO;
 global using System.Linq;
 global using System.Text.RegularExpressions;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Running;
+using System.Diagnostics;
 using System.Reflection;
 using Advent.Core;
 
 #if RELEASE
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
-using BenchmarkDotNet.Running;
 
 BenchmarkRunner.Run<AocRunner>();
 
@@ -33,7 +34,6 @@ public class AocRunner
 }
 
 #else
-using System.Diagnostics;
 
 var day = DayFactory.GetDay(DateTime.Today.Day, Assembly.GetExecutingAssembly());
 if (day is IReadInputDay readInputDay) 

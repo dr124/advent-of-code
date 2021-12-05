@@ -23,4 +23,7 @@ public record Vec2(int X, int Y)
     public static implicit operator Vec2(int a) => new(a, a);
 
     public static implicit operator (int x, int y)(Vec2 p) => (p.X, p.Y);
+
+    public int X { get; set; } = X;
+    public int Y { get; set; } = Y;
 }

@@ -49,7 +49,7 @@ internal class Day4 : IReadInputDay
                     return last.SumUnmarked() * number;
             }
 
-            foreach (var bingo in Bingos)
+            foreach (var bingo in bingos)
                 if (bingo.MarkNumber(number))
                     bingos.Remove(bingo);
         }
@@ -106,5 +106,66 @@ internal class Day4 : IReadInputDay
         }
 
         public int SumUnmarked() => _board.Sum(x => x.Where(y => !y.c).Sum(y=>y.p));
+    }
+
+
+    public class Bingo2
+    {
+        private const int ZERO = 2137;
+        public int[,] board = new int[5, 5];
+        public bool IsWinner = false;
+        public Bingo2(string[] strValues)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var values = strValues[i].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                for (int j = 0; j < 5; j++)
+                {
+                    board[i, j] = int.Parse(values[j]);
+                    if (board[i, j] == 0)
+                        board[i, j] = ZERO;
+                }
+            }
+        }
+
+        public void Mark(int number)
+        {
+            if (number == 0)
+                number = ZERO;
+
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 5; j++)
+                    if (board[i, j] == number)
+                    {
+                        board[i, j] *= (-1);
+                        return;
+                    }
+        }
+
+        public bool IsWinning()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                int bingoY = 0, bingoX = 0;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (board[i, j] < 0)
+                        bingoY++;
+
+                    if (board[j, i] < 0)
+                        bingoX++;
+
+                    if (bingoY == 5 || bingoX == 5)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int UnmarkedSum() => (
+            from int val
+            in board 
+            where val >= 0 && val != ZERO select val).Sum();
     }
 }
