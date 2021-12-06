@@ -1,4 +1,7 @@
-﻿using Advent.Core;
+﻿using System.Numerics;
+using System.Runtime.Intrinsics;
+using Advent.Core;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 
 namespace Advent._2021.Week1;
 
@@ -17,20 +20,42 @@ internal class Day6 : IReadInputDay
             Input[x] += 1;
     }
 
-    public object TaskA() => LiveForNDays(Input.ToArray(), 80);
+    public object TaskA() => LiveForNDays2(Input, 80);
+                                         
+    public object TaskB() => LiveForNDays2(Input, 256);
 
-    public object TaskB() => LiveForNDays(Input.ToArray(), 256);
-
-    long LiveForNDays(long[] fish, int days)
+    long LiveForNDays2(long[] fish, int days)
     {
-        for (var day = 0; day < days; day++)
+        unchecked
         {
-            var @new = fish[0];
-            for (var i = 1; i < fish.Length; i++)
-                fish[i - 1] = fish[i];
-            fish[6] += fish[8] = @new; 
-        }
+            var nodes = new Node[fish.Length];
+            for (var i = 0; i < nodes.Length; i++)
+                nodes[i] = new Node
+                {
+                    V = fish[i],
+                };
 
-        return fish.Sum();
+            for (var i = 0; i < nodes.Length; i++)
+            {
+                nodes[i].Prev = nodes[(i + 8) % 9];
+                nodes[i].Next = nodes[(i + 1) % 9];
+            }
+
+            var head = nodes[0];
+            for (var day = 0; day < days; day++, head = head.Next)
+                head.Prev.Prev.V += head.V;
+
+            var sum = 0l;
+            foreach (var t in nodes)
+                sum += t.V;
+            return sum;
+        }
+    }
+
+    class Node
+    {
+        public long V;
+        public Node Next;
+        public Node Prev;
     }
 }
