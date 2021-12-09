@@ -58,8 +58,6 @@ internal class Day9 : IReadInputDay
                 if (tab[y + dx][x + dy] == 0 && tab[y][x] > 0)
                     tab[y + dx][x + dy] = tab[y][x];
 
-        print();
-
         return tab
             .SelectMany(x => x)
             .Where(x => x > 0)
@@ -68,19 +66,5 @@ internal class Day9 : IReadInputDay
             .OrderByDescending(x => x)
             .Take(3)
             .Aggregate(1, (acc, val) => acc * val);
-
-        void print()
-        {
-            var sb = new StringBuilder();
-            for (var y = 0; y < Input.Length; y++, sb.AppendLine())
-            for (var x = 0; x < Input[0].Length; x++)
-                sb.Append(tab[y][x] switch
-                {
-                    0 => " ",
-                    -1 => "█",
-                    _ => tab[y][x] % 10
-                });
-            Console.WriteLine(sb);
-        }
     }
 }
