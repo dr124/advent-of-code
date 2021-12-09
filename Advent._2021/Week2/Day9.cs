@@ -1,7 +1,4 @@
-﻿using System.Resources;
-using System.Text;
-using Advent.Core;
-using Microsoft.CodeAnalysis;
+﻿using Advent.Core;
 
 namespace Advent._2021.Week2;
 
