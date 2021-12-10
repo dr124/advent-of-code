@@ -9,16 +9,17 @@ internal class Day10 : IReadInputDay
 
     public void ReadData() => Input = File.ReadAllLines("Week2/Day10.txt");
 
-    public object TaskA() => Input.Select(XD).Sum();
-    public object TaskB() => Input.Select(XD2).Where(x => x > 0).Median();
+    public object TaskA() => Input.Select(GetFirstCorrupted).Sum();
+    public object TaskB() => Input.Select(GetCompletionCost).Where(x => x > 0).Median();
 
-    int XD(string str)
+    int GetFirstCorrupted(string line)
     {
-        Stack<char> q = new();
+        Stack<char> queue = new();
 
-        foreach (var c in str)
-            if (IsOpening(c)) q.Push(c);
-            else if (GetClosing(q.Pop()) != c)
+        foreach (var c in line)
+        {
+            if (IsOpening(c)) queue.Push(c);
+            else if (GetClosing(queue.Pop()) != c)
                 return c switch
                 {
                     ')' => 3,
@@ -26,40 +27,40 @@ internal class Day10 : IReadInputDay
                     '}' => 1197,
                     '>' => 25137
                 };
-        
+        }
+
         return 0;
     }
     
-    long XD2(string str)
+    long GetCompletionCost(string line)
     {
         var isCorrupted = false;
-        Stack<char> q = new();
+        Stack<char> queue = new();
 
-        foreach (var c in str)
-            if (IsOpening(c)) q.Push(c);
-            else if (GetClosing(q.Pop()) != c) 
+        foreach (var c in line)
+        {
+            if (IsOpening(c)) queue.Push(c);
+            else if (GetClosing(queue.Pop()) != c)
                 isCorrupted = true;
+        }
 
-        if(!isCorrupted)
-            return q.Aggregate<char, long>(0, (sum, c) => sum * 5 + c switch
+        return isCorrupted
+            ? 0 
+            : queue.Aggregate<char, long>(0, (sum, c) => sum * 5 + c switch
             {
                 '(' => 1,
                 '[' => 2,
                 '{' => 3,
                 '<' => 4
             });
-
-        return 0;
     }
 
     bool IsOpening(char c) => c is '(' or '[' or '{' or '<';
-    char GetClosing(char c) =>
-        c switch
-        {
-            '(' => ')',
-            '[' => ']',
-            '{' => '}',
-            '<' => '>'
-        };
-
+    char GetClosing(char c) => c switch
+    {
+        '(' => ')',
+        '[' => ']',
+        '{' => '}',
+        '<' => '>'
+    };
 }
