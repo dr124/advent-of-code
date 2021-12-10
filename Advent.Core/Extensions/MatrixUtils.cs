@@ -1,4 +1,4 @@
-﻿namespace Advent.Core;
+﻿namespace Advent.Core.Extensions;
 
 public static class MatrixUtils
 {

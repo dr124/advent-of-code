@@ -11,9 +11,9 @@ This year I focus on writing very performant and elegant code in C#.
 | ✔️ [Day 5: Hydrothermal Venture](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week1/Day5.cs)    | ⭐️ ⭐️ | 17.15 ms | 31.95 ms  |
 | ✔️ [Day 6: Lanternfish](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week1/Day6.cs)             | ⭐️ ⭐️ | 262.6 ns | 490.8 ns  |
 | ✔️ [Day 7: The Treachery of Whales](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week1/Day7.cs) | ⭐️ ⭐️ | 8.031 µs | 12.001 µs |
-| ❌ Day 8: ...                                                                                                       |         |
-| ❌ Day 9: ...                                                                                                       |         |
-| ❌ Day 10: ...                                                                                                      |         |
+| ✔️ [Day 8: Seven Segment Search](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day8.cs)    | ⭐️ ⭐️ |
+| ✔️ [Day 9: Smoke Basin](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day9.cs)             | ⭐️ ⭐️ |
+| ✔️ [Day 10: Syntax Scoring](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day10.cs)        | ⭐️ ⭐️ |
 | ❌ Day 11: ...                                                                                                      |         |
 | ❌ Day 12: ...                                                                                                      |         |
 | ❌ Day 13: ...                                                                                                      |         |

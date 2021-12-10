@@ -1,4 +1,5 @@
 ﻿using Advent.Core;
+using Advent.Core.Extensions;
 
 namespace Advent._2021.Week1;
 
