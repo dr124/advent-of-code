@@ -17,7 +17,7 @@ internal class Day1 : IReadInputDay<int[]>
             if (Input[i] > Input[i - 1])
                 result++;
 
-        return result;
+        return result; // 1502
     }
 
     public object TaskB()
@@ -27,6 +27,6 @@ internal class Day1 : IReadInputDay<int[]>
             if (Input[i] > Input[i - 3])
                 result++;
 
-        return result;
+        return result; // 1538
     }
 }

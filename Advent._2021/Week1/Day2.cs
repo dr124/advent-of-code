@@ -2,17 +2,17 @@
 
 namespace Advent._2021.Week1;
 
-internal class Day2 : IReadInputDay<(int dx, int dy)[]>
+internal class Day2 : IReadInputDay<Vec2[]>
 {
-    public (int dx, int dy)[] Input { get; set; }
+    public Vec2[] Input { get; set; }
     public void ReadData() =>
         Input = File.ReadAllLines("Week1/Day2.txt")
-            .Select(s => s[0] switch
+            .Select(s => (Vec2)(s[0] switch
             {
                 'f' => (s[^1] - '0', 0),
                 'd' => (0, s[^1] - '0'),
                 'u' => (0, -s[^1] + '0')
-            }).ToArray();
+            })).ToArray();
 
     public object TaskA()
     {
@@ -23,7 +23,7 @@ internal class Day2 : IReadInputDay<(int dx, int dy)[]>
             y += dy;
         }
 
-        return x * y;
+        return x * y; // 2036120
     }
 
     public object TaskB()
@@ -36,6 +36,6 @@ internal class Day2 : IReadInputDay<(int dx, int dy)[]>
             a += da;
         }
 
-        return x * y;
+        return x * y; // 2015547716
     }
 }

@@ -23,7 +23,7 @@ internal class Day3 : IReadInputDay<int[][]>
         var num1 = ToInt(transposed.Select(MostCommon).Reverse());
         var num2 = ToInt(transposed.Select(LeastCommon).Reverse());
 
-        return num1 * num2;
+        return num1 * num2; // 749376
     }
 
     public object TaskB()
@@ -44,7 +44,6 @@ internal class Day3 : IReadInputDay<int[][]>
         var num1 = Find(MostCommon, Input);
         var num2 = Find(LeastCommon, Input);
 
-        return num1 * num2;
+        return num1 * num2; // 2372923
     }
-
 }

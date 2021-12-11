@@ -63,4 +63,23 @@ internal class Day10 : IReadInputDay
         '{' => '}',
         '<' => '>'
     };
+
+    private static int CalculateCorrupted(string line)
+    {
+        var brackets = new Stack<char>();
+
+        foreach (var c in line)
+            if (c is ('(' or '<' or '[' or '{'))
+                brackets.Push(c);
+            else if (c - brackets.Pop() != 2)
+                return c switch
+                {
+                    '*' => 3,
+                    ']' => 57,
+                    '}' => 1197,
+                    '>' => 25137
+                };
+        return 0;
+    }
+
 }
