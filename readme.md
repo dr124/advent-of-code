@@ -14,8 +14,8 @@ This year I focus on writing very performant and elegant code in C#.
 | ✔️ [Day 8: Seven Segment Search](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day8.cs)    | ⭐️ ⭐️ |
 | ✔️ [Day 9: Smoke Basin](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day9.cs)             | ⭐️ ⭐️ |
 | ✔️ [Day 10: Syntax Scoring](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day10.cs)        | ⭐️ ⭐️ |
-| ❌ Day 11: ...                                                                                                      |         |
-| ❌ Day 12: ...                                                                                                      |         |
+| ✔️ [Day 11: Dumbo Octopus](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day11.cs)         | ⭐️ ⭐️ |
+| ✔️ [Day 12: Passage Pathing](https://github.com/dr124/advent-of-code/blob/master/Advent._2021/Week2/Day12.cs)       | ⭐️ ⭐️ |
 | ❌ Day 13: ...                                                                                                      |         |
 | ❌ Day 14: ...                                                                                                      |         |
 | ❌ Day 15: ...                                                                                                      |         |
