@@ -7,7 +7,7 @@ internal class Day12 : IReadInputDay
 {
     private Dictionary<string, string[]> dict;
 
-    bool IsVisitOnce(string str) => str[0] >= 'a'; 
+    bool IsVisitOnce(string str) => str[0] >= 'a';
 
     public void ReadData()
     {
@@ -24,27 +24,22 @@ internal class Day12 : IReadInputDay
                 .ToArray());
     }
 
-    public object TaskA() => Traverse(new() { "start" }, true).Count;
-    public object TaskB() => Traverse(new() { "start" }, false).Count;
+    public object TaskA() => Traverse(new() { "start" }, true);
+    public object TaskB() => Traverse(new() { "start" }, false);
 
-    List<Path> Traverse(Path visited, bool hasVisitedTwice)
+    int Traverse(Path visited, bool hasVisitedTwice)
     {
         var here = visited[^1];
         if (here == "end")
-            return new() { visited };
+            return 1;
 
         var toVisit = dict[here];
-        if (hasVisitedTwice) 
+        if (hasVisitedTwice)
             toVisit = toVisit.Except(visited.Where(IsVisitOnce)).ToArray();
 
-        List<Path> visitedPaths = new();
-        foreach (var node in toVisit)
-        {
-            var isTwiceNow = hasVisitedTwice || IsVisitOnce(node) && visited.Contains(node);
-            var paths = Traverse(visited.Append(node).ToList(), isTwiceNow);
-            visitedPaths.AddRange(paths);
-        }
-
-        return visitedPaths;
+        return (from node in toVisit
+                let isTwiceNow = hasVisitedTwice || IsVisitOnce(node) && visited.Contains(node)
+                select Traverse(visited.Append(node).ToList(), isTwiceNow))
+            .Sum();
     }
 }
