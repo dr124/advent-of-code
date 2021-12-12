@@ -1,5 +1,4 @@
 ﻿using Advent.Core;
-using Path = System.Collections.Generic.List<string>;
 
 namespace Advent._2021.Week2;
 
@@ -27,7 +26,7 @@ internal class Day12 : IReadInputDay
     public object TaskA() => Traverse(new() { "start" }, true);
     public object TaskB() => Traverse(new() { "start" }, false);
 
-    int Traverse(Path visited, bool hasVisitedTwice)
+    int Traverse(List<string> visited, bool hasVisitedTwice)
     {
         var here = visited[^1];
         if (here == "end")
