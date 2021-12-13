@@ -26,4 +26,15 @@ public record Vec2(int X, int Y)
 
     public int X { get; set; } = X;
     public int Y { get; set; } = Y;
+
+    public static Vec2 FromString(string str)
+    {
+        //(x,y) 
+        var split = str.Replace("(", "")
+            .Replace(")", "")
+            .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var x = int.Parse(split[0]);
+        var y = int.Parse(split[1]);
+        return (x, y);
+    }
 }
