@@ -4,14 +4,12 @@ namespace Advent._2021.Week3;
 
 internal class Day16 : IReadInputDay
 {
-    private string Input;
     private Packet _packet;
 
     public void ReadData()
     {
-        Input = File.ReadAllText("Week3/Day16.txt");
-
-        var bytes = Convert.FromHexString(Input);
+        var text = File.ReadAllText("Week3/Day16.txt");
+        var bytes = Convert.FromHexString(text);
         var xd = bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')).ToArray();
         var bin = xd.SelectMany(c => c).Select(c => c - '0').ToArray();
 
@@ -19,109 +17,56 @@ internal class Day16 : IReadInputDay
     }
 
     public object TaskA() => _packet.VersionSum();
-
-    public object TaskB() => _packet.Op();
+    public object TaskB() => _packet.Operation();
 
     public class Packet
     {
         public List<Packet>? Packets { get; set; }
-        public long Value { get; set; }
+        public long? Value { get; set; }
         public int Version { get; set; }
         public int Type { get; set; }
 
-        public static List<Packet> ParseBits(int[] bin, int bits)
+        public static List<Packet> ParseNumber(int[] bin, int maxPackets, out int idx)
         {
-            List<Packet> parsed = new();
+            var parsed = new List<Packet>();
             var i = 0;
-            while (true)
+            while (parsed.Count < maxPackets && i < bin.Length - 5)
             {
-                if (i >= bits-5) break;
-
-                Packet p = new()
+                var packet = new Packet
                 {
                     Version = bin[i..(i += 3)].ToBitMap(),
                     Type = bin[i..(i += 3)].ToBitMap()
                 };
-                if (p.Type == 4)
-                {
-                    List<int> value = new();
-                    var keepReading = true;
-                    for (; keepReading; i += 5)
-                    {
-                        keepReading = bin[i] == 1;
-                        var x = bin[(i + 1)..(i + 5)];
-                        value.AddRange(x);
-                    }
 
-                    p.Value = value.ToBitMapLong();
+                if (packet.Type == 4)
+                {
+                    var value = new List<int>();
+                    var keepReading = true;
+                    while(keepReading)
+                    {
+                        keepReading = bin[i++] == 1;
+                        value.AddRange(bin[i..(i += 4)]);
+                    }
+                    packet.Value = value.ToBitMapLong();
                 }
                 else
                 {
                     var I = bin[i..(i += 1)].ToBitMap();
+                    var l = I == 0 ? 15 : 11;
                     if (I == 0)
                     {
-                        var l = 15;
                         var length = bin[i..(i += l)].ToBitMap();
-                        p.Packets = Packet.ParseBits(bin[i..(i += length)], length);
+                        packet.Packets = ParseNumber(bin[i..(i += length)], int.MaxValue, out _);
                     }
                     else
                     {
-                        var l = 11;
-                        var number = bin[i..(i += l)].ToBitMap();
-                        p.Packets = Packet.ParseNumber(bin[i..], number, out var idx);
-                        i += idx;
-                    }
-                }
-
-                parsed.Add(p);
-            }
-
-            return parsed;
-        }
-
-        public static List<Packet> ParseNumber(int[] bin, int number, out int idx)
-        {
-            List<Packet> parsed = new();
-            var i = 0;
-            while (parsed.Count < number)
-            {
-                Packet p = new()
-                {
-                    Version = bin[i..(i += 3)].ToBitMap(),
-                    Type = bin[i..(i += 3)].ToBitMap()
-                };
-                if (p.Type == 4)
-                {
-                    List<int> value = new();
-                    var keepReading = true;
-                    for (; keepReading; i += 5)
-                    {
-                        keepReading = bin[i] == 1;
-                        var x = bin[(i + 1)..(i + 5)];
-                        value.AddRange(x);
-                    }
-
-                    p.Value = value.ToBitMapLong();
-                }
-                else
-                {
-                    var I = bin[i..(i += 1)].ToBitMap();
-                    if (I == 0)
-                    {
-                        var l = 15;
-                        var length = bin[i..(i += l)].ToBitMap();
-                        p.Packets = Packet.ParseBits(bin[i..(i += length)], length);
-                    }
-                    else
-                    {
-                        var l = 11;
                         var n = bin[i..(i += l)].ToBitMap();
-                        p.Packets = Packet.ParseNumber(bin[i..], n, out var addIdx);
-                        i += addIdx;
+                        packet.Packets = ParseNumber(bin[i..], n, out var readPosition);
+                        i += readPosition;
                     }
                 }
 
-                parsed.Add(p);
+                parsed.Add(packet);
             }
 
             idx = i;
@@ -130,17 +75,17 @@ internal class Day16 : IReadInputDay
 
         public int VersionSum() => Version + (Packets?.Sum(x => x.VersionSum()) ?? 0);
 
-        public long Op() =>
+        public long Operation() =>
             Type switch
             {
-                0 => Packets!.Select(x => x.Op()).Sum(),
-                1 => Packets!.Select(x => x.Op()).Product(),
-                2 => Packets!.Select(x => x.Op()).Min(),
-                3 => Packets!.Select(x => x.Op()).Max(),
-                4 => Value,
-                5 => Packets![0].Op() > Packets[1].Op() ? 1 : 0,
-                6 => Packets![0].Op() < Packets[1].Op() ? 1 : 0,
-                7 => Packets![0].Op() == Packets[1].Op() ? 1 : 0,
+                0 => Packets!.Select(x => x.Operation()).Sum(),
+                1 => Packets!.Select(x => x.Operation()).Product(),
+                2 => Packets!.Select(x => x.Operation()).Min(),
+                3 => Packets!.Select(x => x.Operation()).Max(),
+                4 => Value!.Value,
+                5 => Packets![0].Operation() > Packets[1].Operation() ? 1 : 0,
+                6 => Packets![0].Operation() < Packets[1].Operation() ? 1 : 0,
+                7 => Packets![0].Operation() == Packets[1].Operation() ? 1 : 0,
                 _ => throw new ArgumentException("XD")
             };
     }
