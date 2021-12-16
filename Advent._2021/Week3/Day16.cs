@@ -24,7 +24,7 @@ internal class Day16 : IReadInputDay
 
     public class Packet
     {
-        public List<Packet> Packets { get; set; }
+        public List<Packet>? Packets { get; set; }
         public long Value { get; set; }
         public int Version { get; set; }
         public int Type { get; set; }
@@ -133,14 +133,14 @@ internal class Day16 : IReadInputDay
         public long Op() =>
             Type switch
             {
-                0 => Packets.Select(x => x.Op()).Sum(),
-                1 => Packets.Select(x => x.Op()).Product(),
-                2 => Packets.Select(x => x.Op()).Min(),
-                3 => Packets.Select(x => x.Op()).Max(),
+                0 => Packets!.Select(x => x.Op()).Sum(),
+                1 => Packets!.Select(x => x.Op()).Product(),
+                2 => Packets!.Select(x => x.Op()).Min(),
+                3 => Packets!.Select(x => x.Op()).Max(),
                 4 => Value,
-                5 => Packets[0].Op() > Packets[1].Op() ? 1 : 0,
-                6 => Packets[0].Op() < Packets[1].Op() ? 1 : 0,
-                7 => Packets[0].Op() == Packets[1].Op() ? 1 : 0,
+                5 => Packets![0].Op() > Packets[1].Op() ? 1 : 0,
+                6 => Packets![0].Op() < Packets[1].Op() ? 1 : 0,
+                7 => Packets![0].Op() == Packets[1].Op() ? 1 : 0,
                 _ => throw new ArgumentException("XD")
             };
     }
