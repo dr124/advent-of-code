@@ -1,7 +1,5 @@
-﻿using System.Collections.Concurrent;
-using Advent.Core;
+﻿using Advent.Core;
 using Advent.Core.Extensions;
-using BenchmarkDotNet.Disassemblers;
 
 namespace Advent._2021.Week3;
 
@@ -51,7 +49,7 @@ internal class Day15 : IReadInputDay
 
             queue.Enqueue((x,y), currentCost);
         }
-
+        
         while (queue.TryDequeue(out var current, out int totalCost))
         {
             var x = current.x;
