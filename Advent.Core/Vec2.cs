@@ -37,4 +37,6 @@ public record Vec2(int X, int Y)
         var y = int.Parse(split[1]);
         return (x, y);
     }
+
+    public override string ToString() => $"({X}, {Y})";
 }
