@@ -1,4 +1,5 @@
 ﻿using Advent.Core;
+using Advent.Core.Extensions;
 
 namespace Advent._2021.Week3;
 
@@ -58,7 +59,7 @@ internal class Day17 : IReadInputDay
 
     private bool WillItHit(Vec2 vel, out int maxHeight)
     {
-        bool IsWithinArea(Vec2 v) => v.X >= target.minX && v.X <= target.maxX && v.Y >= target.minY && v.Y <= target.maxY;
+        bool IsWithinArea(Vec2 v) => v.X.IsBetween(target.minX, target.maxX) && v.Y.IsBetween(target.minY, target.maxY);
         bool ShouldIterate(Vec2 v) =>  v.X <= target.maxX && v.Y >= target.minY;
 
         Vec2 pos = (0, 0);
@@ -70,6 +71,8 @@ internal class Day17 : IReadInputDay
             maxHeight = Math.Max(maxHeight, pos.Y);
             vel.Y--;
             vel.X = Math.Max(0, vel.X - 1);
+            if (vel.X == 0 && pos.X.IsBetween(target.maxY, target.minX))
+                break;
         }
 
         return IsWithinArea(pos);

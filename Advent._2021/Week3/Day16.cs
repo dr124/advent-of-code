@@ -75,7 +75,9 @@ internal class Day16 : IReadInputDay
 
         public int VersionSum() => Version + (Packets?.Sum(x => x.VersionSum()) ?? 0);
 
-        public long Operation() =>
+        public long Operation()
+        {
+            var xd = 
             Type switch
             {
                 0 => Packets!.Select(x => x.Operation()).Sum(),
@@ -88,6 +90,9 @@ internal class Day16 : IReadInputDay
                 7 => Packets![0].Operation() == Packets[1].Operation() ? 1 : 0,
                 _ => throw new ArgumentException("XD")
             };
+            Console.WriteLine(xd);
+            return xd;
+        }
     }
 }
 

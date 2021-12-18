@@ -35,7 +35,7 @@ public class AocRunner
 
 #else
 
-var day = DayFactory.GetDay(DateTime.Today.Day, Assembly.GetExecutingAssembly());
+var day = DayFactory.GetDay(18, Assembly.GetExecutingAssembly());
 if (day is IReadInputDay readInputDay) 
     readInputDay.ReadData();
 
