@@ -8,6 +8,7 @@ using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
 using System.Diagnostics;
 using System.Reflection;
+using Advent._2021.Week3;
 using Advent.Core;
 
 #if RELEASE
@@ -35,8 +36,8 @@ public class AocRunner
 
 #else
 
-var day = DayFactory.GetDay(18, Assembly.GetExecutingAssembly());
-if (day is IReadInputDay readInputDay) 
+var day = DayFactory.GetDay(19, Assembly.GetExecutingAssembly());
+if (day is IReadInputDay readInputDay)
     readInputDay.ReadData();
 
 // A 
@@ -62,6 +63,7 @@ Console.WriteLine("All finished");
 if (resultA is not null) Console.WriteLine($"A: {resultA}, {timeA.ElapsedMilliseconds} ms");
 if (resultB is not null) Console.WriteLine($"B: {resultB}, {timeB.ElapsedMilliseconds} ms");
 Console.WriteLine($"Total time: {timeA.ElapsedMilliseconds + timeB.ElapsedMilliseconds} ms");
+
 
 _ = 0;
 #endif

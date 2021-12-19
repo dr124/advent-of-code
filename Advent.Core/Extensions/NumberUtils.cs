@@ -2,7 +2,7 @@
 
 public static class NumberUtils
 {
-    public static bool IsBetween<T>(this T val, T a, T b) where T : INumber<T> =>
+    public static bool IsBetween(this int val, int a, int b) =>
         a < b
             ? val >= a && val <= b
             : val >= b && val <= a;

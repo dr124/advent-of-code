@@ -39,4 +39,18 @@ public record Vec2(int X, int Y)
     }
 
     public override string ToString() => $"({X}, {Y})";
+
+    public Vec2 Rotate(RotateDirection dir) =>
+        dir switch
+        {
+            RotateDirection.Left => (-Y, X),
+            RotateDirection.Right => (Y, -X)
+        };
 }
+public enum RotateDirection
+{
+    Left,
+    Right,
+}
+
+
