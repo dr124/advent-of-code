@@ -29,7 +29,7 @@ internal class Day19 : IReadInputDay
         for(int i = 0; mapsLeft.Count > 0; i++)
         {
             var otherMap = mapsLeft[i];
-            for (int n = 0; n < 50; n++)
+            for (int n = 0; n < 24; n++)
             {
                 otherMap.RotateAll();
                 var same = otherMap.Distances.Where(x => mainMap.Distances.Contains(x)).ToList();
@@ -99,10 +99,12 @@ internal class Day19 : IReadInputDay
     class Map
     {
         private List<Point> _mapCopy;
+        private Point[,] Diffs;
+        private int Rotation = 0;
+
         public List<Point> Points;
-        public Point[,] Diffs;
-        public int Rotation = 0;
         public HashSet<Point> Distances = new();
+
         public Map(List<Point> list)
         {
             _mapCopy = list;
@@ -119,12 +121,12 @@ internal class Day19 : IReadInputDay
             CalculateDiffs();
         }
 
-        public void Restore()
+        private void Restore()
         {
             Points = _mapCopy.Select(x => (Point)(x.X, x.Y, x.Z)).ToList();
         }
 
-        public void CalculateDiffs()
+        private void CalculateDiffs()
         {
             Diffs = new Point[Points.Count, Points.Count];
             Distances.Clear();
