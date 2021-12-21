@@ -64,7 +64,6 @@ internal class Day21 : IReadInputDay
         { IsPlayer1: false } => new(!s.IsPlayer1, s.Pos1, Mod10(s.Pos2 + roll), s.Score1, s.Score2 + Mod10(s.Pos2 + roll))
     };
 
-
     private Result PlayCached(State s) => _dict.TryGetValue(s, out var res) ? res : _dict[s] = Play(s);
 
     private readonly record struct Result(long A, long B)
