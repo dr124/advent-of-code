@@ -66,6 +66,7 @@ internal class Day21 : IReadInputDay
 
     private Result PlayCached(State s) => _dict.TryGetValue(s, out var res) ? res : _dict[s] = Play(s);
 
+    // ===============
     private readonly record struct Result(long A, long B)
     {
         public static Result Zero => new(0, 0);
