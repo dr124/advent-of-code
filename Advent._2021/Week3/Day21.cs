@@ -58,11 +58,12 @@ internal class Day21 : IReadInputDay
         _ => AllRolls.Aggregate(Result.Zero, (result, roll) => result + PlayCached(NextState(state, roll.value)) * roll.number)
     };
 
-    private State NextState(State s, int roll) => s switch
-    {
-        { IsPlayer1: true } => new(!s.IsPlayer1, Mod10(s.Pos1 + roll), s.Pos2, s.Score1 + Mod10(s.Pos1 + roll), s.Score2),
-        { IsPlayer1: false } => new(!s.IsPlayer1, s.Pos1, Mod10(s.Pos2 + roll), s.Score1, s.Score2 + Mod10(s.Pos2 + roll))
-    };
+    private State NextState(State s, int roll) =>
+        new(!s.IsPlayer1,
+            s.IsPlayer1 ? Mod10(s.Pos1 + roll) : s.Pos1,
+            s.IsPlayer1 ? s.Pos2 : Mod10(s.Pos2 + roll),
+            s.IsPlayer1 ? s.Score1 + Mod10(s.Pos1 + roll) : s.Score1,
+            s.IsPlayer1 ? s.Score2 : s.Score2 + Mod10(s.Pos2 + roll));
 
     private Result PlayCached(State s) => _dict.TryGetValue(s, out var res) ? res : _dict[s] = Play(s);
 
@@ -74,5 +75,6 @@ internal class Day21 : IReadInputDay
         public static Result operator +(Result a, Result b) => new(a.A + b.A, a.B + b.B);
         public static Result operator *(Result a, int b) => new(a.A * b, a.B * b);
     }
+
     private record struct State(bool IsPlayer1, int Pos1, int Pos2, int Score1, int Score2);
 }
