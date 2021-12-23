@@ -25,7 +25,7 @@ public class Day22 : IReadInputDay<List<Day22.Cube>>
         List<Cube> existing = new();
         foreach (var cube in cubes)
         {
-            existing.AddRange(existing.Where(cube.IsIntersect).ToList().Select(x => x.Intersection(cube, !x.Lit)));
+            existing.AddRange(existing.Where(cube.Intersects).ToList().Select(x => x.GetIntersection(cube, !x.Lit)));
             if (cube.Lit)
                 existing.Add(cube);
         }
@@ -47,14 +47,14 @@ public class Day22 : IReadInputDay<List<Day22.Cube>>
                               * (To.Y - From.Y + 1L)
                               * (To.Z - From.Z + 1L);
 
-        public bool IsIntersect(Cube cube) => From.X <= cube.To.X
+        public bool Intersects(Cube cube) => From.X <= cube.To.X
                                               && From.Y <= cube.To.Y
                                               && From.Z <= cube.To.Z
                                               && To.X >= cube.From.X
                                               && To.Y >= cube.From.Y
                                               && To.Z >= cube.From.Z;
 
-        public Cube Intersection(Cube other, bool lit) => new(
+        public Cube GetIntersection(Cube other, bool lit) => new(
             (Math.Max(From.X, other.From.X),
                 Math.Max(From.Y, other.From.Y),
                 Math.Max(From.Z, other.From.Z)),

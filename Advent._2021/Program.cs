@@ -26,17 +26,17 @@ public class AocRunner
         if(_day is IReadInputDay readInputDay)
             readInputDay.ReadData();
     }
-    
+  
     [Benchmark]
     public object TaskA() => _day.TaskA();
-    
+  
     [Benchmark]
     public object TaskB() => _day.TaskB();
 }
 
 #else
 
-var day = DayFactory.GetDay(DateTime.Today.Day-1, Assembly.GetExecutingAssembly());
+var day = DayFactory.GetDay(24, Assembly.GetExecutingAssembly());
 if (day is IReadInputDay readInputDay)
     readInputDay.ReadData();
 

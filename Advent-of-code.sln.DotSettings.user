@@ -9,4 +9,8 @@
     &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipUDTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipLRTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/Coords/@EntryValue">(Doc Ln 41 Col 60)</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/FileId/@EntryValue">6A891F9D-E8C7-493D-9598-AC992FD4C64B/d:Week4/f:Day24.cs</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/Owner/@EntryValue">NumberedBookmarkManager</s:String></wpf:ResourceDictionary>
