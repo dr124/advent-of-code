@@ -1,6 +1,6 @@
 ﻿namespace Advent.Core;
 
-public record Vec3(int X, int Y, int Z)
+public record struct Vec3(int X, int Y, int Z)
 {
     public static Vec3 operator +(Vec3 v) => new(v.X, v.Y, v.Z);
     public static Vec3 operator -(Vec3 v) => new(v.X, v.Y, v.Z);
