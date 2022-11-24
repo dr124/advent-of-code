@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Advent.Core\Advent.Core.csproj" />
+    <ProjectReference Include="..\Advent.Core_2021\Advent.Core_2021.csproj" />
   </ItemGroup>
 
   <ItemGroup>
