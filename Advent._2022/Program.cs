@@ -1,3 +1,5 @@
 ﻿using Advent._2022.Week1;
 
-new Day0().Execute();
+
+var lines = File.ReadAllLines("Week1/Day0.txt");
+
