@@ -1,14 +1,14 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=466a90b9_002Dd057_002D4672_002D976f_002Dc923a027a30a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="BoolToIntMatrixTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.BoolToIntMatrixTest&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_1&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_2&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.ArrayUtilsTests.ToBitMapTest&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.RotateTest&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipUDTest&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipLRTest&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=466a90b9_002Dd057_002D4672_002D976f_002Dc923a027a30a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="BoolToIntMatrixTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.BoolToIntMatrixTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_1&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Graphs.Tests.MatchingTests.MaxFlowTest_2&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.ArrayUtilsTests.ToBitMapTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.RotateTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipUDTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::55BD4A54-2A72-41E6-B33E-C5E0B5E32A2A::net5.0::Advent.Core.Tests.MatrixUtilsTests.FlipLRTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/Coords/@EntryValue">(Doc Ln 41 Col 60)</s:String>
