@@ -8,7 +8,8 @@ var mode = Environment.GetEnvironmentVariable("mode");
 
 if (mode is "run")
 {
-    var day = DayFactory.GetDay(24, Assembly.GetExecutingAssembly());
+    var dayNumber = Start.DayToRun;
+    var day = DayFactory.GetDay(Start.DayToRun, Assembly.GetExecutingAssembly());
     if (day is IReadInputDay readInputDay)
         readInputDay.ReadData();
 
@@ -48,5 +49,14 @@ else throw new InvalidOperationException("chopie..");
 
 public class Start
 {
-    public int DayToRun => 1;
+    public static int DayToRun
+    {
+        get 
+        {
+            var now = DateTime.Now;
+            if (now.TimeOfDay < TimeSpan.FromHours(6))
+                return now.Day - 1;
+            return now.Day;
+        }
+    }
 }
