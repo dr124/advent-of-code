@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Advent.Core_2022\Advent.Core_2022.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Week*\*.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
