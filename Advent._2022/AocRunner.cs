@@ -12,7 +12,8 @@ public class AocRunner
 
     public AocRunner()
     {
-        _day = DayFactory.GetDay(24, Assembly.GetExecutingAssembly());
+        var dayNumber = DateTime.Now.AddHours(-6).Day;
+        _day = DayFactory.GetDay(dayNumber, Assembly.GetExecutingAssembly());
         if (_day is IReadInputDay readInputDay)
             readInputDay.ReadData();
     }
