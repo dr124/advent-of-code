@@ -1,4 +1,4 @@
-# [🎄 Advent of Code 2021](https://adventofcode.com/2021)
+# [🎄 Advent of Code 2022](https://adventofcode.com/2022)
 
 This year I focus on writing ~~very~~ performant and *elegant* code in C#.
 
