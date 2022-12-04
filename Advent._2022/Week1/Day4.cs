@@ -12,7 +12,7 @@ public class Day4 : IReadInputDay
                 .Split(',', '-')
                 .Select(int.Parse)
                 .ToArray())
-            .Select(x => new Pair(new(x[0], x[1]), new(x[2], x[3])))
+            .Select(x => new Pair(x[0], x[1], x[2], x[3]))
             .ToArray();
 
     public object? TaskA() => _input.Count(IsFullyContained);
@@ -20,13 +20,11 @@ public class Day4 : IReadInputDay
     public object? TaskB() => _input.Count(IsPartiallyContained);
 
     private bool IsFullyContained(Pair pair) =>
-        (pair.A.Start >= pair.B.Start && pair.A.End <= pair.B.End)
-        || (pair.B.Start >= pair.A.Start && pair.B.End <= pair.A.End);
+        (pair.StartA >= pair.StartB && pair.EndA <= pair.EndB)
+        || (pair.StartB >= pair.StartA && pair.EndB <= pair.EndA);
 
     private bool IsPartiallyContained(Pair pair) =>
-        pair.A.Start <= pair.B.End && pair.A.End >= pair.B.Start;
+        pair.StartA <= pair.EndB && pair.EndA >= pair.StartB;
     
-    private record Section(int Start, int End);
-
-    private record Pair(Section A, Section B);
+    private record Pair(int StartA, int EndA, int StartB, int EndB);
 }
