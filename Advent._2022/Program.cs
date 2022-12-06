@@ -3,6 +3,8 @@ using System.Reflection;
 using Advent.Core;
 
 #if RELEASE
+using Advent._2022;
+using BenchmarkDotNet.Running;
 BenchmarkRunner.Run<AocRunner>();
 return;
 #endif

@@ -4,18 +4,27 @@ namespace Advent._2022.Week1;
 
 public class Day6 : IReadInputDay
 {
+    string _input;
+    
     public void ReadData()
     {
-        File.ReadAllLines("Week1/Day6.txt");
+        _input = File.ReadAllText("Week1/Day6.txt");
     }
 
-    public object? TaskA()
-    {
-        throw new NotImplementedException();
-    }
+    public object TaskA() => FindMarker(_input, 4);
+    
+    public object TaskB() => FindMarker(_input, 14);
 
-    public object? TaskB()
+    private static int FindMarker(string s, int n)
     {
-        throw new NotImplementedException();
+        for (int i = n; i < s.Length; i++)
+        {
+            if (s[(i - n)..i].Distinct().Count() == n)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
