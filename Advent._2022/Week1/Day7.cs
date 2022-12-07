@@ -64,7 +64,8 @@ public class Day7 : IReadInputDay
     public record Node(Node Parent, string Name, long? Size) 
     {
         public List<Node> Children { get; } = new();
-        public long TotalSize() => Size ?? Children.Sum(c => c.TotalSize());
+        private long? _size = null;
+        public long TotalSize() => _size ??= Size ?? Children.Sum(c => c.TotalSize());
         public Node this[string name] => name switch
         {
             ".." => Parent,
