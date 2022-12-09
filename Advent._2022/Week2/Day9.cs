@@ -55,9 +55,9 @@ public class Day9 : IReadInputDay
 
     private Vec2 Dir2Vec(char dir) => dir switch
     {
-        'U' => new Vec2(0, 1),
-        'D' => new Vec2(0, -1),
-        'L' => new Vec2(-1, 0),
-        'R' => new Vec2(1, 0),
+        'U' => (0, 1),
+        'D' => (0, -1),
+        'L' => (-1, 0),
+        'R' => (1, 0),
     };
 }
