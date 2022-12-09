@@ -46,6 +46,8 @@ public record Vec2(int X, int Y)
             RotateDirection.Left => (-Y, X),
             RotateDirection.Right => (Y, -X)
         };
+
+    public static Vec2 Zero => new Vec2(0, 0);
 }
 public enum RotateDirection
 {

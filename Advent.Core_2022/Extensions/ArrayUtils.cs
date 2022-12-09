@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Numerics;
 
-namespace Advent.Core_2019_2020;
+namespace Advent.Core.Extensions;
 //https://stackoverflow.com/questions/1014005/how-to-populate-instantiate-a-c-sharp-array-with-a-single-value
 
 public static class ArrayUtils
 {
-    public static void PopulateSimd<T>(T[] array, T value) where T : struct
+    public static void FillSimd<T>(T[] array, T value) where T : struct
     {
         var vector = new Vector<T>(value);
         var i = 0;
@@ -16,10 +15,17 @@ public static class ArrayUtils
         for (; i < array.Length; i++) array[i] = value;
     }
 
-    public static T[] Populate<T>(this T[] arr, T value)
+    public static T[] Fill<T>(this T[] arr, T value)
     {
         for (var i = 0; i < arr.Length; i++) 
             arr[i] = value;
+        return arr;
+    }
+
+    public static T[] Populate<T>(this T[] arr, Func<int, T> value)
+    {
+        for (var i = 0; i < arr.Length; i++)
+            arr[i] = value(i);
         return arr;
     }
 

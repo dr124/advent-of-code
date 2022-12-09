@@ -1,7 +1,5 @@
-﻿using System.Collections.Concurrent;
-using System.Xml.Linq;
-using Advent.Core;
-using Advent.Core_2019_2020;
+﻿using Advent.Core;
+using Advent.Core.Extensions;
 
 namespace Advent._2022.Week2;
 
@@ -16,59 +14,14 @@ public class Day9 : IReadInputDay
             .ToArray();
     }
 
-    private Vec2 Dir2Vec(char dir) => dir switch
-    {
-        'U' => new Vec2(0, 1),
-        'D' => new Vec2(0, -1),
-        'L' => new Vec2(-1, 0),
-        'R' => new Vec2(1, 0),
-    };
-
-
     public object TaskA() => SimulateLine(2);
     
     public object TaskB() => SimulateLine(10);
 
-    void TailFollowHead(ref Vec2 h, ref Vec2 t)
-    {
-        var d = h - t;
-        var absx = Math.Abs(d.X);
-        var absy = Math.Abs(d.Y);
-        var dirx = Math.Sign(d.X);
-        var diry = Math.Sign(d.Y);
-        if (absx == 1 && absy == 1)
-        {
-            // diagonal, it's good
-        }
-        else if (absx == 1 && absy == 0)
-        {
-            // horizontal, it's good
-        }
-        else if (absx == 0 && absy == 1)
-        {
-            // vertical, it's good
-        }
-        else
-        {
-            if (absx == 0) // move vertically
-            {
-                t += new Vec2(0, diry);
-            }
-            else if (absy == 0) // move horizontally
-            {
-                t += new Vec2(dirx, 0);
-            }
-            else // move diagonally
-            {
-                t += new Vec2(dirx, diry);
-            }
-        }
-    }
-
     private int SimulateLine(int size)
     {
         var visited = new HashSet<Vec2>();
-        var line = new Vec2[size].Populate(new Vec2(0,0));
+        var line = new Vec2[size].Fill(Vec2.Zero);
 
         visited.Add(line[^1]);
         
@@ -78,7 +31,7 @@ public class Day9 : IReadInputDay
             {
                 line[0] += Dir2Vec(dir);
 
-                for (int l = 1; l < size; l++)
+                for (var l = 1; l < size; l++)
                 {
                     TailFollowHead(ref line[l - 1], ref line[l]);
                 }
@@ -89,4 +42,22 @@ public class Day9 : IReadInputDay
 
         return visited.Count;
     }
+
+    void TailFollowHead(ref Vec2 h, ref Vec2 t)
+    {
+        var d = h - t;
+
+        if (Math.Abs(d.X) > 1 || Math.Abs(d.Y) > 1)
+        {
+            t += new Vec2(Math.Sign(d.X), Math.Sign(d.Y));
+        }
+    }
+
+    private Vec2 Dir2Vec(char dir) => dir switch
+    {
+        'U' => new Vec2(0, 1),
+        'D' => new Vec2(0, -1),
+        'L' => new Vec2(-1, 0),
+        'R' => new Vec2(1, 0),
+    };
 }
