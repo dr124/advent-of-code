@@ -19,7 +19,7 @@ public class Day10 : IReadInputDay
     public object TaskA()
     {
         var cycleStrength = new List<int> { 1 };
-        int register = 1;
+        var register = 1;
 
         foreach (var instr in _input)
         {
