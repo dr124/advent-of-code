@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿global using Advent.Core;
+using System.Diagnostics;
 using System.Reflection;
-using Advent.Core;
 
 #if RELEASE
 using Advent._2022;
