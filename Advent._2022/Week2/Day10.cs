@@ -1,49 +1,41 @@
-﻿using System.Text;
-using System.Xml.Linq;
-using Advent.Core;
+﻿using Advent.Core;
 using Advent.Core.Extensions;
 
 namespace Advent._2022.Week2;
 
 public class Day10 : IReadInputDay
 {
-    private int?[] _input;
+    private int[] _input;
 
     public void ReadData()
     {
         _input = File.ReadAllLines("Week2/Day10.txt")
-            .Select(x => x[0] == 'a' ? int.Parse(x[4..]) : (int?)null)
+            .SelectMany(x => x[0] == 'a'
+                ? new[] { 0, int.Parse(x[5..]) }
+                : new[] { 0 })
             .ToArray();
     }
 
     public object TaskA()
     {
-        var cycleStrength = new List<int> { 1 };
-        var register = 1;
+        var x = 1;
+        var strength = 0;
 
-        foreach (var instr in _input)
+        for (var i = 1; i <= _input.Length; i++)
         {
-            if (instr is not null)
+            if ((i - 20) % 40 == 0)
             {
-                cycleStrength.Add(register);
+                strength += i * x;
             }
 
-            cycleStrength.Add(register);
-            register += instr ?? 0;
+            Console.Write(x.IsBetween(i % 40 - 2, i % 40) ? '#' : ' ');
+            if (i % 40 == 0)
+                Console.WriteLine();
+
+            x += _input[i-1];
         }
 
-        for (int y = 0; y < 6; y++)
-        {
-            for (int x = 0; x < 40; x++)
-            {
-                Console.Write(cycleStrength[y * 40 + x].IsBetween(x - 2, x) ? '#' : '.');
-            }
-            Console.WriteLine();
-        }
-
-        return new[] { 20, 60, 100, 140, 180, 220 }
-            .Select(x => cycleStrength[x] * x)
-            .Sum();
+        return strength;
     }
 
     public object? TaskB() => null; // done in A, read console
