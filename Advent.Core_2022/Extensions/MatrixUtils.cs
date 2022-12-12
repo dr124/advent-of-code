@@ -17,7 +17,7 @@ public static class MatrixUtils
         return transposed;
     }
     
-    public static string ToMatrixString<T>(this T[,] matrix, string delimiter = "\t")
+    public static string ToMatrixString<T>(this T[,] matrix, string delimiter = "\t", string format = null)
     {
         var s = new StringBuilder();
         for (var i = 0; i < matrix.GetLength(0); i++, s.AppendLine())
@@ -56,10 +56,40 @@ public static class MatrixUtils
             yield return (i, j);
     }
 
+    public static IEnumerable<Vec2> EnumerateVec<T>(this T[,] src)
+    {
+        var M = src.GetLength(0);
+        var N = src.GetLength(1);
+        for (var y = 0; y < M; y++)
+        for (var x = 0; x < N; x++)
+            yield return (x, y);
+    }
+
     public static Span<T> GetRowSpan<T>(this T[,] m, int row)
     {
         if (row < 0 || row >= m.GetLength(0))
             throw new ArgumentOutOfRangeException(nameof(row), "The row index isn't valid");
         return MemoryMarshal.CreateSpan(ref m[row, 0], m.GetLength(1));
+    }
+
+    public static ref T At<T>(this T[,] src, Vec2 v) => ref src[v.Y, v.X];
+    public static ref T At<T>(this T[,] src, int x, int y) => ref src[y, x];
+
+    public static IEnumerable<Vec2> Adjacent<T>(this T[,] map, Vec2 point, bool includeDiagonal = false)
+    {
+        var (x, y) = point;
+        var (M, N) = (map.GetLength(0), map.GetLength(1));
+        for (var i = -1; i <= 1; i++)
+            for (var j = -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0)
+                    continue;
+                if (!includeDiagonal && Math.Abs(i) + Math.Abs(j) > 1)
+                    continue;
+                var (nx, ny) = (x + i, y + j);
+                if (nx < 0 || nx >= N || ny < 0 || ny >= M)
+                    continue;
+                yield return (nx, ny);
+            }
     }
 }
