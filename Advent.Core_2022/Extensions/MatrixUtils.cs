@@ -77,7 +77,6 @@ public static class MatrixUtils
 
     public static IEnumerable<Vec2> Adjacent<T>(this T[,] map, Vec2 point, bool includeDiagonal = false)
     {
-        var (x, y) = point;
         var (M, N) = (map.GetLength(0), map.GetLength(1));
         for (var i = -1; i <= 1; i++)
         for (var j = -1; j <= 1; j++)
