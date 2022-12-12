@@ -12,17 +12,17 @@ public static class MatrixUtils
             transposed[j] = new T[tab.Length];
 
         for (var i = 0; i < tab.Length; i++)
-        for (var j = 0; j < tab[i].Length; j++)
-            transposed[j][i] = tab[i][j];
+            for (var j = 0; j < tab[i].Length; j++)
+                transposed[j][i] = tab[i][j];
         return transposed;
     }
-    
+
     public static string ToMatrixString<T>(this T[,] matrix, string delimiter = "\t", string format = null)
     {
         var s = new StringBuilder();
         for (var i = 0; i < matrix.GetLength(0); i++, s.AppendLine())
-        for (var j = 0; j < matrix.GetLength(1); j++)
-            s.Append(matrix[i, j]).Append(delimiter);
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                s.Append(matrix[i, j]).Append(delimiter);
         return s.ToString();
     }
 
@@ -30,8 +30,8 @@ public static class MatrixUtils
     {
         var matrix = new T[tab.Length, tab[0].Length];
         for (var i = 0; i < tab.Length; i++)
-        for (var j = 0; j < tab[0].Length; j++)
-            matrix[i, j] = tab[i][j];
+            for (var j = 0; j < tab[0].Length; j++)
+                matrix[i, j] = tab[i][j];
         return matrix;
     }
 
@@ -42,8 +42,8 @@ public static class MatrixUtils
 
         var matrix = new T[M, N];
         for (var i = 0; i < M; i++)
-        for (var j = 0; j < N; j++)
-            matrix[i, j] = src[i, j];
+            for (var j = 0; j < N; j++)
+                matrix[i, j] = src[i, j];
         return matrix;
     }
 
@@ -52,8 +52,8 @@ public static class MatrixUtils
         var M = src.GetLength(0);
         var N = src.GetLength(1);
         for (var i = 0; i < M; i++)
-        for (var j = 0; j < N; j++)
-            yield return (i, j);
+            for (var j = 0; j < N; j++)
+                yield return (i, j);
     }
 
     public static IEnumerable<Vec2> EnumerateVec<T>(this T[,] src)
@@ -61,8 +61,8 @@ public static class MatrixUtils
         var M = src.GetLength(0);
         var N = src.GetLength(1);
         for (var y = 0; y < M; y++)
-        for (var x = 0; x < N; x++)
-            yield return (x, y);
+            for (var x = 0; x < N; x++)
+                yield return (x, y);
     }
 
     public static Span<T> GetRowSpan<T>(this T[,] m, int row)
@@ -80,16 +80,25 @@ public static class MatrixUtils
         var (x, y) = point;
         var (M, N) = (map.GetLength(0), map.GetLength(1));
         for (var i = -1; i <= 1; i++)
-            for (var j = -1; j <= 1; j++)
+        for (var j = -1; j <= 1; j++)
+        {
+            if (i == 0 && j == 0)
             {
-                if (i == 0 && j == 0)
-                    continue;
-                if (!includeDiagonal && Math.Abs(i) + Math.Abs(j) > 1)
-                    continue;
-                var (nx, ny) = (x + i, y + j);
-                if (nx < 0 || nx >= N || ny < 0 || ny >= M)
-                    continue;
-                yield return (nx, ny);
+                continue;
             }
+            
+            if (!includeDiagonal && Math.Abs(i) + Math.Abs(j) > 1)
+            {
+                continue;
+            }
+            
+            var n = point + (i, j);
+            if (n.X < 0 || n.X >= N || n.Y < 0 || n.Y >= M)
+            {
+                continue;
+            }
+
+            yield return n;
+        }
     }
 }
