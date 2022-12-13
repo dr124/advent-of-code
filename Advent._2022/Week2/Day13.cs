@@ -15,7 +15,7 @@ public class Day13 : IReadInputDay
 
     public object TaskA() => _input.Chunk(2)
         .Select((x, idx) => (x, idx))
-        .Where(x => CompareTokens(x.x[0], x.x[1]) == true)
+        .Where(x => CompareAnyTokens(x.x[0], x.x[1]) == true)
         .Sum(x => x.idx + 1);
 
     public object TaskB()
@@ -35,38 +35,38 @@ public class Day13 : IReadInputDay
         return (i2+1) * (i6+1);
     }
 
-    private static bool? CompareTokens(JToken a, JToken b)
-    {
-        if (a.Type == JTokenType.Integer && b.Type == JTokenType.Integer)
-            return a.Value<int>() != b.Value<int>()
-                ? a.Value<int>() < b.Value<int>()
-                : null;
-
-        if (a.Type == JTokenType.Array && b.Type == JTokenType.Array)
+    private static bool? CompareAnyTokens(JToken a, JToken b) =>
+        (a.Type, b.Type) switch
         {
-            for (int iA = 0, iB = 0;; iA++, iB++)
-            {
-                if (iA >= a.Children().Count() && iB >= b.Children().Count())
-                    return null;
-                if (iA >= a.Children().Count())
-                    return true;
-                if (iB >= b.Children().Count())
-                    return false;
-
-                var res = CompareTokens(
-                    a.Children().ElementAt(iA),
-                    b.Children().ElementAt(iB));
-                if (res != null)
-                    return res;
-            }
-        }
-
-        return (a.Type, b.Type) switch
-        {
-            (JTokenType.Integer, JTokenType.Array)  => CompareTokens(Pack(a), b),
-            (JTokenType.Array, JTokenType.Integer) => CompareTokens(a, Pack(b)),
+            (JTokenType.Integer, JTokenType.Integer) => CompareIntegers(a, b),
+            (JTokenType.Array, JTokenType.Array) => CompareArrays(a, b),
+            (JTokenType.Integer, JTokenType.Array) => CompareArrays(Pack(a), b),
+            (JTokenType.Array, JTokenType.Integer) => CompareArrays(a, Pack(b)),
             _ => null
         };
+
+    private static bool? CompareIntegers(JToken a, JToken b)
+    {
+        return a.Value<int>() != b.Value<int>()
+            ? a.Value<int>() < b.Value<int>()
+            : null;
+    }
+
+    private static bool? CompareArrays(JToken a, JToken b)
+    {
+        for (int iA = 0, iB = 0; ; iA++, iB++)
+        {
+            if (iA >= a.Children().Count() && iB >= b.Children().Count())
+                return null;
+            if (iA >= a.Children().Count())
+                return true;
+            if (iB >= b.Children().Count())
+                return false;
+
+            var res = CompareAnyTokens(a[iA], b[iB]);
+            if (res != null)
+                return res;
+        }
     }
 
     private static JToken Pack(JToken token) => Deserialize($"[{token.Value<int>()}]");
@@ -75,7 +75,7 @@ public class Day13 : IReadInputDay
     private class TokenComparer : IComparer<JToken>
     {
         public int Compare(JToken x, JToken y) =>
-            CompareTokens(x, y) switch
+            CompareAnyTokens(x, y) switch
             {
                 false => 1,
                 null => 0,
