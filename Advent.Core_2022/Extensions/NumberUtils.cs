@@ -6,4 +6,6 @@ public static class NumberUtils
         a < b
             ? val >= a && val <= b
             : val >= b && val <= a;
+
+    public static int Product(this IEnumerable<int> arr) => arr.Aggregate(1, (a, b) => a * b);
 }
