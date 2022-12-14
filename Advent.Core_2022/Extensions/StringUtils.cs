@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Advent._2022.Week1;
+namespace Advent.Core.Extensions;
 
 public static partial class StringUtils
 {

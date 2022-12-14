@@ -10,4 +10,24 @@ public static class EnumerableUtils
             return default(T);
         return sorted[len / 2];
     }
+
+    public static IEnumerable<T> Do<T>(this IEnumerable<T> source, Action<T> action)
+    {
+        foreach (var item in source)
+        {
+            action(item);
+            yield return item;
+        }
+    }
+}
+
+public static class Enumerate
+{
+    public static IEnumerable<int> From(int start = 0)
+    {
+        for (int i = start; ; i++)
+        {
+            yield return i;
+        }
+    }
 }
