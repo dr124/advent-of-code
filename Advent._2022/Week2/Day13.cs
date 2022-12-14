@@ -23,16 +23,8 @@ public class Day13 : IReadInputDay
         var _2 = Deserialize("[[2]]");
         var _6 = Deserialize("[[6]]");
 
-        var ordered = _input
-            .Append(_2)
-            .Append(_6)
-            .Order(new TokenComparer())
-            .ToList();
-
-        var i2 = ordered.IndexOf(_2);
-        var i6 = ordered.IndexOf(_6);
-
-        return (i2+1) * (i6+1);
+        return (_input.Count(x => CompareAnyTokens(x, _2) == true) + 1)
+               * (_input.Count(x => CompareAnyTokens(x, _6) == true) + 2); // +1 because [[2]] would be placed in the array before [[6]];
     }
 
     private static bool? CompareAnyTokens(JToken a, JToken b) =>
@@ -71,15 +63,4 @@ public class Day13 : IReadInputDay
 
     private static JToken Pack(JToken token) => Deserialize($"[{token.Value<int>()}]");
     private static JToken Deserialize(string str) => JsonConvert.DeserializeObject<JToken>(str);
-    
-    private class TokenComparer : IComparer<JToken>
-    {
-        public int Compare(JToken x, JToken y) =>
-            CompareAnyTokens(x, y) switch
-            {
-                false => 1,
-                null => 0,
-                true => -1
-            };
-    }
 }
