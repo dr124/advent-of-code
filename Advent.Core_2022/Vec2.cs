@@ -27,6 +27,29 @@ public record Vec2(int X, int Y)
     public int X { get; set; } = X;
     public int Y { get; set; } = Y;
 
+    public override string ToString() => $"({X}, {Y})";
+
+    public static Vec2 Zero => new(0, 0);
+
+}
+
+public enum RotateDirection
+{
+    Left,
+    Right,
+}
+
+public static class Vec2Extensions
+{
+    public static int ManhattanLength(this Vec2 vec) => Math.Abs(vec.X) + Math.Abs(vec.Y);
+
+    public static Vec2 Rotate(this Vec2 vec, RotateDirection dir) =>
+        dir switch
+        {
+            RotateDirection.Left => new Vec2(-vec.Y, vec.X),
+            RotateDirection.Right => new Vec2(vec.Y, -vec.X)
+        };
+
     public static Vec2 FromString(string str)
     {
         //(x,y) 
@@ -37,22 +60,4 @@ public record Vec2(int X, int Y)
         var y = int.Parse(split[1]);
         return (x, y);
     }
-
-    public override string ToString() => $"({X}, {Y})";
-
-    public Vec2 Rotate(RotateDirection dir) =>
-        dir switch
-        {
-            RotateDirection.Left => (-Y, X),
-            RotateDirection.Right => (Y, -X)
-        };
-
-    public static Vec2 Zero => new Vec2(0, 0);
 }
-public enum RotateDirection
-{
-    Left,
-    Right,
-}
-
-
