@@ -84,10 +84,9 @@ public class Day16 : IReadInputDay
             pressure += MaxPressureLeft(currentValve, minute);
         }
 
-        if (notOpenedYet.Count == 0 || minute >= 30)
+        if (notOpenedYet.Count == 0 || minute <= 30)
         {
             yield return new (new (), minute, pressure);
-            yield break;
         }
 
         foreach (var valve in notOpenedYet)
