@@ -21,7 +21,7 @@ public class Day15 : IReadInputDay
         _beacons = _areas.Select(x => x.Beacon).ToHashSet();
     }
 
-    public object? TaskA()
+    public object TaskA()
     {
         const int y = 2000000;
         var sum = 0;
@@ -44,12 +44,12 @@ public class Day15 : IReadInputDay
         return sum;
     }
 
-    public object TaskB2()
+    public object TaskB()
     {
         var to = 4_000_000;
 
         long result = -1;
-        Parallel.For(0, to, (y, pls) =>
+        Parallel.For(0, to+1, (y, pls) =>
         {
             for (int x = 0; x <= to; x++)
             {
@@ -68,34 +68,6 @@ public class Day15 : IReadInputDay
         });
 
         return result;
-    }
-
-    public object TaskB()
-    {
-        var to = 4_000_000;
-
-        var first = Enumerable.Range(0, to + 1)
-            .AsParallel()
-            .Select(y =>
-            {
-                for (int x = 0; x <= to; x++)
-                {
-                    var area = GetInRange((x, y));
-                    if (area is not null)
-                    {
-                        x = area.GetP((x, y));
-                    }
-                    else
-                    {
-                        Console.WriteLine($"kuzwa tu: {x},{y}");
-                        return (long)x * to + y;
-                    }
-                }
-                return -1;
-            })
-            .First(x => x > 0);
-
-        return first;
     }
 
     private Area GetInRange(Vec2 p)
