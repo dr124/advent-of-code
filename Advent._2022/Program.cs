@@ -2,12 +2,12 @@
 using System.Diagnostics;
 using System.Reflection;
 
-#if RELEASE
+//#if RELEASE
 using Advent._2022;
 using BenchmarkDotNet.Running;
-BenchmarkRunner.Run<AocRunner>();
-return;
-#endif
+//BenchmarkRunner.Run<AocRunner>();
+//return;
+//#endif
 
 var dayNumber = DateTime.Now.AddHours(-6).Day;
 var day = DayFactory.GetDay(dayNumber, Assembly.GetExecutingAssembly());
