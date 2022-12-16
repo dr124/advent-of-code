@@ -25,77 +25,84 @@ public class Day16 : IReadInputDay
                 .ToArray();
         }
 
+        // calculate all distances between valves
         _distances = new int[_input.Length, _input.Length];
-        for (int i = 0; i < _input.Length; i++)
-        {
-            for (int j = 0; j < _input.Length; j++)
-            {
-                _distances[i, j] = int.MaxValue;
-                if (i == j)
-                    _distances[i, j] = 0;
-            }
-        }
 
-        foreach (var valve in _input)
+        for (var i = 0; i < _input.Length; i++)
         {
-            var i = _valves[valve.Name].Id;
-            foreach (var connected in valve.ConnectedTo)
-            {
-                var j = _valves[connected.Name].Id;
-                _distances[i, j] = 1;
-            }
-        }
+            var valve = _input[i];
+            var distances = new Dictionary<Valve, int>();
+            var visited = new HashSet<Valve>();
+            var queue = new Queue<(Valve, int)>();
+            queue.Enqueue((valve, 0));
 
-        for (int k = 0; k < _input.Length; k++)
-        {
-            for (int i = 0; i < _input.Length; i++)
+            while (queue.Count > 0)
             {
-                for (int j = 0; j < _input.Length; j++)
+                var (v, d) = queue.Dequeue();
+
+                if (visited.Contains(v))
+                    continue;
+
+                visited.Add(v);
+                distances[v] = d;
+
+                foreach (var c in v.ConnectedTo)
                 {
-                    if (_distances[i, k] != int.MaxValue && _distances[k, j] != int.MaxValue)
-                    {
-                        _distances[i, j] = Math.Min(_distances[i, j], _distances[i, k] + _distances[k, j]);
-                    }
+                    queue.Enqueue((c, d + 1));
                 }
             }
+
+            for (var j = 0; j < _input.Length; j++)
+            {
+                _distances[i, j] = distances[_input[j]];
+            }
         }
+
     }
 
     public object? TaskA()
     {
         var start = _valves["AA"];
-        var nop = _input.Where(x => x.FlowRate > 0).Select(x=>x.Id).ToList();
-        var acts2 = GenerateActs(new List<Act>(), start, nop, -1);
+        var allToVisit = _valves.Values.Where(v => v.FlowRate > 0).ToList();
 
-        return acts2
-            .AsParallel()
-            .Select(EvalActs)
-            .Max();
+        var xd = GenerateActs(start, allToVisit, 0, 0)
+            .OrderByDescending(x=>x.pressure)
+            .ToList();
+
+        return GenerateActs(start, allToVisit, 0, 0).AsParallel().Max(x => x.pressure);
     }
-
-    public IEnumerable<IEnumerable<Act>> GenerateActs(List<Act> acts, Valve currentValve, List<int> notOpenedYet, int goal)
+    
+    public IEnumerable<(List<string> path, int minute, int pressure)> GenerateActs(Valve currentValve, List<Valve> notOpenedYet, int minute, int pressure)
     {
-        //if current is goal, open,
-        //enqueue every other not opened yet as goals
-        if (goal == currentValve.Id)
+        if (currentValve.Name == "AA")
         {
-            acts.Add(Act.Open());
-            // open
+            // nothing, starting point
+        }
+        else // open it!
+        {
+            minute++;
+            pressure += MaxPressureLeft(currentValve, minute);
         }
 
-        if (notOpenedYet.Count == 0)
+        if (notOpenedYet.Count == 0 || minute >= 30)
         {
-            yield return acts;
+            yield return new (new (), minute, pressure);
+            yield break;
         }
 
-        // open all not opened
-        foreach (var notOpened in notOpenedYet)
+        foreach (var valve in notOpenedYet)
         {
-            var newNotOpened = notOpenedYet.Where(x => x != notOpened).ToList();
-            var newActs = new List<Act>(acts) { Act.Move(notOpened) };
-            foreach (var act in GenerateActs(newActs, _input[notOpened], newNotOpened, notOpened))
+            var newNotOpenedYet = notOpenedYet.ToList();
+            newNotOpenedYet.Remove(valve);
+            
+            var newMinute = minute + _distances[currentValve.Id, valve.Id];
+            if (newMinute < 30)
             {
-                yield return act;
+                var acts = GenerateActs(valve, newNotOpenedYet, newMinute, pressure);
+                foreach (var act in acts)
+                {
+                    yield return (act.path.Prepend(valve.Name).ToList(), act.minute, act.pressure);
+                }
             }
         }
     }
@@ -105,57 +112,17 @@ public class Day16 : IReadInputDay
         return null;
     }
 
-    public int MaxPressureLeft(int flowRate, int currentMinute)
+    public int MaxPressureLeft(Valve valve, int currentMinute)
     {
-        return flowRate * (maxMin - currentMinute);
-
+        if (currentMinute > maxMin)
+        {
+            return -10000;
+        }
+        return valve.FlowRate * (maxMin - currentMinute);
     }
 
     const int maxMin = 30;
-
-    public int EvalActs(IEnumerable<Act> acts)
-    {
-        int sum = 0;
-        var v = _valves["AA"];
-        int minute = 1;
-
-        foreach (var act in acts)
-        {
-            if (act is not null)
-            {
-                if (act.IsOpen) // valve opening
-                {
-                    //Console.WriteLine($"You open valve {currentValve.Name}");
-                    sum += MaxPressureLeft(v.FlowRate, minute);
-                    minute++;
-                }
-                else // movement
-                {
-                    //Console.WriteLine($"You move to valve {act.MoveTo}");
-                    var cost = _distances[v.Id, act.MoveTo];
-                    v = _input[act.MoveTo];
-                    minute += cost;
-                }
-            }
-            else
-            {
-                minute++;
-            }
-            if (minute > maxMin)
-                return -1;
-
-        }
-
-        return sum;
-    }
-
-    public record Act(bool IsOpen, int MoveTo)
-    {
-        public static Act Move(int id) => new(false, id);
-        public static Act Open() => new(true, -1);
-
-    }
-
+    
     public class Valve
     {
         public int Id { get; init; }
@@ -184,3 +151,5 @@ public class Day16 : IReadInputDay
         public override string ToString() => $"{Name}:{FlowRate} --> {string.Join(", ", ConnectedToNames)}";
     }
 }
+
+// 2247 too low
