@@ -55,6 +55,13 @@ public class Day17 : IReadInputDay
 
     public object? TaskA()
     {
+        var patterns = new List<string>();
+        var pattern = "";
+        var bestPattern = "";
+        var bestPatternIdx = -1;
+        var bestPatternHeight = -1;
+        var heightOffset = 0L;
+
         var grid = new HashSet<Vec2>();
         var width = 7;
 
@@ -112,22 +119,49 @@ public class Day17 : IReadInputDay
                 TryReduceMap(grid);
                 //DrawMap(20, 0, grid, shape, offset);
             }
+
+            pattern += offset.X;
+
+            if (i % 5 == 4)
+            {
+                var p = string.Join("", pattern);
+                patterns.Add(p);
+                pattern = "";
+                var pat = patterns.GroupBy(x => x).MaxBy(x=>x.Count()).Key;
+
+                if (bestPattern == "" && patterns.Count > 100 && p == pat)
+                {
+                    bestPattern = pat;
+                    bestPatternIdx = i;
+                    bestPatternHeight = maxY;
+                }
+                else if (bestPattern == pat && pat == p)
+                {
+                    var idx2 = i;
+                    var height2 = maxY;
+                    var heightMod = height2 - bestPatternHeight;
+
+                    long mod = idx2 - bestPatternIdx;
+
+                    var blocksNeeded = 1000000000000L;
+                    var allSequences = (blocksNeeded-idx2) / mod;
+                    block += (allSequences * mod);
+                    heightOffset = (allSequences * heightMod);
+                }
+            }
             //DrawMap(20, 0, grid, shape, offset);
             i++;
         }
 
-        return grid.Max(x => x.Y);
+        return grid.Max(x => x.Y) + heightOffset;
     }
 
     private void TryReduceMap(HashSet<Vec2> map)
     {
-        if (map.Count > 10000)
+        if (map.Count > 20000)
         {
-            // check if there are duplicate lines
-            var lines = map.GroupBy(x => x.Y)
-                .Select(x => x.Select(x => x.X))
-                .Select(ToInt)
-                .ToArray();
+           
+           
         }
     }
 
