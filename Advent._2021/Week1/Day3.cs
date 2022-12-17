@@ -46,4 +46,7 @@ internal class Day3 : IReadInputDay<int[][]>
 
         return num1 * num2; // 2372923
     }
+
+    
 }
+

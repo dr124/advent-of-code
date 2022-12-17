@@ -1,5 +1,6 @@
 ﻿using Advent.Core;
 using System.Linq;
+using Microsoft.Diagnostics.Tracing;
 
 namespace Advent._2022.Week3;
 
@@ -7,7 +8,6 @@ public class Day17 : IReadInputDay
 {
     public char[] _input;
     public HashSet<Vec2>[] _shapes;
-
     public void ReadData()
     {
         _input = File.ReadAllText("Week3/day17.txt").ToCharArray();
@@ -67,16 +67,16 @@ public class Day17 : IReadInputDay
         // tetris simulation
         var i = 0;
         var j = 0;
-        int block = 0;
-        while (block<2022)
+        long block = 0;
+        while (block < 1000000000000L)
         {
             var shape = _shapes[i % 5];
             int maxY = grid.Max(x => x.Y);
-            Vec2 offset = (2, maxY+4);
+            Vec2 offset = (2, maxY + 4);
             while (true)
             {
                 //DrawMap(20, 0, grid, shape, offset);
-                
+
                 var direction = _input[j++ % _input.Length];
                 if (direction == '>')
                 {
@@ -94,8 +94,7 @@ public class Day17 : IReadInputDay
                         offset.X++;
                     }
                 }
-                
-                
+
                 // fall down
                 offset.Y--;
                 if (DoesHit(grid, shape, offset))
@@ -109,7 +108,8 @@ public class Day17 : IReadInputDay
                     block++;
                     break; // this shape end
                 }
-                
+
+                TryReduceMap(grid);
                 //DrawMap(20, 0, grid, shape, offset);
             }
             //DrawMap(20, 0, grid, shape, offset);
@@ -117,6 +117,18 @@ public class Day17 : IReadInputDay
         }
 
         return grid.Max(x => x.Y);
+    }
+
+    private void TryReduceMap(HashSet<Vec2> map)
+    {
+        if (map.Count > 10000)
+        {
+            // check if there are duplicate lines
+            var lines = map.GroupBy(x => x.Y)
+                .Select(x => x.Select(x => x.X))
+                .Select(ToInt)
+                .ToArray();
+        }
     }
 
     private void DrawMap(int fromY, int toY, HashSet<Vec2> grid, HashSet<Vec2> shape = null, Vec2 shapeOfffset = null)
@@ -156,4 +168,6 @@ public class Day17 : IReadInputDay
     {
         return null;
     }
+
+    int ToInt(IEnumerable<int> tab) => tab.Select((x, i) => (x == 1 ? 1 : 0) * (1 << i)).Sum();
 }
