@@ -1,109 +1,110 @@
-﻿using Advent.Core.Extensions;
-using Iced.Intel;
+﻿using System.Globalization;
+using Advent.Core.Extensions;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 
 namespace Advent._2022.Week3;
 
+public class SomeUtils
+{
+    // get shortest path between two points in graph
+    public static List<T> GetShortestPath<T>(T start, T end, Func<T, IEnumerable<T>> getNeighbors)
+    {
+        var queue = new Queue<(T node, List<T> path)>();
+        queue.Enqueue((start, new List<T> { start }));
+
+        while (queue.Count > 0)
+        {
+            var (node, path) = queue.Dequeue();
+
+            if (node.Equals(end))
+                return path;
+
+            foreach (var neighbor in getNeighbors(node))
+            {
+                if (path.Contains(neighbor))
+                    continue;
+
+                var newPath = path.ToList();
+                newPath.Add(neighbor);
+                queue.Enqueue((neighbor, newPath));
+            }
+        }
+
+        return new List<T>();
+    }
+
+    public static IEnumerable<IEnumerable<T>> GetVariationsWithoutDuplicates<T>(IList<T> items, int length)
+    {
+        if (length == 0 || !items.Any()) return new List<List<T>> { new List<T>() };
+        return from item in items.Distinct()
+               from permutation in GetVariationsWithoutDuplicates(items.Where(i => !EqualityComparer<T>.Default.Equals(i, item)).ToList(), length - 1)
+               select Prepend(item, permutation);
+    }
+
+    public static IEnumerable<T> Prepend<T>(T first, IEnumerable<T> rest)
+    {
+        yield return first;
+        foreach (var item in rest)
+            yield return item;
+    }
+}
+
 public class Day16 : IReadInputDay
 {
-    private Valve[] _input;
-    private Dictionary<string, Valve> _valves;
-    //private Dictionary<string, int> _mapping;
-    private int[,] _distances;
+    const int maxTime = 30;
+
+    private static Valve[] _input;
+    private static Dictionary<string, Valve> _valves;
+    private static List<Valve>[,] _paths;
+    private static Valve[,] _nextNodes;
 
     public void ReadData()
     {
         _input = File.ReadAllLines("Week3/Day16.txt")
-            .Select((str, i) => Valve.Create(str, i))
+            .Select(Valve.Create)
             .ToArray();
 
         _valves = _input.ToDictionary(v => v.Name);
 
         foreach (var valve in _input)
-        {
             valve.ConnectedTo = valve.ConnectedToNames
                 .Select(name => _valves[name])
                 .ToArray();
-        }
 
-        // calculate all distances between valves
-        _distances = new int[_input.Length, _input.Length];
-
+        _paths = new List<Valve>[_input.Length, _input.Length];
         for (var i = 0; i < _input.Length; i++)
-        {
-            var valve = _input[i];
-            var distances = new Dictionary<Valve, int>();
-            var visited = new HashSet<Valve>();
-            var queue = new Queue<(Valve, int)>();
-            queue.Enqueue((valve, 0));
-
-            while (queue.Count > 0)
-            {
-                var (v, d) = queue.Dequeue();
-
-                if (visited.Contains(v))
-                    continue;
-
-                visited.Add(v);
-                distances[v] = d;
-
-                foreach (var c in v.ConnectedTo)
-                {
-                    queue.Enqueue((c, d + 1));
-                }
-            }
-
             for (var j = 0; j < _input.Length; j++)
-            {
-                _distances[i, j] = distances[_input[j]];
-            }
-        }
+                _paths[i, j] = SomeUtils.GetShortestPath(_input[i], _input[j], v => v.ConnectedTo);
 
+        _nextNodes = new Valve[_input.Length, _input.Length];
+        for (var i = 0; i < _input.Length; i++)
+            for (var j = 0; j < _input.Length; j++)
+                if (_paths[i, j].Count > 1)
+                    _nextNodes[i, j] = _paths[i, j][1];
     }
 
     public object? TaskA()
     {
         var start = _valves["AA"];
         var allToVisit = _valves.Values.Where(v => v.FlowRate > 0).ToList();
-
-        var xd = GenerateActs(start, allToVisit, 0, 0)
-            .OrderByDescending(x=>x.pressure)
-            .ToList();
-
-        return GenerateActs(start, allToVisit, 0, 0).AsParallel().Max(x => x.pressure);
-    }
-    
-    public IEnumerable<(List<string> path, int minute, int pressure)> GenerateActs(Valve currentValve, List<Valve> notOpenedYet, int minute, int pressure)
-    {
-        if (currentValve.Name == "AA")
+        var a = new Agent
         {
-            // nothing, starting point
-        }
-        else // open it!
-        {
-            minute++;
-            pressure += MaxPressureLeft(currentValve, minute);
-        }
+            Current = start,
+            Goal = null
+        };
 
-        if (notOpenedYet.Count == 0 || minute <= 30)
-        {
-            yield return new (new (), minute, pressure);
-        }
+        var agents = new List<Agent> { a };
 
-        foreach (var valve in notOpenedYet)
+        int pressure = 0;
+        for (int i = 0; i < maxTime; i++)
         {
-            var newNotOpenedYet = notOpenedYet.ToList();
-            newNotOpenedYet.Remove(valve);
-            
-            var newMinute = minute + _distances[currentValve.Id, valve.Id];
-            if (newMinute < 30)
+            foreach (var agent in agents)
             {
-                var acts = GenerateActs(valve, newNotOpenedYet, newMinute, pressure);
-                foreach (var act in acts)
-                {
-                    yield return (act.path.Prepend(valve.Name).ToList(), act.minute, act.pressure);
-                }
+                pressure += agent.Process(allToVisit);
             }
         }
+
+        return -1;
     }
 
     public object? TaskB()
@@ -111,17 +112,16 @@ public class Day16 : IReadInputDay
         return null;
     }
 
-    public int MaxPressureLeft(Valve valve, int currentMinute)
+    public static int MaxPressureLeft(Valve valve, int currentMinute)
     {
-        if (currentMinute > maxMin)
+        if (currentMinute > maxTime)
         {
             return -10000;
         }
-        return valve.FlowRate * (maxMin - currentMinute);
+        return valve.FlowRate * (maxTime - currentMinute);
     }
 
-    const int maxMin = 30;
-    
+
     public class Valve
     {
         public int Id { get; init; }
@@ -147,8 +147,53 @@ public class Day16 : IReadInputDay
             };
         }
 
-        public override string ToString() => $"{Name}:{FlowRate} --> {string.Join(", ", ConnectedToNames)}";
+        public override string ToString() => $"{Id}:{Name} ({FlowRate}/min) --> {string.Join(", ", ConnectedToNames)}";
+    }
+
+    public struct Agent
+    {
+        private void Log(string s)
+        {
+            Console.WriteLine(s);
+        }
+        
+        public Valve Goal;
+        public Valve Current;
+        public int Minute = 0;
+
+        public Agent()
+        {
+            Goal = null;
+            Current = null;
+        }
+
+        public int Process(List<Valve> notOpenGoals)
+        {
+            int pressure = 0;
+            Minute++;
+            var log = $"t={Minute}";
+
+            if (Current == Goal) // you are in valve, open
+            {
+                Goal = null;
+                var up = MaxPressureLeft(Current, Minute);
+                log += $", OPEN {Current.Name} +{up}";
+                pressure += up;
+            }
+            else if(Goal != null)
+            {
+                Current = _nextNodes[Current.Id, Goal.Id];
+                log += $", MOVING TO {Current.Name}";
+            }
+
+            if (Goal == null) // find new goal
+            {
+                Goal = notOpenGoals.First();
+                log += $", NEW GOAL {Goal.Name}";
+            }
+
+            Log(log);
+            return pressure;
+        }
     }
 }
-
-// 2247 too low
