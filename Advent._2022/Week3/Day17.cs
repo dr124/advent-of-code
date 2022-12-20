@@ -75,6 +75,7 @@ public class Day17 : IReadInputDay
         var i = 0;
         var j = 0;
         long block = 0;
+        var optim = false;
         while (block < 1000000000000L)
         {
             var shape = _shapes[i % 5];
@@ -122,36 +123,46 @@ public class Day17 : IReadInputDay
 
             pattern += offset.X;
 
-            if (i % 5 == 4)
+            if (i % 5 == 4 && optim == false)
             {
                 var p = string.Join("", pattern);
                 patterns.Add(p);
                 pattern = "";
-                var pat = patterns.GroupBy(x => x).MaxBy(x=>x.Count()).Key;
 
-                if (bestPattern == "" && patterns.Count > 100 && p == pat)
+                if (patterns.Count > 5000)
                 {
-                    bestPattern = pat;
-                    bestPatternIdx = i;
-                    bestPatternHeight = maxY;
-                }
-                else if (bestPattern == pat && pat == p)
-                {
-                    var idx2 = i;
-                    var height2 = maxY;
-                    var heightMod = height2 - bestPatternHeight;
+                    if (bestPattern == "")
+                    {
+                        bestPattern = patterns.GroupBy(x => x).MaxBy(x => x.Count()).Key;
+                    }
 
-                    long mod = idx2 - bestPatternIdx;
+                    if (bestPattern == p && bestPatternIdx == -1)
+                    {
+                        bestPatternIdx = i;
+                        bestPatternHeight = maxY;
+                    }
+                    
+                    if (bestPattern == p && bestPatternIdx > -1 && i != bestPatternIdx)
+                    {
+                        var idx2 = i;
+                        var height2 = maxY;
+                        var heightMod = height2 - bestPatternHeight;
 
-                    var blocksNeeded = 1000000000000L;
-                    var allSequences = (blocksNeeded-idx2) / mod;
-                    block += (allSequences * mod);
-                    heightOffset = (allSequences * heightMod);
+                        long mod = idx2 - bestPatternIdx;
+
+                        var blocksNeeded = 1000000000000L;
+                        var allSequences = (blocksNeeded - idx2) / mod;
+                        block += (allSequences * mod);
+                        heightOffset = (allSequences * heightMod);
+                        optim = true;
+                    }
                 }
             }
+
             //DrawMap(20, 0, grid, shape, offset);
             i++;
         }
+
 
         return grid.Max(x => x.Y) + heightOffset;
     }
