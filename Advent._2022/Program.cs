@@ -10,6 +10,7 @@ return;
 #endif
 
 var dayNumber = DateTime.Now.AddHours(-6).Day;
+dayNumber = 22;
 var day = DayFactory.GetDay(dayNumber, Assembly.GetExecutingAssembly());
 if (day is IReadInputDay readInputDay)
     readInputDay.ReadData();

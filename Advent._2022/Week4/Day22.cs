@@ -7,6 +7,7 @@ public class Day22 : IReadInputDay
 {
     private char[,] _map;
     private string[] _key;
+    private int _width = 0;
 
     public void ReadData()
     {
@@ -15,6 +16,7 @@ public class Day22 : IReadInputDay
         var maxWidth = lines[..^2].Max(x => x.Length);
         _map = lines[..^2].Select(x=>x.PadRight(maxWidth, ' ')).To2dArray().ToMatrix();
         _key = lines[^1].Replace("L", " L ").Replace("R", " R ").Split(" ", SplitOptions.Clear);
+        _width = lines[0].Count(x => x != ' ');
     }
 
     public object? TaskA()
@@ -48,10 +50,10 @@ public class Day22 : IReadInputDay
                 Console.WriteLine($"Go {n}, {position} -> {position + n * direction}");
                 for (int i = 0; i < n; i++)
                 {
-                    //Console.Clear();
-                    //Console.WriteLine("-------------------");
-                    //Console.WriteLine(_map.ToMatrixString(""));
-                    //Console.ReadKey();
+                    Console.Clear();
+                    Console.WriteLine("-------------------");
+                    Console.WriteLine(_map.ToMatrixString(""));
+                    Console.ReadKey();
 
                     var nextPosition = GetNextPosition(position, direction);
 
@@ -60,12 +62,16 @@ public class Day22 : IReadInputDay
 
                     position = nextPosition;
 
-                    //if (_map.At(position) == '.')
-                    //    _map.At(position) = '@';
+                    if (_map.At(position) == '.')
+                        _map.At(position) = '@';
                 }
             }
         }
-
+        
+        Console.Clear();
+        Console.WriteLine("-------------------");
+        Console.WriteLine(_map.ToMatrixString(""));
+        
         var facing = direction switch
         {
             (1, 0) => 0,
@@ -73,7 +79,6 @@ public class Day22 : IReadInputDay
             (-1, 0) => 2,
             (0, 1) => 3
         };
-
 
         return 1000 * (position.Y + 1) + 4 * (position.X + 1) + facing;
     }
