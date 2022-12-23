@@ -1,5 +1,5 @@
-﻿using Advent.Core;
-using Advent.Core.Extensions;
+﻿using Advent.Core.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Advent._2022.Week4;
 
@@ -16,7 +16,7 @@ public class Day22 : IReadInputDay
         var maxWidth = lines[..^2].Max(x => x.Length);
         _map = lines[..^2].Select(x=>x.PadRight(maxWidth, ' ')).To2dArray().ToMatrix();
         _key = lines[^1].Replace("L", " L ").Replace("R", " R ").Split(" ", SplitOptions.Clear);
-        _width = lines[0].Count(x => x != ' ');
+        _width = lines[0].Count(x => x != ' ')/2;
     }
 
     public object? TaskA()
@@ -31,46 +31,30 @@ public class Day22 : IReadInputDay
         
         var direction = new Vec2(1, 0);
 
-
         foreach (var operation in _key)
         {
             if (operation == "L")
             {
                 direction = direction.Rotate(RotateDirection.Left);
-                Console.WriteLine($"rotate L : {direction}");
             }
             else if (operation == "R")
             {
                 direction = direction.Rotate(RotateDirection.Right);
-                Console.WriteLine($"rotate R : {direction}");
             }
             else
             {
                 var n = int.Parse(operation);
-                Console.WriteLine($"Go {n}, {position} -> {position + n * direction}");
                 for (int i = 0; i < n; i++)
                 {
-                    Console.Clear();
-                    Console.WriteLine("-------------------");
-                    Console.WriteLine(_map.ToMatrixString(""));
-                    Console.ReadKey();
-
-                    var nextPosition = GetNextPosition(position, direction);
+                    var nextPosition = GetNextPosition(position, direction).pos;
 
                     if (_map.At(nextPosition) == '#')
                         break;
 
-                    position = nextPosition;
-
-                    if (_map.At(position) == '.')
-                        _map.At(position) = '@';
+                    (position, direction) = GetNextPosition(position, direction);
                 }
             }
         }
-        
-        Console.Clear();
-        Console.WriteLine("-------------------");
-        Console.WriteLine(_map.ToMatrixString(""));
         
         var facing = direction switch
         {
@@ -83,7 +67,7 @@ public class Day22 : IReadInputDay
         return 1000 * (position.Y + 1) + 4 * (position.X + 1) + facing;
     }
 
-    private Vec2 FindNextPos(Vec2 position, Vec2 direction)
+    private (Vec2 pos, Vec2 dir) FindNextPos(Vec2 position, Vec2 direction)
     {
         var p = position + 0; // copy :D 
         var d = (-direction.X, -direction.Y);
@@ -93,26 +77,98 @@ public class Day22 : IReadInputDay
         }
 
         p -= d;
-        return p;
+        return (p, direction);
     }
 
-    private Vec2 GetNextPosition(Vec2 position, Vec2 direction)
+    private (Vec2 pos, Vec2 dir) FindNextPos2(Vec2 position, Vec2 direction)
     {
-        var dp = (direction.X, -direction.Y);
+        var chunkOld = GetChunk(position);
+        var chunkNew = GetChunk(position + direction);
+        var chunkPos = position % _width;
+
+        Vec2 chunk = (-100, -100);
+        Vec2 newPosition = Vec2.Zero;
+        Vec2 newDirection = Vec2.Zero;
+
+        Action action = (chunkOld, chunkNew) switch
+        {
+            ((0,3), (0,4)) => () => FlipLR((2,0)),
+            ((2,0), (2,-1)) => () => FlipLR((0,3)),
+            
+            ((0,2), (0,1)) => () => RotateCW((1,1)),
+            ((1,2), (1,3)) => () => RotateCW((0,3)),
+            ((2,0), (2,1)) => () => RotateCW((1,1)),
+            ((1,1), (2,1)) => () => RotateCW((2,0)),
+            ((0,3), (-1,3)) => () => RotateCW((1,0)),
+            
+            ((2, 0), (3, 0)) => () => FlipUD((1, 2)),
+            ((1, 2), (2, 2)) => () => FlipUD((2, 0)),
+            ((1, 0), (0, 0)) => () => FlipUD((0, 2)),
+            ((0, 2), (-1, 2)) => () => FlipUD((1, 0)),
+            
+            ((1,0), (1,-1)) => () => RotateCCW((1,0)),
+            ((1, 1), (0, 1)) => () => RotateCCW((0, 2)),
+            ((0, 3), (1, 3)) => () => RotateCCW((1, 2)),
+        };
+
+        action();
+        
+        void RotateCCW(Vec2 c)
+        {
+            chunk = c;
+            newPosition = chunk * _width + (chunkPos.Y, chunkPos.X);
+            newDirection = (direction.Y, direction.X);
+        }
+
+        void RotateCW(Vec2 c)
+        {
+            chunk = c;
+            newPosition = chunk * _width + (chunkPos.Y, chunkPos.X);
+            newDirection = (-direction.Y, direction.X);
+        }
+
+        void FlipUD(Vec2 c)
+        {
+            chunk = c;
+            newPosition = chunk * _width + (chunkPos.X, _width - 1 - chunkPos.Y);
+            newDirection = (-direction.X, direction.Y);
+        }
+
+        void FlipLR(Vec2 c)
+        {
+            chunk = c;
+            newPosition = chunk * _width + (chunkPos.X, _width - 1 - chunkPos.Y);
+            newDirection = (direction.X, -direction.Y);
+        }
+
+        return (newPosition, newDirection);
+    }
+
+    private Vec2 GetChunk(Vec2 position)
+    {
+        var chunk = position / _width;
+        if(position.Y < 0)
+            chunk.Y--;
+        if (position.X < 0)
+            chunk.X--;
+        return chunk;
+    }
+
+    private (Vec2 pos, Vec2 dir) GetNextPosition(Vec2 position, Vec2 direction)
+    {
+        Vec2 dp = (direction.X, -direction.Y);
         if (IsInBounds(position + dp) && _map.At(position + dp) is not ' ')
-            return position + dp;
+            return (position + dp, direction);
 
-        return FindNextPos(position, dp);
-        //else throw new Exception("whaa");
+        return FindNextPos2(position, dp);  // B
+        //return (FindNextPos(position, dp).pos, direction); // A
     }
 
-    private bool IsInBounds(Vec2 position)
-    {
-        return position.X >= 0
-               && position.X < _map.GetLength(1) 
-               && position.Y >= 0
-               && position.Y < _map.GetLength(0);
-    }
+    private bool IsInBounds(Vec2 position) =>
+        position.X >= 0
+        && position.Y >= 0
+        && position.X < _map.GetLength(1) 
+        && position.Y < _map.GetLength(0);
 
     public object? TaskB()
     {

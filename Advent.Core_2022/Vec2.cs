@@ -17,6 +17,10 @@ public record Vec2(int X, int Y)
     public static Vec2 operator/(Vec2 a, Vec2 b) => new(a.X / b.X, a.Y / b.Y);
     public static Vec2 operator/(Vec2 a, int b) => new(a.X / b, a.Y / b);
 
+    public static Vec2 operator %(Vec2 a, Vec2 b) => new(a.X % b.X, a.Y % b.Y);
+    public static Vec2 operator %(Vec2 a, int b) => new(a.X % b, a.Y % b);
+
+
 
     public static implicit operator Vec2((int x, int y) p) => new (p.x, p.y);
 
