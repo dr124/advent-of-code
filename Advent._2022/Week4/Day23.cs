@@ -12,6 +12,7 @@ public class Day23 : IReadInputDay
     
     private HashSet<Vec2> _map;
     private List<Entity> _elves;
+    private List<Func<Vec2, Vec2>> _directions;
 
     public void ReadData()
     {
@@ -21,6 +22,15 @@ public class Day23 : IReadInputDay
             .Where(x => x.c == '#')
             .Select(x => new Entity { Position = (x.x, x.y) })
             .ToList();
+        _map = _elves.Select(x => x.Position).ToHashSet();
+        
+        _directions = new List<Func<Vec2, Vec2>>
+        {
+            v => !_map.Contains(v + _N + _W) && !_map.Contains(v + _N) && !_map.Contains(v + _N + _E) ? _N : 0,
+            v => !_map.Contains(v + _S + _W) && !_map.Contains(v + _S) && !_map.Contains(v + _S + _E) ? _S : 0,
+            v => !_map.Contains(v + _N + _W) && !_map.Contains(v + _W) && !_map.Contains(v + _S + _W) ? _W : 0,
+            v => !_map.Contains(v + _N + _E) && !_map.Contains(v + _E) && !_map.Contains(v + _S + _E) ? _E : 0,
+        };
     }
 
     [DebuggerDisplay("{Position} -> {Goal}")]
@@ -65,17 +75,17 @@ public class Day23 : IReadInputDay
         }
     }
 
-    private void ProcessMovement(Func<Vec2, bool> isAlone, List<Func<Vec2, Vec2>> directions, int i)
+    private void ProcessMovement(int i)
     {
         foreach (var elf in _elves)
         {
             var v = elf.Position;
 
-            if (!isAlone(v))
+            if (!IsAlone(v))
             {
-                for (int j = 0; j < directions.Count; j++)
+                for (int j = 0; j < _directions.Count; j++)
                 {
-                    var d = directions[(j + i) % directions.Count](v);
+                    var d = _directions[(j + i) % _directions.Count](v);
                     if (d != 0)
                     {
                         elf.Goal = v + d;
@@ -88,20 +98,10 @@ public class Day23 : IReadInputDay
 
     private int XD()
     {
-        var directions = new List<Func<Vec2, Vec2>>
-        {
-            v => !_map.Contains(v + _N + _W) && !_map.Contains(v + _N) && !_map.Contains(v + _N + _E) ? _N : 0,
-            v => !_map.Contains(v + _S + _W) && !_map.Contains(v + _S) && !_map.Contains(v + _S + _E) ? _S : 0,
-            v => !_map.Contains(v + _N + _W) && !_map.Contains(v + _W) && !_map.Contains(v + _S + _W) ? _W : 0,
-            v => !_map.Contains(v + _N + _E) && !_map.Contains(v + _E) && !_map.Contains(v + _S + _E) ? _E : 0,
-        };
-
-        _map = _elves.Select(x => x.Position).ToHashSet();
-
         int i = 0;
         for (i = 0; ; i++)
         {
-            ProcessMovement(IsAlone, directions, i);
+            ProcessMovement(i);
 
             AdjustGoals();
 
@@ -121,6 +121,4 @@ public class Day23 : IReadInputDay
     private bool IsAlone(Vec2 v) => !_map.Contains(v + _N + _W) && !_map.Contains(v + _N) && !_map.Contains(v + _N + _E)
                                     && !_map.Contains(v + _W) && !_map.Contains(v + _E)
                                     && !_map.Contains(v + _S + _W) && !_map.Contains(v + _S) && !_map.Contains(v + _S + _E);
-
-   
 }
