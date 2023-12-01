@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Advent.Core_2021\Advent.Core_2021.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Week*\*.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

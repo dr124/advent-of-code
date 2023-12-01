@@ -7,11 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="morelinq" Version="3.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PCRE.NET" Version="0.14.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Advent.Core_2019_2020\Advent.Core_2019_2020.csproj" />
   </ItemGroup>
 
   <ItemGroup>
