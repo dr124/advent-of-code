@@ -4,7 +4,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Advent._2023.Core;
 
-[SimpleJob]
+[SimpleJob(iterationCount:100)]
 public class AocBenchmark
 {
     private string[] _input = null!;
