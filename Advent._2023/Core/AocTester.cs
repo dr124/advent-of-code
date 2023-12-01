@@ -14,16 +14,21 @@ public static class AocTester
     {
         if (resultA is not null)
         {
-            var part1 = day.TaskA();
+            var part1 = day.Part1();
             Console.WriteLine($"Part 1: {part1}");
             part1.Should().Be(resultA);
         }
 
         if (resultB is not null)
         {
-            var part2 = day.TaskB();
+            var part2 = day.Part2();
             Console.WriteLine($"Part 2: {part2}");
             part2.Should().Be(resultB);
         }
+    }
+
+    public static void Benchmark<T>()
+    {
+
     }
 }

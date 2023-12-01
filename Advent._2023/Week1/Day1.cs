@@ -2,9 +2,9 @@
 
 public class Day1(string[] lines) : IDay
 {
-    public object TaskA() => DoTheThing(false);
+    public object Part1() => DoTheThing(false);
 
-    public object TaskB() => DoTheThing(true);
+    public object Part2() => DoTheThing(true);
 
     private int DoTheThing(bool useText) => lines
             .Select(line => GetFirstDigit(line, useText) * 10 + GetLastDigit(line, useText))

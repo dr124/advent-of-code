@@ -2,6 +2,6 @@
 
 public interface IDay
 {
-    object? TaskA();
-    object? TaskB();
+    object? Part1();
+    object? Part2();
 }
