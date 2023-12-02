@@ -4,7 +4,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Advent._2023.Core;
 
-[SimpleJob(iterationCount:100)]
+[SimpleJob]
 public class AocBenchmark
 {
     private string[] _input = null!;
@@ -12,12 +12,12 @@ public class AocBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _input = File.ReadAllLines("Week1/Day1.txt");
+        _input = File.ReadAllLines("Week1/Day2.txt");
     }
 
     [Benchmark]
-    public void Part1() => new Day1(_input).Part1();
+    public void Part1() => new Day2(_input).Part1();
 
     [Benchmark]
-    public void Part2() => new Day1(_input).Part2();
+    public void Part2() => new Day2(_input).Part2();
 }
