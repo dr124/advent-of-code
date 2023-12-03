@@ -1,6 +1,5 @@
 using Advent._2023.Week1;
 using BenchmarkDotNet.Attributes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Advent._2023.Core;
 
@@ -12,12 +11,12 @@ public class AocBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _input = File.ReadAllLines("Week1/Day2.txt");
+        _input = File.ReadAllLines("Week1/Day3.txt");
     }
 
     [Benchmark]
-    public void Part1() => new Day2(_input).Part1();
+    public void Part1() => new Day3(_input).Part1();
 
     [Benchmark]
-    public void Part2() => new Day2(_input).Part2();
+    public void Part2() => new Day3(_input).Part2();
 }

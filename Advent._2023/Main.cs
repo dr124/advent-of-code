@@ -22,4 +22,9 @@ public class Program
     [AocData("Week1/Example2.txt", part1: 8, part2: 2286)]
     [AocData("Week1/Day2.txt", part1: 2377, part2: 71220)]
     public void Day2Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day2>(data, part1, part2);
+
+    [Theory]
+    [AocData("Week1/Example3.txt", part1: 4361, part2: 467835)]
+    [AocData("Week1/Day3.txt", part1: 539590, part2: 80703636)]
+    public void Day3Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day3>(data, part1, part2);
 }

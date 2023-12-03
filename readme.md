@@ -6,7 +6,7 @@ This year, my focus is on striking a balance between elegant and performant codi
 | --------------------------------------------------------------------------------------------------------------------- | :-----: | :-------: | --------- |
 | [Day 1: Trebuchet?!](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day1.cs) | ⭐️ ⭐️ | 25.00 µs | 118.42 µs |
 | [Day 2: Cube Conundrum ](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day2.cs) | ⭐️ ⭐️ | 97.72 µs | 104.94 µs |
-| [Day 3: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day3.cs)  | - - | - ms | - ms |
+| [Day 3: Gear Ratios](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day3.cs)  | ⭐️ ⭐️ | 1,48 ms | 628.6 µs |
 | [Day 4: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day4.cs)   | - - | - ms | - ms |   
 | [Day 5: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day5.cs)   | - - | - ms | - ms |   
 | [Day 6: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day6.cs)   | - - | - ms | - ms |  
