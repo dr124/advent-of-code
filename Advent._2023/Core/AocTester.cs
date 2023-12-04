@@ -26,9 +26,4 @@ public static class AocTester
             part2.Should().Be(resultB);
         }
     }
-
-    public static void Benchmark<T>()
-    {
-
-    }
 }
