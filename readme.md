@@ -2,8 +2,8 @@
 
 This year, my focus is on striking a balance between elegant and performant coding in C#.
 
-| Day                                                                                                                   |  Stars  | Part One & Two  |
-| --------------------------------------------------------------------------------------------------------------------- | :-----: | :-------: | --------- |
+| Day                                                                                                                   |  Stars  | Part One \& Two  |
+| --------------------------------------------------------------------------------------------------------------------- | :-----: | :-------: |
 | [Day 1: Trebuchet?!](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day1.cs) | ⭐️ ⭐️ | 143.9 µs |
 | [Day 2: Cube Conundrum ](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day2.cs) | ⭐️ ⭐️ | 109.1 µs |
 | [Day 3: Gear Ratios](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day3.cs)  | ⭐️ ⭐️ | 2.224 ms |
