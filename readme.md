@@ -8,7 +8,7 @@ This year, my focus is on striking a balance between elegant and performant codi
 | [Day 2: Cube Conundrum ](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day2.cs) | ⭐️ ⭐️ | 109.1 µs |
 | [Day 3: Gear Ratios](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day3.cs)  | ⭐️ ⭐️ | 2.224 ms |
 | [Day 4: Scratchcards](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day4.cs)   | ⭐️ ⭐️ | 212.7 µs |   
-| [Day 5: If You Give A Seed A Fertilizer](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day5.cs)   | ⭐️ ⭐️ | <small>6.5 s </br> (brute force)</small> |   
+| [Day 5: If You Give A Seed A Fertilizer](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day5.cs)   | ⭐️ ⭐️ | <sub><sup>6.5 s </br> (brute force)</sup></sub> |   
 | [Day 6: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day6.cs)   | - - | - µs |  
 | [Day 7: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day7.cs)   | - - | - µs | 
 | [Day 8: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day8.cs)   | - - | - µs |  
