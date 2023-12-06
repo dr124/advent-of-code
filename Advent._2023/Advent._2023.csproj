@@ -31,12 +31,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Week4\" />
-	  <Folder Include="Week3\" />
-	  <Folder Include="Week2\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="Week*\*.txt">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
