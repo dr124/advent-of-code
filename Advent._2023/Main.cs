@@ -2,6 +2,7 @@ global using Advent._2023.Core;
 using Advent._2023.Week1;
 using Advent._2023.Week2;
 using BenchmarkDotNet.Running;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 using Xunit;
 
 namespace Advent._2023;
@@ -10,6 +11,10 @@ public class Program
 {
     private static void Main(string[] args)
     {
+        //var input = File.ReadAllLines("Week1/Day5.txt");
+        //var day = new Day5(input);
+        //day.Part1();
+        //day.Part2();
         BenchmarkRunner.Run<AocBenchmark>();
     }
 
@@ -35,8 +40,8 @@ public class Program
     public void Day04Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day4>(data, part1, part2);
 
     [Theory]
-    [AocData("Week1/Day5Example.txt", part1: null, part2: null)]
-    [AocData("Week1/Day5.txt", part1: null, part2: null)]
+    [AocData("Week1/Day5Example.txt", part1: 35, part2: 46)]
+    [AocData("Week1/Day5.txt", part1: 84470622, part2: 26714516, Skip = "It takes few seconds to finish")]
     public void Day05Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day5>(data, part1, part2);
 
     [Theory]
