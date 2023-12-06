@@ -11,10 +11,6 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        //var input = File.ReadAllLines("Week1/Day5.txt");
-        //var day = new Day5(input);
-        //day.Part1();
-        //day.Part2();
         BenchmarkRunner.Run<AocBenchmark>();
     }
 
@@ -45,8 +41,8 @@ public class Program
     public void Day05Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day5>(data, part1, part2);
 
     [Theory]
-    [AocData("Week1/Day6Example.txt", part1: null, part2: null)]
-    [AocData("Week1/Day6.txt", part1: null, part2: null)]
+    [AocData("Week1/Day6Example.txt", part1: 288, part2: 71503)]
+    [AocData("Week1/Day6.txt", part1: 252000, part2: 36992486)]
     public void Day06Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day6>(data, part1, part2);
 
     [Theory]
