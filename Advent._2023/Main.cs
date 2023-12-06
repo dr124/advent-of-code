@@ -41,7 +41,7 @@ public class Program
 
     [Theory]
     [AocData("Week1/Day5Example.txt", part1: 35, part2: 46)]
-    [AocData("Week1/Day5.txt", part1: 84470622, part2: 26714516, Skip = "It takes few seconds to finish")]
+    [AocData("Week1/Day5.txt", part1: 84470622, part2: 26714516, Skip = "This brute force takes 5-10 seconds to finish")]
     public void Day05Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day5>(data, part1, part2);
 
     [Theory]

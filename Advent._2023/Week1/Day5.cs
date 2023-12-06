@@ -7,7 +7,6 @@ public class Day5(string[] input) : IDay
 {
     private Almanac _almanac = ParseInput(input);
 
-
     public object Part1()
     {
         var result = _almanac.Seeds.Select(_almanac.Process).ToArray();
@@ -54,84 +53,32 @@ public class Day5(string[] input) : IDay
             .Select(uint.Parse)
             .ToArray();
 
-        List<Rule> seedToSoilRules = [];
-        List<Rule> soilToFertilizerRules = [];
-        List<Rule> fertilizerToWaterRules = [];
-        List<Rule> waterToLightRules = [];
-        List<Rule> lightToTemperatureRules = [];
-        List<Rule> temperatureToHumidityRules = [];
-        List<Rule> humidityToLocationRules = [];
-        
-        uint line = 3;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            seedToSoilRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            soilToFertilizerRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            fertilizerToWaterRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            waterToLightRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            lightToTemperatureRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (!string.IsNullOrWhiteSpace(lines[line]))
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            temperatureToHumidityRules.Add(rule);
-            line++;
-        }
-
-        line += 2;
-        while (line < lines.Length)
-        {
-            var rule = Rule.ParseRule(lines[line]);
-            humidityToLocationRules.Add(rule);
-            line++;
-        }
-
+        var line = 3;
         return new Almanac
         {
             Seeds = seeds,
-            SeedToSoilRules = [..seedToSoilRules.OrderBy(x => x.SourceFrom)],
-            SoilToFertilizerRules = [..soilToFertilizerRules.OrderBy(x => x.SourceFrom)],
-            FertilizerToWaterRules = [..fertilizerToWaterRules.OrderBy(x => x.SourceFrom)],
-            WaterToLightRules = [..waterToLightRules.OrderBy(x => x.SourceFrom)],
-            LightToTemperatureRules = [..lightToTemperatureRules.OrderBy(x => x.SourceFrom)],
-            TemperatureToHumidityRules = [..temperatureToHumidityRules.OrderBy(x => x.SourceFrom)],
-            HumidityToLocationRules = [..humidityToLocationRules.OrderBy(x => x.SourceFrom)]
+            SeedToSoilRules = ReadInput(lines, ref line),
+            SoilToFertilizerRules = ReadInput(lines, ref line),
+            FertilizerToWaterRules = ReadInput(lines, ref line),
+            WaterToLightRules = ReadInput(lines, ref line),
+            LightToTemperatureRules = ReadInput(lines, ref line),
+            TemperatureToHumidityRules = ReadInput(lines, ref line),
+            HumidityToLocationRules = ReadInput(lines, ref line)
         };
     }
 
-    [DebuggerDisplay("{SourceFrom}..{SourceTo} -> {DestinationFrom}..{DestinationTo}")]
+    private static Rule[] ReadInput(string[] lines, ref int lineIndex)
+    {
+        var rules = new List<Rule>();
+        while (lineIndex < lines.Length && !string.IsNullOrWhiteSpace(lines[lineIndex]))
+        {
+            rules.Add(Rule.ParseRule(lines[lineIndex++]));
+        }
+
+        lineIndex += 2;
+        return rules.OrderBy(x => x.From).ToArray();
+    }
+
     private class Rule(uint destination, uint source, uint length) : IComparable<uint>
     {
         public static Rule ParseRule(string rule)
@@ -143,23 +90,16 @@ public class Day5(string[] input) : IDay
             return new Rule(destination, source, length);
         }
 
-        public uint SourceFrom { get; } = source;
-        public uint SourceTo { get; } = source + length;
-
-        public uint DestinationFrom { get; } = destination;
-        public uint DestinationTo { get; } = destination + length;
-        
         public int CompareTo(uint other)
         {
-            if (other < SourceFrom) return 1;
-            if (other > SourceTo) return -1;   
+            if (other < source) return 1;
+            if (other > source + length) return -1;   
             return 0;                   
         }
 
-        public uint Apply(uint value)
-        {
-            return value - SourceFrom + DestinationFrom;
-        }
+        public uint From { get; } = source;
+
+        public uint Apply(uint value) => value - source + destination;
     }
 
     private class Almanac
