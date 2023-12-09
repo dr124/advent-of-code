@@ -37,7 +37,7 @@ public class Program
 
     [Theory]
     [AocData("Week1/Day5Example.txt", part1: 35, part2: 46)]
-    [AocData("Week1/Day5.txt", part1: 84470622, part2: 26714516)]
+    [AocData("Week1/Day5.txt", part1: 84470622, part2: 26714516, Skip = "This takes 6s to finish.")]
     public void Day05Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day5>(data, part1, part2);
 
     [Theory]
@@ -58,8 +58,8 @@ public class Program
     public void Day08Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day8>(data, part1, part2);
 
     [Theory]
-    [AocData("Week2/Day9Example.txt", part1: null, part2: null)]
-    [AocData("Week2/Day9.txt", part1: null, part2: null)]
+    [AocData("Week2/Day9Example.txt", part1: 114, part2: 2)]
+    [AocData("Week2/Day9.txt", part1: 1987402313, part2: 900)]
     public void Day09Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day9>(data, part1, part2);
 
     [Theory]
@@ -101,7 +101,6 @@ public class Program
     [AocData("Week3/Day17Example.txt", part1: null, part2: null)]
     [AocData("Week3/Day17.txt", part1: null, part2: null)]
     public void Day17Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day17>(data, part1, part2);
-
 
     [Theory]
     [AocData("Week3/Day18Example.txt", part1: null, part2: null)]

@@ -12,7 +12,7 @@ This year, my focus is on striking a balance between elegant and performant codi
 | [Day 6: Wait For It](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day6.cs)   | ⭐️ ⭐️ | 630.1 ns |  
 | [Day 7: Camel Cards](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week1/Day7.cs)   | ⭐️ ⭐️ | 1.463 ms | 
 | [Day 8: Haunted Wasteland](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day8.cs)   | ⭐️ ⭐️ | 397.9 µs |  
-| [Day 9: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day9.cs)   | - - | - µs |  
+| [Day 9: Mirage Maintenance ](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day9.cs)   | ⭐️ ⭐️ | 132.4 µs |  
 | [Day 10: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day10.cs) | - - | - µs |  
 | [Day 11: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day11.cs) | - - | - µs |  
 | [Day 12: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day12.cs) | - - | - µs |  
