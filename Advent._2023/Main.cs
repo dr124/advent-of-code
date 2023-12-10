@@ -1,6 +1,8 @@
 global using Advent._2023.Core;
 using Advent._2023.Week1;
 using Advent._2023.Week2;
+using Advent._2023.Week3;
+using Advent._2023.Week4;
 using BenchmarkDotNet.Running;
 using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 using Xunit;

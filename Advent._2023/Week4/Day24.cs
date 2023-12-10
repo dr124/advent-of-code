@@ -1,4 +1,4 @@
-﻿namespace Advent._2023.Week1;
+﻿namespace Advent._2023.Week4;
 
 public class Day24(string[] input) : IDay
 {
