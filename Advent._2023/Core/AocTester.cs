@@ -12,9 +12,9 @@ public static class AocTester
 
     private static void TestDay(IDay day, object? resultA, object? resultB)
     {
+        var part1 = day.Part1();
         if (resultA is not null)
         {
-            var part1 = day.Part1();
             Console.WriteLine($"Part 1: {part1}");
             part1.Should().Be(resultA);
         }
