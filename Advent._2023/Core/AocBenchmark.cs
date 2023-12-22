@@ -12,13 +12,13 @@ public class AocBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _input = File.ReadAllLines("Week2/Day13.txt");
+        _input = File.ReadAllLines("Week2/Day14.txt");
     }
 
     [Benchmark]
     public void Part()
     {
-        var day = new Day13(_input);
+        var day = new Day14(_input);
         day.Part1();
         day.Part2();
     }

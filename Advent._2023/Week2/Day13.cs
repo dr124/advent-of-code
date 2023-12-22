@@ -34,13 +34,13 @@ public class Day13 : IDay
 
     private static int DoTheThing(Pattern pattern, bool isSmudgy)
     {
-        var mirrorH = FindMirror(pattern.Horizontal.AsSpan(), isSmudgy);
+        var mirrorH = FindMirror(pattern.Horizontal, isSmudgy);
         if (mirrorH != null)
         {
             return mirrorH.Value * 100;
         }
 
-        var mirrorV = FindMirror(pattern.Vertical.AsSpan(), isSmudgy);
+        var mirrorV = FindMirror(pattern.Vertical, isSmudgy);
         if (mirrorV != null)
         {
             return mirrorV.Value;
