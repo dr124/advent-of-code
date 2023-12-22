@@ -4,7 +4,6 @@ using Advent._2023.Week2;
 using Advent._2023.Week3;
 using Advent._2023.Week4;
 using BenchmarkDotNet.Running;
-using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 using Xunit;
 
 namespace Advent._2023;
@@ -13,7 +12,7 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        BenchmarkRunner.Run<AocBenchmark>();
+        BenchmarkRunner.Run<AocBenchmark>(args: args);
     }
 
     [Theory]
@@ -76,13 +75,13 @@ public class Program
     public void Day11Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day11>(data, part1, part2);
 
     [Theory]
-    [AocData("Week2/Day12Example.txt", part1: null, part2: null)]
-    [AocData("Week2/Day12.txt", part1: null, part2: null)]
+    [AocData("Week2/Day12Example.txt", part1: 21, part2: 525152, Skip = "Too long")]
+    [AocData("Week2/Day12.txt", part1: 7939, part2: 1, Skip = "Too long")]
     public void Day12Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day12>(data, part1, part2);
 
     [Theory]
-    [AocData("Week2/Day13Example.txt", part1: null, part2: null)]
-    [AocData("Week2/Day13.txt", part1: null, part2: null)]
+    [AocData("Week2/Day13Example.txt", part1: 405, part2: 400)]
+    [AocData("Week2/Day13.txt", part1: 37113, part2: 30449)]
     public void Day13Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day13>(data, part1, part2);
 
     [Theory]

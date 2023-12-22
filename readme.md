@@ -14,17 +14,17 @@ This year, my focus is on striking a balance between elegant and performant codi
 | [Day 8: Haunted Wasteland](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day8.cs)   | ⭐️ ⭐️ | 397.9 µs |  
 | [Day 9: Mirage Maintenance ](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day9.cs)   | ⭐️ ⭐️ | 132.4 µs |  
 | [Day 10: Pipe Maze](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day10.cs) | ⭐️ ⭐️ | 2.582 ms |  
-| [Day 11: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day11.cs) | ⭐️ ⭐️ | 4.869 ms |  
-| [Day 12: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day12.cs) | - - | - µs |  
-| [Day 13: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day13.cs) | - - | - µs |  
-| [Day 14: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day14.cs) | - - | - µs | 
-| [Day 15: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day15.cs) | - - | - µs |  
-| [Day 16: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day16.cs) | - - | - µs |  
-| [Day 17: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day17.cs) | - - | - µs |  
-| [Day 18: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day18.cs) | - - | - µs |  
-| [Day 19: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day19.cs) | - - | - µs |  
-| [Day 20: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day20.cs) | - - | - µs |  
-| [Day 21: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day21.cs) | - - | - µs |  
+| [Day 11: Cosmic Expansion](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day11.cs) | ⭐️ ⭐️ | 4.869 ms |  
+| [Day 12: Hot Springs](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day12.cs) | ⭐️ | - µs |  
+| [Day 13: Point of Incidence](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day13.cs) | ⭐️ ⭐️ | 62.51 µs |  
+| [Day 14: Parabolic Reflector Dish](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day14.cs) | - - | - µs | 
+| [Day 15: Lens Library](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day15.cs) | - - | - µs |  
+| [Day 16: The Floor Will Be Lava](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day16.cs) | - - | - µs |  
+| [Day 17: Clumsy Crucible](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day17.cs) | - - | - µs |  
+| [Day 18: Lavaduct Lagoon](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day18.cs) | - - | - µs |  
+| [Day 19: Aplenty](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day19.cs) | - - | - µs |  
+| [Day 20: Pulse Propagation](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day20.cs) | - - | - µs |  
+| [Day 21: Step Counter](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day21.cs) | - - | - µs |  
 | [Day 22: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week4/Day22.cs) | - - | - µs |  
 | [Day 23: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week4/Day23.cs) | - - | - µs |  
 | [Day 24: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week4/Day24.cs) | - - | - µs |  
