@@ -18,7 +18,7 @@ This year, my focus is on striking a balance between elegant and performant codi
 | [Day 12: Hot Springs](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day12.cs) | ⭐️ | - µs |  
 | [Day 13: Point of Incidence](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day13.cs) | ⭐️ ⭐️ | 62.51 µs |  
 | [Day 14: Parabolic Reflector Dish](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week2/Day14.cs) | ⭐️ ⭐️ | 29.15 ms | 
-| [Day 15: Lens Library](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day15.cs) | - - | - µs |  
+| [Day 15: Lens Library](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day15.cs) | ⭐️ ⭐️ | 352.7 µs |  
 | [Day 16: The Floor Will Be Lava](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day16.cs) | - - | - µs |  
 | [Day 17: Clumsy Crucible](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day17.cs) | - - | - µs |  
 | [Day 18: Lavaduct Lagoon](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day18.cs) | - - | - µs |  
