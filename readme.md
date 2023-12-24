@@ -21,7 +21,7 @@ This year, my focus is on striking a balance between elegant and performant codi
 | [Day 15: Lens Library](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day15.cs) | ⭐️ ⭐️ | 352.7 µs |  
 | [Day 16: The Floor Will Be Lava](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day16.cs) | ⭐️ ⭐️ | brute 23s |  
 | [Day 17: Clumsy Crucible](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day17.cs) | ⭐️ ⭐️ | 363.9 ms |  
-| [Day 18: Lavaduct Lagoon](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day18.cs) | - - | - µs |  
+| [Day 18: Lavaduct Lagoon](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day18.cs) | ⭐️ ⭐️ | 22.82 µs |  
 | [Day 19: Aplenty](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day19.cs) | - - | - µs |  
 | [Day 20: Pulse Propagation](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day20.cs) | - - | - µs |  
 | [Day 21: Step Counter](https://github.com/dr124/advent-of-code/blob/master/Advent._2023/Week3/Day21.cs) | - - | - µs |  
