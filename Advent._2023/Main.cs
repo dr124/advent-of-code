@@ -100,8 +100,9 @@ public class Program
     public void Day16Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day16>(data, part1, part2);
 
     [Theory]
-    [AocData("Week3/Day17Example.txt", part1: null, part2: null)]
-    [AocData("Week3/Day17.txt", part1: null, part2: null)]
+    [AocData("Week3/Day17Example.txt", part1: 102, part2: 94)]
+    [AocData("Week3/Day17Example2.txt", part1: null, part2: 71)]
+    [AocData("Week3/Day17.txt", part1: 814, part2: 974)]
     public void Day17Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day17>(data, part1, part2);
 
     [Theory]
