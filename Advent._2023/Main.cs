@@ -75,8 +75,8 @@ public class Program
     public void Day11Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day11>(data, part1, part2);
 
     [Theory]
-    [AocData("Week2/Day12Example.txt", part1: 21, part2: 525152, Skip = "Too long")]
-    [AocData("Week2/Day12.txt", part1: 7939, part2: 1, Skip = "Too long")]
+    [AocData("Week2/Day12Example.txt", part1: 21, part2: 525152)]
+    [AocData("Week2/Day12.txt", part1: 7939, part2: 850504257483930L)]
     public void Day12Tests(string[] data, object? part1, object? part2) => AocTester.Test<Day12>(data, part1, part2);
 
     [Theory]
