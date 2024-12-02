@@ -21,8 +21,8 @@ public class Program
     public void Day01Tests(AocData data) => AocTester.Test<Day1>(data);
 
     [Test]
-    [AocData("Week1/Day2Example.txt", part1: null, part2: null)]
-    [AocData("Week1/Day2.txt", part1: null, part2: null)]
+    [AocData("Week1/Day2Example.txt", part1: 2, part2: 4)]
+    [AocData("Week1/Day2.txt", part1: 598, part2: 634)]
     public void Day02Tests(AocData data) => AocTester.Test<Day2>(data);
 
     [Test]

@@ -1,8 +1,9 @@
+using Advent._2024.Week1;
 using BenchmarkDotNet.Attributes;
 
 namespace Advent._2024.Core;
 
-[SimpleJob]
+[SimpleJob, MemoryDiagnoser]
 public class AocBenchmark
 {
     private string[] _input = null!;
@@ -10,14 +11,14 @@ public class AocBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _input = File.ReadAllLines("Week2/Day12.txt");
+        _input = File.ReadAllLines("Week1/Day2.txt");
     }
 
-    // [Benchmark]
-    // public void Part()
-    // {
-    //     var day = new Day12(_input);
-    //     day.Part1();
-    //     day.Part2();
-    // }
+     [Benchmark(Baseline = true)]
+     public void PartD()
+     {
+         var day = new Day2(_input);
+         day.Part1();
+         day.Part2();
+    }
 }
