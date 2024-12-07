@@ -31,6 +31,10 @@ public record struct Vec2
     public static Vec2 Right { get; } = (1, 0);
     public static Vec2 Zero { get; } = (0, 0);
     public static Vec2 One { get; } = (1, 1);
+    
+    public static readonly Vec2[] Sides = [Up, Down, Left, Right];
+    public static readonly Vec2[] Corners = [Up + Left, Up + Right, Down + Left, Down + Right];
+    public static readonly Vec2[] Adjacent = [..Sides, ..Corners];
 }
 
 public enum Rotation
