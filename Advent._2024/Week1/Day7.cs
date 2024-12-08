@@ -57,7 +57,7 @@ public class Day7(string[] input) : IDay
 
         return IsTrue2(result, value + elements[0], elements[1..])
                || IsTrue2(result, value * elements[0], elements[1..])
-               || IsTrue2(result, MathExtensions.Concat(value, elements[0]), elements[1..]);
+               || IsTrue2(result, Extensions.Concat(value, elements[0]), elements[1..]);
     }
 
     private record Equation(long Result, int[] Numbers)

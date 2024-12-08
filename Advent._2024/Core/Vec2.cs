@@ -43,27 +43,3 @@ public enum Rotation
     Flip = 2,
     CounterClockwise = 3,
 }
-
-public static class Vec2Extensions
-{
-    public static Vec2 Rotate(this Vec2 v, Rotation rotation)
-    {
-        return rotation switch
-        {
-            Rotation.CounterClockwise => (v.Y, -v.X),
-            Rotation.Clockwise => (-v.Y, v.X),
-            Rotation.Flip => (-v.X, -v.Y),
-            _ => v,
-        };
-    }
-
-    public static bool IsInBounds(this Vec2 v, string[] matrix)
-    {
-        return v.Y >= 0 && v.Y < matrix.Length && v.X >= 0 && v.X < matrix[v.Y].Length;
-    }
-
-    public static char On(this Vec2 v, string[] matrix)
-    {
-        return matrix[v.Y][v.X];
-    }
-}
