@@ -1,4 +1,5 @@
 using Advent._2024.Week1;
+using Advent._2024.Week2;
 using BenchmarkDotNet.Attributes;
 
 namespace Advent._2024.Core;
@@ -11,13 +12,13 @@ public class AocBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _input = File.ReadAllLines("Week1/Day7.txt");
+        _input = File.ReadAllLines("Week2/Day10.txt");
     }
 
      [Benchmark(Baseline = true)]
      public void PartD()
      {
-         var day = new Day7(_input);
+         var day = new Day10(_input);
          day.Part1();
          day.Part2();
     }
