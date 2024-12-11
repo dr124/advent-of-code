@@ -23,6 +23,7 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day09Tests&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day10Tests&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day11Tests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/@KeyIndexDefined">True</s:Boolean>
