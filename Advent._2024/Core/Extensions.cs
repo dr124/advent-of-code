@@ -4,7 +4,8 @@ namespace Advent._2024.Core;
 
 public static class Extensions
 {
-    public static Vec2 Rotate(this Vec2 v, Rotation rotation)
+    public static Vec2<T> Rotate<T>(this Vec2<T> v, Rotation rotation) 
+        where T : struct, INumber<T>
     {
         return rotation switch
         {
