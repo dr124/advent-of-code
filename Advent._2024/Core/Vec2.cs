@@ -23,6 +23,7 @@ public record struct Vec2<T> where T : struct, INumber<T>
     public static implicit operator Vec2<T>((T x, T y) pair) => new() { X = pair.x, Y = pair.y };
 
     public static Vec2<T> operator *(Vec2<T> a, int b) => new(a.X * T.CreateChecked(b), a.Y * T.CreateChecked(b));
+    public static Vec2<T> operator *(Vec2<T> a, T b) => new(a.X * b, a.Y * b);
     public static Vec2<T> operator +(Vec2<T> a, Vec2<T> b) => new(a.X + b.X, a.Y + b.Y);
     public static Vec2<T> operator -(Vec2<T> a, Vec2<T> b) => new (a.X - b.X, a.Y - b.Y);
     public static Vec2<T> operator -(Vec2<T> v) => new (-v.X, -v.Y);
