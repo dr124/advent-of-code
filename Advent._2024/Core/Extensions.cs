@@ -18,12 +18,38 @@ public static class Extensions
 
     public static bool IsInBounds(this Vec2 v, string[] matrix)
     {
-        return v.Y >= 0 && v.Y < matrix.Length && v.X >= 0 && v.X < matrix[v.Y].Length;
+        return v is { Y: >= 0, X: >= 0 } 
+               && v.Y < matrix.Length
+               && v.X < matrix[v.Y].Length;
+    }
+    
+    public static bool IsInBounds<T>(this Vec2 v, T[][] matrix)
+    {
+        return v is { Y: >= 0, X: >= 0 } 
+               && v.Y < matrix.Length
+               && v.X < matrix[v.Y].Length;
+    }
+    
+    public static bool IsInBounds<T>(this Vec2 v, T[,] matrix)
+    {
+        return v is { Y: >= 0, X: >= 0 }
+               && v.Y < matrix.GetLength(1)
+               && v.X < matrix.GetLength(1);
     }
 
     public static char On(this Vec2 v, string[] matrix)
     {
         return matrix[v.Y][v.X];
+    }
+    
+    public static ref T On<T>(this Vec2 v, T[][] matrix)
+    {
+        return ref matrix[v.Y][v.X];
+    }
+    
+    public static ref T On<T>(this Vec2 v, T[,] matrix)
+    {
+        return ref matrix[v.Y, v.X];
     }
 
     public static IEnumerable<Vec2> ReadInput(string[] input, int character) =>
@@ -38,7 +64,7 @@ public static class Extensions
 
     public static IEnumerable<Vec2> EnumerateInput(string[] input) =>
         from y in Enumerable.Range(0, input.Length)
-        from x in Enumerable.Range(0, input[0].Length)
+        from x in Enumerable.Range(0, input[y].Length)
         select new Vec2(x, y);
     
     /// <summary>

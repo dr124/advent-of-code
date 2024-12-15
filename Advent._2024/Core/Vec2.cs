@@ -38,6 +38,11 @@ public record struct Vec2<T> where T : struct, INumber<T>
     public static readonly Vec2<T>[] Sides = [Up, Down, Left, Right];
     public static readonly Vec2<T>[] Corners = [Up + Left, Up + Right, Down + Left, Down + Right];
     public static readonly Vec2<T>[] Adjacent = [..Sides, ..Corners];
+
+    public override string ToString()
+    {
+        return $"({X},{Y})";
+    }
 }
 
 public enum Rotation
