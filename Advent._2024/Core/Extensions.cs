@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Text;
 
 namespace Advent._2024.Core;
 
@@ -66,6 +67,28 @@ public static class Extensions
         from y in Enumerable.Range(0, input.Length)
         from x in Enumerable.Range(0, input[y].Length)
         select new Vec2(x, y);
+
+    public static Vec2<T>[] Sides<T>(this Vec2<T> p) where T : struct, INumber<T> =>
+    [
+        p + Vec2<T>.Up,
+        p + Vec2<T>.Down, 
+        p + Vec2<T>.Left,
+        p + Vec2<T>.Right
+    ];
+
+    public static Vec2<T>[] Corners<T>(this Vec2<T> p) where T : struct, INumber<T> =>
+    [
+        p + Vec2<T>.Up + Vec2<T>.Left,
+        p + Vec2<T>.Up + Vec2<T>.Right,
+        p + Vec2<T>.Down + Vec2<T>.Left,
+        p + Vec2<T>.Down + Vec2<T>.Right
+    ];
+
+    public static Vec2<T>[] Adjacent<T>(this Vec2<T> p) where T : struct, INumber<T> =>
+    [
+        ..p.Sides(), 
+        ..p.Corners()
+    ];
     
     /// <summary>
     /// This method concats two numbers with basic math.
@@ -84,5 +107,37 @@ public static class Extensions
         }
 
         return value1 * multiplier + value2;
+    }
+    
+    public static string ConvertArray<T>(T[,] array, Func<T, string> elementToString)
+    {
+        var sb = new StringBuilder();
+        for (int i = 0; i < array.GetLength(0); i++) // Iterate rows
+        {
+            for (int j = 0; j < array.GetLength(1); j++) // Iterate columns
+            {
+                sb.Append(elementToString(array[i, j]));
+                if (j < array.GetLength(1) - 1)
+                    sb.Append(" "); // Add space between elements
+            }
+            sb.AppendLine(); // New line at the end of each row
+        }
+        return sb.ToString();
+    }
+
+    public static string ConvertArray<T>(T[][] array, Func<T, string> elementToString)
+    {
+        var sb = new StringBuilder();
+        foreach (var row in array)
+        {
+            for (int j = 0; j < row.Length; j++)
+            {
+                sb.Append(elementToString(row[j]));
+                if (j < row.Length - 1)
+                    sb.Append(" "); // Add space between elements
+            }
+            sb.AppendLine(); // New line at the end of each row
+        }
+        return sb.ToString();
     }
 }
