@@ -89,7 +89,9 @@ public static class Extensions
         ..p.Sides(), 
         ..p.Corners()
     ];
-    
+
+    public static T Manhattan<T>(this Vec2<T> p) where T : struct, INumber<T> => T.Abs(p.X) + T.Abs(p.Y);
+
     /// <summary>
     /// This method concats two numbers with basic math.
     /// It's benchmarked about 5x faster than .ToString() + long.Parse().

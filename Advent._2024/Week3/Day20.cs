@@ -1,86 +1,75 @@
-﻿namespace Advent._2024.Week3;
+﻿using System.Collections.Concurrent;
+
+namespace Advent._2024.Week3;
 
 public class Day20(string[] input) : IDay
 {
-    private Vec2 _start = Extensions.ReadInput(input, 'S').First();
-    private Vec2 _end = Extensions.ReadInput(input, 'E').First();
-    private HashSet<Vec2> _walls = Extensions.ReadInput(input, '#').ToHashSet();
+    private readonly Vec2 _start = Extensions.ReadInput(input, 'S').First();
+    private readonly HashSet<Vec2> _walls = Extensions.ReadInput(input, '#').ToHashSet();
+    private Dictionary<Vec2, int>? _visited;
     
-    public object Part1()
+    public object Part1() => Calc(2, 100);
+
+    public object Part2() => Calc(20, 100);
+
+    private int Calc(int size, int threshold)
+    {
+        _visited ??= TraverseMaze(_start, _walls);
+
+        var offsets = GetManhattanOffsets(size).ToList();
+        return _visited
+            .AsParallel()
+            .SelectMany(vis1 => FindCheats(vis1, offsets, size, threshold))
+            .Count() / 2;
+    }
+
+    private IEnumerable<int> FindCheats(KeyValuePair<Vec2, int> vis1, List<Vec2> offsets, int size, int threshold)
+    {
+        foreach (var offset in offsets)
+        {
+            var vis2 = vis1.Key + offset;
+    
+            if (!_visited.TryGetValue(vis2, out var cost2) || vis1.Key == vis2)
+                continue;
+    
+            var dist = (vis1.Key - vis2).Manhattan();
+            if (dist > size)
+                continue;
+
+            var diff = Math.Abs(vis1.Value - cost2) - dist;
+            if (diff >= threshold)
+            {
+                yield return dist;
+            }
+        }
+    }
+
+    private static IEnumerable<Vec2> GetManhattanOffsets(int distance) =>
+        from dx in Enumerable.Range(-distance, 2 * distance + 1)
+        from dy in Enumerable.Range(-distance, 2 * distance + 1)
+        where Math.Abs(dx) + Math.Abs(dy) <= distance
+        select new Vec2(dx, dy);
+
+    private static Dictionary<Vec2, int> TraverseMaze(Vec2 start, ISet<Vec2> walls)
     {
         var queue = new PriorityQueue<Vec2, int>();
-        queue.Enqueue(_start, 1);
+        queue.Enqueue(start, 1);
 
         var visited = new Dictionary<Vec2, int>();
+        visited[start] = 1;
 
-        while (queue.TryDequeue(out var vec, out var cost))
+        while (queue.TryDequeue(out var current, out var currentCost))
         {
-            if (vec == _end)
+            foreach (var side in current.Sides())
             {
-                continue;
-            }
+                if (walls.Contains(side) || (visited.TryGetValue(side, out var existingCost) && existingCost <= currentCost + 1))
+                    continue;
 
-            var sides = vec.Sides().AsEnumerable();
-            sides = sides.Where(x => !_walls.Contains(x));
-            sides = sides.Where(x => !visited.ContainsKey(x) || visited[x] > cost + 1);
-            foreach (var side in sides)
-            {
-                visited[side] = cost + 1;
-                queue.Enqueue(side, cost + 1);
+                visited[side] = currentCost + 1;
+                queue.Enqueue(side, currentCost + 1);
             }
         }
 
-        Dictionary<int, int> cheats = [];
-        
-        foreach (var wall in _walls)
-        {
-            var sides = wall.Sides().AsEnumerable();
-            sides = sides.Where(x => !_walls.Contains(x));
-            sides = sides.Where(x => visited.ContainsKey(x));
-            var s = sides.ToList();
-
-            if (s.Count >= 2)
-            {
-                var pairs = s.Skip(1).Zip(s).ToList();
-                foreach (var pair in pairs)
-                {
-                    var cost1 = visited[pair.First];
-                    var cost2 = visited[pair.Second];
-                    var diff = Math.Abs(cost1 - cost2) - 2;
-
-                    if (diff > 0)
-                    {
-                        cheats.TryAdd(diff, 0);
-                        cheats[diff]++;
-                    }
-                }
-            }
-        }
-
-        return cheats.Where(x => x.Key >= 100).Sum(x =>x.Value);
+        return visited;
     }
-
-    public object Part2()
-    {
-        var queue = new PriorityQueue<State, int>();
-        queue.Enqueue(new State(_start, 20), 1);
-
-        var visited = new Dictionary<State, int>();
-        Dictionary<State, int> finishers = [];
-        
-        while (queue.TryDequeue(out var state, out var cost))
-        {
-            if (state.Position == _end)
-            {
-                finishers[state] = cost;
-                continue;
-            }
-            
-            
-        }
-        
-        return null!;
-    }
-
-    private record State(Vec2 Position, int CheatTimeLeft);
 }
