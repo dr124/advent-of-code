@@ -46,10 +46,19 @@
   &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=834d8f45_002D87ac_002D4d87_002D9368_002Def8fe6f19934/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day20Tests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day21Tests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day20Tests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day21Tests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day22Tests&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Not&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day20Tests&lt;/TestId&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::735376CC-AF72-4076-B5D1-12CCAE8D197B::net9.0::Advent._2024.Program.Day21Tests&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+    &lt;/Not&gt;&#xD;
+  &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/Coords/@EntryValue">(Doc Ln 41 Col 60)</s:String>
