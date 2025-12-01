@@ -2,7 +2,7 @@
 
 | Day                                                                                                                   |  Stars  | Benchmark  |
 | --------------------------------------------------------------------------------------------------------------------- | :-----: | :-------: |
-| [Day 1: Trebuchet?!](https://github.com/dr124/advent-of-code/blob/master/Advent._2025/Day01.cs) | ⭐️ ⭐️ | 58.59 µs | 
+| [Day 1: Secret Entrance](https://github.com/dr124/advent-of-code/blob/master/Advent._2025/Day01.cs) | ⭐️ ⭐️ | 58.59 µs | 
 | [Day 2: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2025/Day02.cs) | - - | - µs |  
 | [Day 3: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2025/Day03.cs) | - - | - µs |  
 | [Day 4: ..](https://github.com/dr124/advent-of-code/blob/master/Advent._2025/Day04.cs) | - - | - µs |  
