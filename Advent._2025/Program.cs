@@ -1,10 +1,62 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 using Xunit;
 using Xunit.Sdk;
 using Xunit.v3;
 
-namespace Advent._2025;
+if (args.Length > 0 && int.TryParse(args[0], out var parsedDay))
+{
+	AocBenchmark.Day = parsedDay;
+}
+else
+{
+	Console.Write("Enter day number to benchmark (1-12): ");
+	var input = Console.ReadLine();
+	if (int.TryParse(input, out parsedDay))
+	{
+		AocBenchmark.Day = parsedDay;
+	}
+	else
+	{
+		Console.WriteLine("Invalid input, exiting.");
+		return;
+	}
+}
+
+BenchmarkRunner.Run<AocBenchmark>(args: args);
+
+[SimpleJob, MemoryDiagnoser]
+public class AocBenchmark
+{
+	public static int Day { get; set; } = 1;
+	public static string ClassName => $"Advent._2025.Day{Day:D2}";
+	public static string InputFile = $"Day{Day:D2}.txt";
+
+	private string[] _input = null!;
+	private Day? _instance;
+
+	[GlobalSetup]
+	public void Setup()
+	{
+		_input = File.ReadAllLines(InputFile);
+		var t = Type.GetType(ClassName) ?? throw new InvalidOperationException("Invalid Day type");
+		_instance = (Day)Activator.CreateInstance(t)!;
+	}
+
+	[Benchmark(Baseline = true)]
+	public void Part()
+	{
+		if (_instance is null)
+		{
+			throw new InvalidOperationException("Invalid Day instance");
+		}
+
+		_instance?.Run(_input);
+	}
+}
+
 
 /// <summary>
 /// Declares expected AoC inputs and results for a day. Multiple instances allowed.
