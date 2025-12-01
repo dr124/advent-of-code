@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Advent._2025", "Advent._2025.csproj", "{57B40D5E-E7E2-BECF-D137-7903436C6BAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57B40D5E-E7E2-BECF-D137-7903436C6BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B40D5E-E7E2-BECF-D137-7903436C6BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B40D5E-E7E2-BECF-D137-7903436C6BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B40D5E-E7E2-BECF-D137-7903436C6BAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26936CD6-B5E9-40C4-9357-F20476CC7B9E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,92 @@
+﻿using System.Diagnostics;
+using System.Reflection;
+using Xunit;
+using Xunit.Sdk;
+using Xunit.v3;
+
+namespace Advent._2025;
+
+/// <summary>
+/// Declares expected AoC inputs and results for a day. Multiple instances allowed.
+/// </summary>
+/// <param name="path">Relative path to the input file.</param>
+/// <param name="part1">Expected Part 1 result (optional).</param>
+/// <param name="part2">Expected Part 2 result (optional).</param>
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public sealed class AocDataAttribute(string path, object? part1 = null, object? part2 = null) : Attribute
+{
+	/// <summary>Relative input file path.</summary>
+	public string Path { get; } = path;
+
+	/// <summary>Expected result for Part 1 (nullable).</summary>
+	public object? Part1 { get; } = part1;
+
+	/// <summary>Expected result for Part 2 (nullable).</summary>
+	public object? Part2 { get; } = part2;
+}
+
+/// <summary>
+/// Base AoC day with a single run entry and an inherited xUnit theory verifying datasets.
+/// </summary>
+public abstract class Day
+{
+	/// <summary>
+	/// Executes the puzzle and returns Part A and Part B results.
+	/// </summary>
+	public abstract (object? PartA, object? PartB) Run(string[] lines);
+
+	/// <summary>
+	/// xUnit theory: for each <see cref="AocDataAttribute"/> on the derived day,
+	/// loads input and asserts expected Part 1/Part 2 if provided.
+	/// </summary>
+	/// <param name="path">Relative input file path.</param>
+	/// <param name="expectedPart1">Expected Part 1 (nullable).</param>
+	/// <param name="expectedPart2">Expected Part 2 (nullable).</param>
+	[Theory(DisplayName = "AoC Dataset")]
+	[AocDataset]
+	public void VerifiesDataset(string path, object? expectedPart1, object? expectedPart2)
+	{
+		if (!File.Exists(path))
+			throw new FileNotFoundException($"Input file not found: {path}", path);
+
+		var lines = File.ReadAllLines(path);
+		var instance = (Day)Activator.CreateInstance(GetType())!;
+
+		var sw = Stopwatch.StartNew();
+		var (actualPart1, actualPart2) = instance.Run(lines);
+		sw.Stop();
+
+		Console.WriteLine($"{GetType().Name} | {path} | Part1={actualPart1} | Part2={actualPart2} | Elapsed={sw.ElapsedMilliseconds}ms");
+
+		if (expectedPart1 is not null)
+			Assert.Equal(expectedPart1, actualPart1);
+
+		if (expectedPart2 is not null)
+		{
+			Assert.Equal(expectedPart2, actualPart2);
+		}
+	}
+}
+
+/// <summary>
+/// Supplies theory rows by reading <see cref="AocDataAttribute"/> from the derived day type.
+/// </summary>
+internal sealed class AocDatasetAttribute : DataAttribute
+{
+	/// <inheritdoc/>
+	public override ValueTask<IReadOnlyCollection<ITheoryDataRow>> GetData(MethodInfo testMethod, DisposalTracker disposalTracker)
+	{
+		var dayType = testMethod.ReflectedType!;
+		var dataAttributes = dayType.GetCustomAttributes<AocDataAttribute>();
+		var dataRows = new List<ITheoryDataRow>();
+		foreach (var dataAttr in dataAttributes)
+		{
+			var dataRow = new TheoryDataRow(dataAttr.Path, dataAttr.Part1, dataAttr.Part2);
+			dataRows.Add(dataRow);
+		}
+		return new ValueTask<IReadOnlyCollection<ITheoryDataRow>>(dataRows);
+	}
+
+	/// <inheritdoc/>
+	public override bool SupportsDiscoveryEnumeration() => true;
+}
