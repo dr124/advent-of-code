@@ -2,46 +2,29 @@
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
+using Shouldly;
 using Xunit;
 using Xunit.Sdk;
 using Xunit.v3;
 
-if (args.Length > 0 && int.TryParse(args[0], out var parsedDay))
-{
-	AocBenchmark.Day = parsedDay;
-}
-else
-{
-	Console.Write("Enter day number to benchmark (1-12): ");
-	var input = Console.ReadLine();
-	if (int.TryParse(input, out parsedDay))
-	{
-		AocBenchmark.Day = parsedDay;
-	}
-	else
-	{
-		Console.WriteLine("Invalid input, exiting.");
-		return;
-	}
-}
+[assembly: CaptureConsole]
 
-BenchmarkRunner.Run<AocBenchmark>(args: args);
+BenchmarkRunner.Run<AocBenchmark>();
 
 [SimpleJob, MemoryDiagnoser]
 public class AocBenchmark
 {
-	public static int Day { get; set; } = 1;
-	public static string ClassName => $"Advent._2025.Day{Day:D2}";
-	public static string InputFile = $"Day{Day:D2}.txt";
-
+	const int Day = 2;
+	private readonly string _className = $"Advent._2025.Day{Day:D2}";
+	private readonly string _inputFile = $"Day{Day:D2}.txt";
 	private string[] _input = null!;
 	private Day? _instance;
 
 	[GlobalSetup]
 	public void Setup()
 	{
-		_input = File.ReadAllLines(InputFile);
-		var t = Type.GetType(ClassName) ?? throw new InvalidOperationException("Invalid Day type");
+		_input = File.ReadAllLines(_inputFile);
+		var t = Type.GetType(_className) ?? throw new InvalidOperationException("Invalid Day type");
 		_instance = (Day)Activator.CreateInstance(t)!;
 	}
 
@@ -56,7 +39,6 @@ public class AocBenchmark
 		_instance?.Run(_input);
 	}
 }
-
 
 /// <summary>
 /// Declares expected AoC inputs and results for a day. Multiple instances allowed.
@@ -111,11 +93,11 @@ public abstract class Day
 		Console.WriteLine($"{GetType().Name} | {path} | Part1={actualPart1} | Part2={actualPart2} | Elapsed={sw.ElapsedMilliseconds}ms");
 
 		if (expectedPart1 is not null)
-			Assert.Equal(expectedPart1, actualPart1);
+			actualPart1.ShouldBe(expectedPart1);
 
 		if (expectedPart2 is not null)
 		{
-			Assert.Equal(expectedPart2, actualPart2);
+			actualPart2.ShouldBe(expectedPart2);
 		}
 	}
 }
