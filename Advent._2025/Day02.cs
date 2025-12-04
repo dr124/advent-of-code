@@ -1,7 +1,4 @@
-﻿using Shouldly;
-using Xunit;
-
-namespace Advent._2025;
+﻿namespace Advent._2025;
 
 [AocData("Day02.txt", part1: 29940924880L, part2: 48631958998L)]
 [AocData("Day02Example.txt", part1: 1227775554L, part2: 4174379265L)]

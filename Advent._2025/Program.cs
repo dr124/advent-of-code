@@ -2,8 +2,6 @@
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-using Shouldly;
-using Xunit;
 using Xunit.Sdk;
 using Xunit.v3;
 
@@ -14,7 +12,7 @@ BenchmarkRunner.Run<AocBenchmark>();
 [SimpleJob, MemoryDiagnoser]
 public class AocBenchmark
 {
-	const int Day = 2;
+	const int Day = 3;
 	private readonly string _className = $"Advent._2025.Day{Day:D2}";
 	private readonly string _inputFile = $"Day{Day:D2}.txt";
 	private string[] _input = null!;
