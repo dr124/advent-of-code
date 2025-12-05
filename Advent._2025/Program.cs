@@ -12,7 +12,7 @@ BenchmarkRunner.Run<AocBenchmark>();
 [SimpleJob, MemoryDiagnoser]
 public class AocBenchmark
 {
-	const int Day = 3;
+	const int Day = 5;
 	private readonly string _className = $"Advent._2025.Day{Day:D2}";
 	private readonly string _inputFile = $"Day{Day:D2}.txt";
 	private string[] _input = null!;
@@ -26,7 +26,7 @@ public class AocBenchmark
 		_instance = (Day)Activator.CreateInstance(t)!;
 	}
 
-	[Benchmark(Baseline = true)]
+	[Benchmark]
 	public void Part()
 	{
 		if (_instance is null)
