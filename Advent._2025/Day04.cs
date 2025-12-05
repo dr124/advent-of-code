@@ -8,14 +8,11 @@ public class Day04 : Day
 	{
 		var points = Extensions.ReadInput(lines, c => c == '@').ToHashSet();
 		var startCount = points.Count;
-		var firstStageRemoved = -1;
+		var firstStageRemoved = RemoveRolls(points);
 
 		while (true)
 		{
 			var removed = RemoveRolls(points);
-
-			if (firstStageRemoved == -1)
-				firstStageRemoved = removed;
 
 			if (removed == 0)
 				break;
