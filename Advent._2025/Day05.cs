@@ -10,7 +10,7 @@ public class Day05 : Day
 	{
 		var separator = lines.IndexOf(string.Empty);
 		var freshIngredientsRanges = lines[..separator]
-			.Select(str => Range.Parse(str))
+			.Select(Range.Parse)
 			.OrderBy(x => x.From)
 			.ThenByDescending(x => x.To)
 			.ToList();
