@@ -2,8 +2,8 @@
 
 namespace Advent._2025;
 
-[AocData("Day08.txt", part1: null, part2: null)]
-[AocData("Day08Example.txt", part1: 40, part2: null)]
+[AocData("Day08.txt", part1: 90036, part2: null)]
+[AocData("Day08Example.txt", part1: 40, part2: 25272)]
 public class Day08 : Day
 {
 	public override (object? PartA, object? PartB) Run(string[] lines)
@@ -27,6 +27,7 @@ public class Day08 : Day
 			}
 		}
 
+		Vec3 lastA = new(), lastB = new();
 		List<HashSet<Vec3>> strings = [];
 		for(int i = 0; i < (points.Count < 100 ? 10 : 1000); i++)
 		{
@@ -57,9 +58,11 @@ public class Day08 : Day
 
 			existingA.Add(pointA);
 			existingA.Add(pointB);
+			lastA = pointA;
+			lastB = pointB;
 		}
 
-		return (strings.Select(x => x.Count).OrderDescending().Take(3).Aggregate(1L, (acc, x) => acc * x), null);
+		return (strings.Select(x => x.Count).OrderDescending().Take(3).Aggregate(1L, (acc, x) => acc * x), (long)lastA.X * lastB.X);
 	}
 
 	private (int A, int B) FindClosestPair(double[,] distSquareMap)
